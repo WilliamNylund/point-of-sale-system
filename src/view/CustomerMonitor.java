@@ -24,7 +24,7 @@ public class CustomerMonitor extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+                System.out.println("Well hello to you, too!");
             }
         });
 
