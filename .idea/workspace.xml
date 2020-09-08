@@ -15,11 +15,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1599567839839" />
@@ -29,10 +38,15 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="pvp" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method v="2">
@@ -89,13 +103,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="640" y="403" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1599568657475" />
-    <state x="690" y="368" key="FileChooserDialogImpl" timestamp="1599568672627">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="460" y="163" key="FileChooserDialogImpl" timestamp="1599573657320">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
+    <state x="460" y="163" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1599573657320" />
     <state x="690" y="368" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1599568672627" />
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1599573478495">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599573478495" />
+    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1599573478494">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599573478494" />
+    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1599573478494">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599573478494" />
+    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1599573478494">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599573478494" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1599573675102">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1599573675102" />
     <state x="728" y="527" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599568856018">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="728" y="527" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1599568856018" />
+    <state x="91" y="1" key="new project wizard" timestamp="1599573502906">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="91" y="1" key="new project wizard/0.0.1280.680@0.0.1280.680" timestamp="1599573502906" />
   </component>
 </project>
