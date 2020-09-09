@@ -15,13 +15,17 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+      //  System.out.println("wasd");
         launch(args);
+      //  System.out.println("qwerty");
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+       // System.out.println("abc");
 
         Stage secondStage = new Stage();
+        //System.out.println("def");
 
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view/CustomerScreen.fxml")));
         primaryStage.setTitle("Customer");
@@ -29,10 +33,12 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        double x = bounds.getMinX() + (bounds.getWidth() - scene.getWidth()) * 0;
-        double y = bounds.getMinY() + (bounds.getHeight() - scene.getHeight()) * 0;
+        double x = bounds.getMinX();
+        double y = bounds.getMinY();
         primaryStage.setX(x);
         primaryStage.setY(y);
+
+        //System.out.println("ghi");
 
         Scene secondScene = new Scene(FXMLLoader.load(getClass().getResource("view/CashierScreen.fxml")));
         secondStage.setTitle("Cashier");
@@ -40,8 +46,10 @@ public class Main extends Application {
         secondStage.show();
         Rectangle2D bounds2 = Screen.getPrimary().getVisualBounds();
         double xx = bounds2.getMinX() + (bounds2.getWidth() - scene.getWidth()) * 1;
-        double yy = bounds2.getMinY() + (bounds2.getHeight() - scene.getHeight()) * 0;
+        double yy = bounds2.getMinY();
         secondStage.setX(xx);
         secondStage.setY(yy);
+
+        //System.out.println("jkl");
     }
 }
