@@ -6,9 +6,13 @@ public class Item {
     private int id;
     private double price;
 
-    public Item(String name, double price){
+    public Item(String name, int id, double price){
         this.setName(name);
         this.setPrice(price);
+        this.setId(id);
+    }
+    public String toString(){
+        return this.getId() + "    ----    " + this.getName() + "    ----    Price: " + this.getPrice() + "€" ;
     }
 
     public String getName() {
