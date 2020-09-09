@@ -16,6 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view/CustomerScreen.fxml")));
+        primaryStage.setTitle("Customer");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
