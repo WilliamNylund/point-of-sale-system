@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="565.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerScreen">
+   <children>
+      <SplitPane dividerPositions="0.6074600355239786" layoutX="-1.0" orientation="VERTICAL" prefHeight="565.0" prefWidth="447.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="445.0">
+               <children>
+                  <Label fx:id="transactionLabel" layoutX="14.0" layoutY="2.0" prefHeight="25.0" prefWidth="87.0" text="Transaction" />
+                  <ListView fx:id="itemListView" layoutX="1.0" layoutY="27.0" prefHeight="314.0" prefWidth="445.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="32.0" prefWidth="158.0">
+               <children>
+                  <Button fx:id="addItemButton" layoutX="277.0" layoutY="28.0" mnemonicParsing="false" onAction="#addItem" text="Add Item" />
+                  <Button fx:id="removeItemButton" layoutX="355.0" layoutY="28.0" mnemonicParsing="false" onAction="#removeItem" text="Remove Item" />
+                  <Label fx:id="totalLabel" layoutX="28.0" layoutY="32.0" text="Total:" />
+                  <TextField fx:id="totalTextField" layoutX="126.0" layoutY="28.0" prefHeight="25.0" prefWidth="87.0" />
+                  <Label fx:id="outstandingLabel" layoutX="28.0" layoutY="180.0" text="Outstanding:" />
+                  <TextField fx:id="outstandingTextField" layoutX="126.0" layoutY="176.0" prefHeight="25.0" prefWidth="87.0" />
+                  <Label fx:id="cashLabel" layoutX="28.0" layoutY="85.0" text="Cash:" />
+                  <Label fx:id="cardLabel" layoutX="28.0" layoutY="134.0" text="Card:" />
+                  <TextField fx:id="cashTextField" layoutX="126.0" layoutY="81.0" prefHeight="25.0" prefWidth="87.0" />
+                  <TextField fx:id="cardTextField" layoutX="126.0" layoutY="130.0" prefHeight="25.0" prefWidth="87.0" />
+                  <CheckBox fx:id="receiptCheckbox" layoutX="247.0" layoutY="180.0" mnemonicParsing="false" text="Receipt" />
+                  <Button fx:id="payButton" accessibleRole="INCREMENT_BUTTON" layoutX="348.0" layoutY="160.0" mnemonicParsing="false" onAction="#pay" prefHeight="41.0" prefWidth="67.0" text="PAY" />
+                  <TextField fx:id="bonusTextField" layoutX="289.0" layoutY="130.0" prefHeight="25.0" prefWidth="128.0" />
+                  <Label layoutX="247.0" layoutY="134.0" prefHeight="17.0" prefWidth="52.0" text="Bonus:" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
