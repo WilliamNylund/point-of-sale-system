@@ -24,7 +24,7 @@
                   <Label fx:id="cardLabel" layoutX="29.0" layoutY="138.0" text="Card:" />
                   <TextField fx:id="cashTextField" layoutX="126.0" layoutY="81.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay by cash" />
                   <TextField fx:id="cardTextField" layoutX="126.0" layoutY="134.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay by card" />
-                  <CheckBox fx:id="receiptCheckbox" layoutX="327.0" layoutY="221.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="96.0" text="Receipt" />
+                  <CheckBox fx:id="receiptCheckBox" layoutX="327.0" layoutY="221.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="96.0" text="Receipt" />
                   <Button fx:id="payButton" accessibleRole="INCREMENT_BUTTON" layoutX="444.0" layoutY="217.0" mnemonicParsing="false" onAction="#pay" prefHeight="51.0" prefWidth="96.0" text="PAY" />
                   <TextField fx:id="bonusTextField" layoutX="126.0" layoutY="188.0" prefHeight="25.0" prefWidth="128.0" promptText="Bonus card number" />
                   <Label fx:id="bonusLabel" layoutX="30.0" layoutY="192.0" prefHeight="17.0" prefWidth="52.0" text="Bonus:" />
