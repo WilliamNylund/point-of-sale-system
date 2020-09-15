@@ -7,12 +7,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import controller.CustomerScreenController;
 
-
-
-
 public class Main extends Application {
-
-
 
     public static void main(String[] args) {
       //  System.out.println("wasd");
@@ -52,4 +47,14 @@ public class Main extends Application {
 
         //System.out.println("jkl");
     }
+
+    // Öppnas nu från cashiercontroller
+
+    /*public void cashBox(Stage boxStage) throws Exception {
+        Scene boxScene = new Scene(FXMLLoader.load(getClass().getResource("view/CashBox.fxml")));
+        boxStage.setTitle("Cashbox");
+        boxStage.setScene(boxScene);
+        boxStage.show();
+
+    }*/
 }
