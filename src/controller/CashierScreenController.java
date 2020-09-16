@@ -1,15 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-
-import java.awt.event.ActionEvent;
-import java.sql.SQLOutput;
 
 public class CashierScreenController {
 
@@ -35,13 +27,7 @@ public class CashierScreenController {
     @FXML
     private void fetchCashBox() {
         try {
-            System.out.println("open cashbox");
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/CashBox.fxml"));
-            Parent par = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("CashBox");
-            stage.setScene(new Scene(par));
-            stage.show();
+            Runtime.getRuntime().exec("java -jar CashBox.jar");
         } catch (Exception e) {
             e.printStackTrace();
         }

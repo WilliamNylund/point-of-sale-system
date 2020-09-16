@@ -47,14 +47,4 @@ public class Main extends Application {
 
         //System.out.println("jkl");
     }
-
-    // Öppnas nu från cashiercontroller
-
-    /*public void cashBox(Stage boxStage) throws Exception {
-        Scene boxScene = new Scene(FXMLLoader.load(getClass().getResource("view/CashBox.fxml")));
-        boxStage.setTitle("Cashbox");
-        boxStage.setScene(boxScene);
-        boxStage.show();
-
-    }*/
 }
