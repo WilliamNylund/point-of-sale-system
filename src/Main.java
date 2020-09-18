@@ -10,17 +10,12 @@ import controller.CustomerScreenController;
 public class Main extends Application {
 
     public static void main(String[] args) {
-      //  System.out.println("wasd");
         launch(args);
-      //  System.out.println("qwerty");
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-       // System.out.println("abc");
-
         Stage secondStage = new Stage();
-        //System.out.println("def");
 
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view/CustomerScreen.fxml")));
         primaryStage.setTitle("Customer");
@@ -33,8 +28,6 @@ public class Main extends Application {
         primaryStage.setX(x);
         primaryStage.setY(y);
 
-        //System.out.println("ghi");
-
         Scene secondScene = new Scene(FXMLLoader.load(getClass().getResource("view/CashierScreen.fxml")));
         secondStage.setTitle("Cashier");
         secondStage.setScene(secondScene);
@@ -44,7 +37,5 @@ public class Main extends Application {
         double yy = bounds2.getMinY();
         secondStage.setX(xx);
         secondStage.setY(yy);
-
-        //System.out.println("jkl");
     }
 }
