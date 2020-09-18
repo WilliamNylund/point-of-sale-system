@@ -1,40 +1,147 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.InvalidObjectException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ProductCatalog {
 
-    /*Admin UI (web-based):         http://localhost:9003/
-Find by barcode:         GET  http://localhost:9003/rest/findByBarCode/{barcode}
-   - Case sensitive
-Find by keyword:         GET  http://localhost:9003/rest/findByKeyword/{keyword}
-   - Case sensitive, accepts only whole keywords
-Find by name:            GET  http://localhost:9003/rest/findByName/{name}
-   - Case insensitive, asterisks (*) are used as wildcards*/
+    public Item getProductByBarCode(int barCode){
+        Item item = new Item();
 
-
-        public String findBarcode() throws IOException {
-
-            URL url = new URL("http://localhost:9003/rest/findByBarCode/2020");
+        try{
+            URL url = new URL("http://localhost:9003/rest/findByBarCode/" + barCode);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            con.setRequestProperty("Accept", "application/xml");
+            InputStream xml = con.getInputStream();
 
-            System.out.println(in.read());
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
-            in.close();
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xml);
+            doc.getDocumentElement().normalize();
+
+            NodeList nList = doc.getElementsByTagName("product");
+            Node node = nList.item(0);
+            Element eElement = (Element) node;
+            item.setName(eElement.getElementsByTagName("name").item(0).getTextContent());
+            item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
+            item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
+            item.setId(Integer.parseInt(eElement.getAttribute("id")));
+            System.out.println(item.toString());
             con.disconnect();
-            System.out.println(content.toString());
-            return content.toString();
-        }
-}
+            return item;
 
+
+        } catch(IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public void getProductByKeyWord(String keyword){
+        try{
+            URL url = new URL("http://localhost:9003/rest/findByKeyword/" + keyword);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/xml");
+            InputStream xml = con.getInputStream();
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xml);
+            doc.getDocumentElement().normalize();
+
+            NodeList nList = doc.getElementsByTagName("product");
+
+            for(int i=0; i< nList.getLength(); i++){
+                Node node = nList.item(i);
+                Element eElement = (Element) node;
+                Item item = new Item();
+                item.setName(eElement.getElementsByTagName("name").item(0).getTextContent());
+                item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
+                item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
+                item.setId(Integer.parseInt(eElement.getAttribute("id")));
+                System.out.println(item.toString());
+            }
+
+            con.disconnect();
+
+        } catch(IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getProductByName(String name){
+        try{
+            URL url = new URL("http://localhost:9003/rest/findByName/" + name);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/xml");
+            InputStream xml = con.getInputStream();
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xml);
+            doc.getDocumentElement().normalize();
+
+
+            NodeList nList = doc.getElementsByTagName("product");
+            Node node = nList.item(0);
+            Element eElement = (Element) node;
+            Item item = new Item();
+            item.setName(eElement.getElementsByTagName("name").item(0).getTextContent());
+            item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
+            item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
+            item.setId(Integer.parseInt(eElement.getAttribute("id")));
+            System.out.println(item.toString());
+            con.disconnect();
+
+        } catch(IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getAllProducts(){
+        try{
+            URL url = new URL("http://localhost:9003/rest/findByName/*");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/xml");
+            InputStream xml = con.getInputStream();
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xml);
+            doc.getDocumentElement().normalize();
+
+            NodeList nList = doc.getElementsByTagName("product");
+
+            for(int i=0; i< nList.getLength(); i++){
+                Node node = nList.item(i);
+                Element eElement = (Element) node;
+                Item item = new Item();
+                item.setName(eElement.getElementsByTagName("name").item(0).getTextContent());
+                item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
+                item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
+                item.setId(Integer.parseInt(eElement.getAttribute("id")));
+                System.out.println(item.toString());
+            }
+
+            con.disconnect();
+
+        } catch(IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
