@@ -18,6 +18,7 @@ public class CashBox {
             con.getInputStream();
             System.out.println("CashBox opened!");
         } catch (IOException e){
+            e.printStackTrace();
             System.out.println("something went terrible wrong in CashBox.open() :(((");
         }
     }
@@ -36,6 +37,7 @@ public class CashBox {
             con.disconnect();
             return content.toString();
         } catch(IOException e){
+            e.printStackTrace();
             return "something went terrible wrong in CashBox.getStatus() :(((";
         }
     }
