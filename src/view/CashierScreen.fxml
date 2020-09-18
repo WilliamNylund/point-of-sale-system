@@ -19,12 +19,12 @@
                                     <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="330.0">
                                             <children>
-                                                <ListView prefHeight="220.66666666666666" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <ListView fx:id="itemListView" prefHeight="220.66666666666666" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                             <children>
-                                                <ListView prefHeight="220.66666666666666" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <ListView fx:id="catalogListView" prefHeight="220.66666666666666" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                             </children>
                                         </AnchorPane>
                                     </items>
@@ -35,7 +35,7 @@
                             <children>
                                 <Button id="openProductCatalogButton" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" onAction="#openProductCatalog" text="Open product catalog" />
                                 <Button id="enterButton" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" onAction="#enter" text="Enter" />
-                                <TextField fx:id="barcode" layoutX="14.0" layoutY="14.0" onAction="#enter" prefHeight="25.0" prefWidth="255.0" promptText="Enter barcode" />
+                                <TextField fx:id="barcodeTextField" layoutX="14.0" layoutY="14.0" onAction="#enter" prefHeight="25.0" prefWidth="255.0" promptText="Enter barcode" onMouseClicked="#validateBarcodeField"/>
                                 <Button id="pauseSaleButton" layoutX="49.0" layoutY="81.0" mnemonicParsing="false" onAction="#pauseSale" prefHeight="73.0" prefWidth="120.0" text="Pause sale" />
                                 <Button id="addDiscountButton" layoutX="227.0" layoutY="81.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="73.0" prefWidth="120.0" text="Add discount" />
                                 <Button id="openCashBoxButton" layoutX="399.0" layoutY="81.0" mnemonicParsing="false" onAction="#fetchCashBox" prefHeight="73.0" prefWidth="120.0" text="Cashbox" />

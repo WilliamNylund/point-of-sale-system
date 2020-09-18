@@ -1,8 +1,12 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="customerAnchorPane" prefHeight="755.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerScreenController">
    <children>
@@ -31,13 +35,13 @@
                   <Button fx:id="addItemButton" layoutX="325.0" layoutY="28.0" mnemonicParsing="false" onAction="#addItem" prefHeight="51.0" prefWidth="96.0" text="Add Item" />
                   <Button fx:id="removeItemButton" layoutX="450.0" layoutY="28.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="51.0" prefWidth="96.0" text="Remove Item" />
                   <Label fx:id="totalLabel" layoutX="29.0" layoutY="32.0" text="Total:" />
-                  <TextField fx:id="totalTextField" layoutX="126.0" layoutY="28.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay" />
+                  <TextField fx:id="totalTextField" editable="false" layoutX="126.0" layoutY="28.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay" />
                   <Label fx:id="outstandingLabel" layoutX="28.0" layoutY="243.0" text="Outstanding:" />
-                  <TextField fx:id="outstandingTextField" layoutX="126.0" layoutY="239.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount left to pay" />
+                  <TextField fx:id="outstandingTextField" editable="false" layoutX="126.0" layoutY="239.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount left to pay" />
                   <Label fx:id="cashLabel" layoutX="29.0" layoutY="85.0" text="Cash:" />
                   <Label fx:id="cardLabel" layoutX="29.0" layoutY="138.0" text="Card:" />
-                  <TextField fx:id="cashTextField" layoutX="126.0" layoutY="81.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay by cash" onMouseClicked="#validateCashField"/>
-                  <TextField fx:id="cardTextField" layoutX="126.0" layoutY="134.0" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay by card" onMouseClicked="#validateCardField"/>
+                  <TextField fx:id="cashTextField" layoutX="126.0" layoutY="81.0" onMouseClicked="#validateCashField" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay by cash" />
+                  <TextField fx:id="cardTextField" layoutX="126.0" layoutY="134.0" onMouseClicked="#validateCardField" prefHeight="25.0" prefWidth="128.0" promptText="Amount to pay by card" />
                   <CheckBox fx:id="receiptCheckBox" layoutX="327.0" layoutY="221.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="96.0" text="Receipt" />
                   <Button fx:id="payButton" accessibleRole="INCREMENT_BUTTON" layoutX="444.0" layoutY="217.0" mnemonicParsing="false" onAction="#pay" prefHeight="51.0" prefWidth="96.0" text="PAY" />
                   <Button fx:id="holdTransactionButton" layoutX="325.0" layoutY="126.0" mnemonicParsing="false" onAction="#holdTransaction" prefHeight="51.0" prefWidth="96.0" text="Hold" />
