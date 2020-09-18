@@ -1,5 +1,7 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,6 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ProductCatalog {
+    private ObservableList<Item> catalog = FXCollections.observableArrayList();
+
 
     public Item getProductByBarCode(int barCode){
         Item item = new Item();
@@ -135,6 +139,7 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 System.out.println(item.toString());
+                catalog.add(item);
             }
 
             con.disconnect();
@@ -143,5 +148,14 @@ public class ProductCatalog {
             e.printStackTrace();
         }
     }
+
+    public ObservableList<Item> getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(ObservableList<Item> catalog) {
+        this.catalog = catalog;
+    }
+
 
 }
