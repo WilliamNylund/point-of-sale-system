@@ -5,14 +5,11 @@ public class Item {
     private String name;
     private int id;
     private double price;
-
-    public Item(String name, int id, double price){
-        this.setName(name);
-        this.setPrice(price);
-        this.setId(id);
-    }
+    private int barCode;
+    private double vat;
+    
     public String toString(){
-        return this.getId() + "    ----    " + this.getName() + "    ----    Price: " + this.getPrice() + "€" ;
+        return this.name + " - " + this.price + "€";
     }
 
     public String getName() {
@@ -37,5 +34,21 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(int barCode) {
+        this.barCode = barCode;
+    }
+
+    public double getVat() {
+        return vat;
+    }
+
+    public void setVat(double vat) {
+        this.vat = vat;
     }
 }
