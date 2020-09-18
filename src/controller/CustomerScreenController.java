@@ -4,12 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.Item;
 
-import java.net.StandardSocketOptions;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class CustomerScreenController {
 
@@ -21,6 +22,7 @@ public class CustomerScreenController {
     // id: bonusTextField
     // id: receiptCheckBox
 
+
     @FXML
     private TextField totalTextField;
     @FXML
@@ -28,9 +30,9 @@ public class CustomerScreenController {
     @FXML
     private TextField outstandingTextField;
     @FXML
-    private TextField cardTextField;
+    public TextField cardTextField;
     @FXML
-    private TextField cashTextField;
+    public TextField cashTextField;
     @FXML
     private TextField bonusTextField;
     @FXML
@@ -39,30 +41,39 @@ public class CustomerScreenController {
     private ObservableList<String> items = FXCollections.observableArrayList();
 
 
-
     @FXML
     private void pay(){ //id: payButton
-        System.out.println("paying");
+        try {
+            System.out.println("paying");
 
+            if (receiptCheckBox.isSelected()) { //if receipt
 
+            }
+            Runtime.getRuntime().exec("java -jar CashBox.jar");
+            URL url = new URL("http://localhost:9001/cashbox/open");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+            con.getInputStream();
 
-        if(receiptCheckBox.isSelected()){ //if receipt
-
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("urmmommagay");
         }
     }
 
     @FXML
     private void addItem(){ //id: addItemButton
         System.out.println("adding item");
-
+        double sum = 0.0;
 
         for(int i = 0; i < 6; i++){
             Item item = new Item("banana", i, 69.69);
             items.add(item.toString());
-
+            sum += item.getPrice();
         }
         itemListView.setItems(items);
-
+        totalTextField.setText(Double.toString(sum));
     }
 
     @FXML
@@ -87,6 +98,24 @@ public class CustomerScreenController {
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
         System.out.println("continue transaction");
+    }
+
+    @FXML
+    private void validateCashField() {
+        cashTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+                cashTextField.setText(oldValue);
+            }
+        });
+    }
+
+    @FXML
+    private void validateCardField() {
+        cardTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+                cardTextField.setText(oldValue);
+            }
+        });
     }
 
 }
