@@ -1,6 +1,8 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.ProductCatalog;
 
@@ -12,6 +14,8 @@ public class CashierScreenController {
 
     @FXML
     private TextField barcodeTextField;
+    @FXML
+    private ListView catalogListView;
 
     @FXML
     private void openProductCatalog() throws IOException {
@@ -21,8 +25,26 @@ public class CashierScreenController {
     }
 
     @FXML
-    private void enter() {
+    private void searchItem() {
         System.out.println(barcodeTextField.getText());
+        try {
+            pc.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+            catalogListView.setItems(pc.getCatalog());
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+        try {
+            pc.getProductByName(barcodeTextField.getText());
+            catalogListView.setItems(pc.getCatalog());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            pc.getProductByKeyWord(barcodeTextField.getText());
+            catalogListView.setItems(pc.getCatalog());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -45,12 +67,4 @@ public class CashierScreenController {
         }
     }
 
-    @FXML
-    private void validateBarcodeField() {
-        barcodeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,2})?")) {
-                barcodeTextField.setText(oldValue);
-            }
-        });
-    }
 }

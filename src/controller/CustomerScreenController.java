@@ -41,9 +41,9 @@ public class CustomerScreenController {
     private TextField bonusTextField;
     @FXML
     private CheckBox receiptCheckBox;
-
-    /*
     private ObservableList<Item> items = FXCollections.observableArrayList();
+    /*
+
     private ObservableList<Item> catalog = FXCollections.observableArrayList();
 
     @FXML

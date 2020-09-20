@@ -2,6 +2,7 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -41,11 +42,15 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             System.out.println(item.toString());
+            catalog.add(item);
             con.disconnect();
+
             return item;
 
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
+            errorMessage(Integer.toString(barCode));
+            System.out.println("error404");
             e.printStackTrace();
             return null;
         }
@@ -76,11 +81,13 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 System.out.println(item.toString());
+                catalog.add(item);
             }
 
             con.disconnect();
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
+            errorMessage(keyword);
             e.printStackTrace();
         }
     }
@@ -108,9 +115,11 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             System.out.println(item.toString());
+            catalog.add(item);
             con.disconnect();
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
+            errorMessage(name);
             e.printStackTrace();
         }
     }
@@ -155,6 +164,14 @@ public class ProductCatalog {
 
     public void setCatalog(ObservableList<Item> catalog) {
         this.catalog = catalog;
+    }
+
+    private void errorMessage (String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("No matches");
+        alert.setHeaderText("No matches");
+        alert.setContentText("'" + msg + "'" + " did not match any items\nPlease try another search term");
+        alert.showAndWait();
     }
 
 
