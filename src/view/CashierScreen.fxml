@@ -33,12 +33,12 @@
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                             <children>
-                                <Button id="openProductCatalogButton" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" onAction="#openProductCatalog" text="Open product catalog" />
-                                <Button id="enterButton" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" onAction="#enter" text="Enter" />
-                                <TextField fx:id="barcodeTextField" layoutX="14.0" layoutY="14.0" onAction="#enter" prefHeight="25.0" prefWidth="255.0" promptText="Enter barcode" onMouseClicked="#validateBarcodeField"/>
-                                <Button id="pauseSaleButton" layoutX="49.0" layoutY="81.0" mnemonicParsing="false" onAction="#pauseSale" prefHeight="73.0" prefWidth="120.0" text="Pause sale" />
-                                <Button id="addDiscountButton" layoutX="227.0" layoutY="81.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="73.0" prefWidth="120.0" text="Add discount" />
-                                <Button id="openCashBoxButton" layoutX="399.0" layoutY="81.0" mnemonicParsing="false" onAction="#fetchCashBox" prefHeight="73.0" prefWidth="120.0" text="Cashbox" />
+                                <Button id="openProductCatalogButton" layoutX="347.0" layoutY="187.0" mnemonicParsing="false" onAction="#openProductCatalog" prefHeight="101.0" prefWidth="155.0" text="Open product catalog" />
+                                <Button id="enterButton" layoutX="403.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchItem" text="Enter" />
+                                <TextField fx:id="barcodeTextField" layoutX="128.0" layoutY="14.0" onAction="#searchItem" prefHeight="25.0" prefWidth="260.0" promptText="Enter search term (barcode, name or keyword)" />
+                                <Button id="pauseSaleButton" layoutX="75.0" layoutY="68.0" mnemonicParsing="false" onAction="#pauseSale" prefHeight="101.0" prefWidth="155.0" text="Pause sale" />
+                                <Button id="addDiscountButton" layoutX="347.0" layoutY="68.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="101.0" prefWidth="155.0" text="Add discount" />
+                                <Button id="openCashBoxButton" layoutX="75.0" layoutY="187.0" mnemonicParsing="false" onAction="#fetchCashBox" prefHeight="101.0" prefWidth="155.0" text="Cashbox" />
                             </children>
                         </AnchorPane>
                     </items>
