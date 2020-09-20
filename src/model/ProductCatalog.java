@@ -15,8 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ProductCatalog {
-    private ObservableList<Item> catalog = FXCollections.observableArrayList();
 
+    private ObservableList<Item> catalog = FXCollections.observableArrayList();
 
     public Item getProductByBarCode(int barCode){
         Item item = new Item();
