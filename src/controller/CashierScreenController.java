@@ -10,7 +10,8 @@ public class CashierScreenController {
 
     ProductCatalog pc = new ProductCatalog();
 
-    @FXML private TextField barcode;
+    @FXML
+    private TextField barcodeTextField;
 
     @FXML
     private void openProductCatalog() throws IOException {
@@ -18,17 +19,20 @@ public class CashierScreenController {
         System.out.println("Open Product Catalog");
         Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
     }
+
     @FXML
-    private void enter(){
-        System.out.println(barcode.getText());
+    private void enter() {
+        System.out.println(barcodeTextField.getText());
     }
+
     @FXML
     private void pauseSale() throws IOException {
         System.out.println("Pause Sale");
-        pc.findBarcode();
+        //pc.findBarcode();
     }
+
     @FXML
-    private void addDiscount(){
+    private void addDiscount() {
         System.out.println("Add discount");
     }
 
@@ -39,5 +43,14 @@ public class CashierScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void validateBarcodeField() {
+        barcodeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,2})?")) {
+                barcodeTextField.setText(oldValue);
+            }
+        });
     }
 }

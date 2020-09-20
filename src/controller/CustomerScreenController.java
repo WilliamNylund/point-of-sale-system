@@ -7,7 +7,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.Item;
+import model.ProductCatalog;
 
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -28,6 +30,8 @@ public class CustomerScreenController {
     @FXML
     private ListView itemListView;
     @FXML
+    private ListView catalogListView;
+    @FXML
     private TextField outstandingTextField;
     @FXML
     public TextField cardTextField;
@@ -38,8 +42,25 @@ public class CustomerScreenController {
     @FXML
     private CheckBox receiptCheckBox;
 
-    private ObservableList<String> items = FXCollections.observableArrayList();
+    /*
+    private ObservableList<Item> items = FXCollections.observableArrayList();
+    private ObservableList<Item> catalog = FXCollections.observableArrayList();
 
+    @FXML
+    private void initialize(){
+        for(int i=0;i<10;i++){
+            Item catItem = new Item();
+            catItem.setName("Leipä nro: "+i);
+            catItem.setBarCode(i);
+            catItem.setPrice(4.20);
+            catalog.add(catItem);
+        }
+
+
+        catalogListView.setItems(catalog);
+        itemListView.setItems(items);
+    }
+    */
 
     @FXML
     private void pay(){ //id: payButton
@@ -65,28 +86,34 @@ public class CustomerScreenController {
     @FXML
     private void addItem(){ //id: addItemButton
         System.out.println("adding item");
-        double sum = 0.0;
+        /*double sum = 0.0;
 
         for(int i = 0; i < 6; i++){
-            Item item = new Item("banana", i, 69.69);
-            items.add(item.toString());
+            Item item = new Item();
+            items.add(item);
             sum += item.getPrice();
-        }
-        itemListView.setItems(items);
-        totalTextField.setText(Double.toString(sum));
+        }*/
+        Item selectedIndex = (Item) catalogListView.getSelectionModel().getSelectedItem();
+        items.add(selectedIndex);
+
+
+
+        //itemListView.setItems(items);
+       // totalTextField.setText(Double.toString(sum));
     }
 
     @FXML
     private void removeItem(){ //id: removeItemButton
         System.out.println("removing item");
-        ObservableList selectedIndices = itemListView.getSelectionModel().getSelectedIndices();
+        Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
+        items.remove(selectedItem);
         System.out.println(items);
-        for(int i = 0; i< selectedIndices.size(); i++){
-            System.out.println(selectedIndices.get(i).getClass());
-        }
+        //for(int i = 0; i< selectedIndices.size(); i++){
+          //  System.out.println(selectedIndices.get(i).getClass());
+       // }
 
 
-        itemListView.refresh();
+        //itemListView.refresh();
 
     }
 
