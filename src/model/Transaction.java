@@ -1,14 +1,19 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.List;
 
 public class Transaction {
-    private List itemList;
+
+    private ObservableList<Item> itemList = FXCollections.observableArrayList();
+
+    //private List itemList;
     private double totalCost;
 
 
     public Transaction(){
-        itemList = null;
         totalCost = 0.0;
     }
 
@@ -17,7 +22,7 @@ public class Transaction {
     }
 
     public void setItemList(List itemList) {
-        this.itemList = itemList;
+        this.itemList = (ObservableList<Item>) itemList;
     }
 
     public double getTotalCost() {
@@ -26,5 +31,19 @@ public class Transaction {
 
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public void addItem(Item item){
+        itemList.add(item);
+    }
+    public void removeItem(Item item){
+        itemList.remove(item);
+    }
+    public double calculateCost(List itemList){
+        for( int i=0;i<itemList.size();i++){
+            Item item = new Item();
+            totalCost += item.getPrice();
+        }
+        return totalCost;
     }
 }

@@ -7,7 +7,7 @@ public class Item {
     private double price;
     private int barCode;
     private double vat;
-
+    
     public String toString(){
         return this.name + " - " + this.price + "€";
     }
