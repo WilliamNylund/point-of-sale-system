@@ -41,7 +41,11 @@ public class CustomerScreenController {
     private TextField bonusTextField;
     @FXML
     private CheckBox receiptCheckBox;
+
     private ObservableList<Item> items = FXCollections.observableArrayList();
+
+    ProductCatalog productCatalog = new ProductCatalog();
+
     /*
 
     private ObservableList<Item> catalog = FXCollections.observableArrayList();
@@ -120,6 +124,9 @@ public class CustomerScreenController {
     @FXML
     private void holdTransaction(){ //id: holdTransactionButton
         System.out.println("holding transaction");
+        productCatalog.getAllProducts();
+        catalogListView.setItems(productCatalog.getCatalog());
+        itemListView.setItems(items);
     }
 
     @FXML
