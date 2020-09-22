@@ -19,6 +19,17 @@ public class ProductCatalog {
 
     private ObservableList<Item> catalog = FXCollections.observableArrayList();
 
+    private static ProductCatalog instance = new ProductCatalog();
+
+    private ProductCatalog(){
+
+    }
+
+    public static ProductCatalog getInstance(){
+        return instance;
+    }
+
+
     public Item getProductByBarCode(int barCode){
         Item item = new Item();
 

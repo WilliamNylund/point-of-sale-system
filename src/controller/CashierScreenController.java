@@ -10,12 +10,18 @@ import java.io.IOException;
 
 public class CashierScreenController {
 
-    ProductCatalog pc = new ProductCatalog();
+    ProductCatalog productCatalog = ProductCatalog.getInstance();
 
     @FXML
     private TextField barcodeTextField;
     @FXML
     private ListView catalogListView;
+
+
+    @FXML
+    private void initialize() {
+        catalogListView.setItems(productCatalog.getCatalog());
+    }
 
     @FXML
     private void openProductCatalog() throws IOException {
@@ -28,20 +34,20 @@ public class CashierScreenController {
     private void searchItem() {
         System.out.println(barcodeTextField.getText());
         try {
-            pc.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
-            catalogListView.setItems(pc.getCatalog());
+            productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+            catalogListView.setItems(productCatalog.getCatalog());
         } catch (Exception e) {
            e.printStackTrace();
         }
         try {
-            pc.getProductByName(barcodeTextField.getText());
-            catalogListView.setItems(pc.getCatalog());
+            productCatalog.getProductByName(barcodeTextField.getText());
+            catalogListView.setItems(productCatalog.getCatalog());
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            pc.getProductByKeyWord(barcodeTextField.getText());
-            catalogListView.setItems(pc.getCatalog());
+            productCatalog.getProductByKeyWord(barcodeTextField.getText());
+            catalogListView.setItems(productCatalog.getCatalog());
         } catch (Exception e) {
             e.printStackTrace();
         }

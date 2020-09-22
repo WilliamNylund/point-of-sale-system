@@ -46,27 +46,12 @@ public class CustomerScreenController {
    // private ObservableList<Item> items = FXCollections.observableArrayList();
 
     Transaction transaction = new Transaction();
-    ProductCatalog productCatalog = new ProductCatalog();
-
-    /*
-
-    private ObservableList<Item> catalog = FXCollections.observableArrayList();
+    ProductCatalog productCatalog = ProductCatalog.getInstance();
 
     @FXML
-    private void initialize(){
-        for(int i=0;i<10;i++){
-            Item catItem = new Item();
-            catItem.setName("Leipä nro: "+i);
-            catItem.setBarCode(i);
-            catItem.setPrice(4.20);
-            catalog.add(catItem);
-        }
-
-
-        catalogListView.setItems(catalog);
-        itemListView.setItems(items);
+    private void initialize() {
+        catalogListView.setItems(productCatalog.getCatalog());
     }
-    */
 
     @FXML
     private void pay(){ //id: payButton

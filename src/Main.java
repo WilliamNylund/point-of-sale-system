@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import controller.CustomerScreenController;
+import model.ProductCatalog;
 
 public class Main extends Application {
 
@@ -37,5 +38,11 @@ public class Main extends Application {
         double yy = bounds2.getMinY();
         secondStage.setX(xx);
         secondStage.setY(yy);
+
+        Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
+
+        ProductCatalog productCatalog = ProductCatalog.getInstance();
+        productCatalog.getAllProducts();
+
     }
 }
