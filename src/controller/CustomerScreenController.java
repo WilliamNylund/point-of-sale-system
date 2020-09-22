@@ -17,15 +17,6 @@ import java.net.URL;
 
 public class CustomerScreenController {
 
-    // id: itemListView
-    // id: totalTextField
-    // id: outstandingTextField
-    // id: cardTextField
-    // id: cashTextField
-    // id: bonusTextField
-    // id: receiptCheckBox
-
-
     @FXML
     private TextField totalTextField;
     @FXML
@@ -43,14 +34,16 @@ public class CustomerScreenController {
     @FXML
     private CheckBox receiptCheckBox;
 
-   // private ObservableList<Item> items = FXCollections.observableArrayList();
+    CashierScreenController cashierScreenController;
+    Transaction transaction;
 
-    Transaction transaction = new Transaction();
     ProductCatalog productCatalog = ProductCatalog.getInstance();
 
     @FXML
     private void initialize() {
+        transaction = new Transaction();
         catalogListView.setItems(productCatalog.getCatalog());
+        cashierScreenController = new CashierScreenController();
     }
 
     @FXML
@@ -77,19 +70,9 @@ public class CustomerScreenController {
     @FXML
     private void addItem(){ //id: addItemButton
         System.out.println("adding item");
-        /*double sum = 0.0;
-
-        for(int i = 0; i < 6; i++){
-            Item item = new Item();
-            items.add(item);
-            sum += item.getPrice();
-        }*/
-        Item selectedIndex = (Item) catalogListView.getSelectionModel().getSelectedItem();
-        //items.add(selectedIndex);
-        transaction.addItem(selectedIndex);
+        Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
+        transaction.addItem(selectedItem);
         System.out.println(transaction.getItemList());
-
-        //add also in cashier
 
         itemListView.setItems((ObservableList) transaction.getItemList());
         totalTextField.setText(Double.toString(transaction.calculateCost(transaction.getItemList())));
@@ -101,9 +84,6 @@ public class CustomerScreenController {
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.getItemList().remove(selectedItem);
         System.out.println(transaction.getItemList());
-        //for(int i = 0; i< selectedIndices.size(); i++){
-          //  System.out.println(selectedIndices.get(i).getClass());
-       // }
 
         totalTextField.setText(Double.toString(transaction.calculateCost(transaction.getItemList())));
         itemListView.refresh();

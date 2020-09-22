@@ -18,7 +18,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Stage secondStage = new Stage();
 
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view/CustomerScreen.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/CustomerScreen.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+
         primaryStage.setTitle("Customer");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
@@ -29,12 +33,15 @@ public class Main extends Application {
         primaryStage.setX(x);
         primaryStage.setY(y);
 
-        Scene secondScene = new Scene(FXMLLoader.load(getClass().getResource("view/CashierScreen.fxml")));
+        FXMLLoader secondLoader = new FXMLLoader(getClass().getResource("view/CashierScreen.fxml"));
+        Parent secondRoot = secondLoader.load();
+        Scene secondScene = new Scene(secondRoot);
+
         secondStage.setTitle("Cashier");
         secondStage.setScene(secondScene);
         secondStage.show();
         Rectangle2D bounds2 = Screen.getPrimary().getVisualBounds();
-        double xx = bounds2.getMinX() + (bounds2.getWidth() - scene.getWidth()) * 1;
+        double xx = bounds2.getMinX() + (bounds2.getWidth() - secondScene.getWidth()) * 1;
         double yy = bounds2.getMinY();
         secondStage.setX(xx);
         secondStage.setY(yy);

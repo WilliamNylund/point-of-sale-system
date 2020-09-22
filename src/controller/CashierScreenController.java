@@ -4,7 +4,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import model.Item;
 import model.ProductCatalog;
+import model.Transaction;
 
 import java.io.IOException;
 
@@ -12,15 +14,24 @@ public class CashierScreenController {
 
     ProductCatalog productCatalog = ProductCatalog.getInstance();
 
+
     @FXML
     private TextField barcodeTextField;
     @FXML
     private ListView catalogListView;
 
+    @FXML
+    private ListView itemListView;
+
+    Transaction transaction; //transaction is a big questionmark atm
+
 
     @FXML
     private void initialize() {
+        transaction = new Transaction();
         catalogListView.setItems(productCatalog.getCatalog());
+        itemListView.setItems((ObservableList) transaction.getItemList());
+
     }
 
     @FXML
