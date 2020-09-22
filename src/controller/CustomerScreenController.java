@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.Item;
 import model.ProductCatalog;
+import model.Transaction;
 
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -42,8 +43,9 @@ public class CustomerScreenController {
     @FXML
     private CheckBox receiptCheckBox;
 
-    private ObservableList<Item> items = FXCollections.observableArrayList();
+   // private ObservableList<Item> items = FXCollections.observableArrayList();
 
+    Transaction transaction = new Transaction();
     ProductCatalog productCatalog = new ProductCatalog();
 
     /*
@@ -98,26 +100,28 @@ public class CustomerScreenController {
             sum += item.getPrice();
         }*/
         Item selectedIndex = (Item) catalogListView.getSelectionModel().getSelectedItem();
-        items.add(selectedIndex);
+        //items.add(selectedIndex);
+        transaction.addItem(selectedIndex);
+        System.out.println(transaction.getItemList());
 
+        //add also in cashier
 
-
-        //itemListView.setItems(items);
-       // totalTextField.setText(Double.toString(sum));
+        itemListView.setItems((ObservableList) transaction.getItemList());
+        totalTextField.setText(Double.toString(transaction.calculateCost(transaction.getItemList())));
     }
 
     @FXML
     private void removeItem(){ //id: removeItemButton
         System.out.println("removing item");
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
-        items.remove(selectedItem);
-        System.out.println(items);
+        transaction.getItemList().remove(selectedItem);
+        System.out.println(transaction.getItemList());
         //for(int i = 0; i< selectedIndices.size(); i++){
           //  System.out.println(selectedIndices.get(i).getClass());
        // }
 
-
-        //itemListView.refresh();
+        totalTextField.setText(Double.toString(transaction.calculateCost(transaction.getItemList())));
+        itemListView.refresh();
 
     }
 
@@ -126,7 +130,7 @@ public class CustomerScreenController {
         System.out.println("holding transaction");
         productCatalog.getAllProducts();
         catalogListView.setItems(productCatalog.getCatalog());
-        itemListView.setItems(items);
+        itemListView.setItems((ObservableList) transaction.getItemList());
     }
 
     @FXML
