@@ -12,6 +12,9 @@ public class Transaction {
     //private List itemList;
     private double totalCost;
 
+    private double cardAmount;
+
+    private double cashAmount;
 
     public Transaction(){
         totalCost = 0.0;
@@ -36,9 +39,11 @@ public class Transaction {
     public void addItem(Item item){
         itemList.add(item);
     }
+
     public void removeItem(Item item){
         itemList.remove(item);
     }
+
     public double calculateCost(List itemList){
         for( int i=0;i<itemList.size();i++){
             Item item = new Item();

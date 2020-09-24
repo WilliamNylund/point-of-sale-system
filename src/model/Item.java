@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Item {
 
     private String name;
@@ -7,7 +9,7 @@ public class Item {
     private double price;
     private int barCode;
     private double vat;
-    
+
     public String toString(){
         return this.name + " - " + this.price + "€";
     }

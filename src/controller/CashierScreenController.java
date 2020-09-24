@@ -12,7 +12,9 @@ import java.io.IOException;
 
 public class CashierScreenController {
 
-    ProductCatalog productCatalog = ProductCatalog.getInstance();
+    private ProductCatalog productCatalog = ProductCatalog.getInstance();
+
+    private CustomerScreenController customerScreenController;
 
 
     @FXML
@@ -23,15 +25,13 @@ public class CashierScreenController {
     @FXML
     private ListView itemListView;
 
-    Transaction transaction; //transaction is a big questionmark atm
+    Transaction transaction;
 
 
     @FXML
     private void initialize() {
-        transaction = new Transaction();
         catalogListView.setItems(productCatalog.getCatalog());
-        itemListView.setItems((ObservableList) transaction.getItemList());
-
+        System.out.println("hi from cashier");
     }
 
     @FXML
@@ -47,6 +47,7 @@ public class CashierScreenController {
         try {
             productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
             catalogListView.setItems(productCatalog.getCatalog());
+
         } catch (Exception e) {
            e.printStackTrace();
         }
@@ -82,6 +83,16 @@ public class CashierScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setTransaction(Transaction transaction){
+        this.transaction = transaction;
+        itemListView.setItems((ObservableList) transaction.getItemList());
+
+    }
+
+    public void addItem(Item item){
+        transaction.addItem(item);
     }
 
 }

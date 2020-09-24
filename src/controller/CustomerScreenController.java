@@ -35,15 +35,15 @@ public class CustomerScreenController {
     private CheckBox receiptCheckBox;
 
     CashierScreenController cashierScreenController;
+
     Transaction transaction;
 
     ProductCatalog productCatalog = ProductCatalog.getInstance();
 
     @FXML
     private void initialize() {
-        transaction = new Transaction();
         catalogListView.setItems(productCatalog.getCatalog());
-        cashierScreenController = new CashierScreenController();
+        System.out.println("hi from cust");
     }
 
     @FXML
@@ -121,4 +121,8 @@ public class CustomerScreenController {
         });
     }
 
+    public void setTransaction(Transaction transaction){
+        this.transaction = transaction;
+        itemListView.setItems((ObservableList) transaction.getItemList());
+    }
 }

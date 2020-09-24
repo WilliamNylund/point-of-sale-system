@@ -55,9 +55,7 @@ public class ProductCatalog {
             System.out.println(item.toString());
             catalog.add(item);
             con.disconnect();
-
             return item;
-
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
             errorMessage(Integer.toString(barCode));
@@ -94,7 +92,6 @@ public class ProductCatalog {
                 System.out.println(item.toString());
                 catalog.add(item);
             }
-
             con.disconnect();
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
@@ -103,7 +100,7 @@ public class ProductCatalog {
         }
     }
 
-    public void getProductByName(String name){
+    public Item getProductByName(String name){
         try{
             URL url = new URL("http://localhost:9003/rest/findByName/" + name);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -125,13 +122,13 @@ public class ProductCatalog {
             item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
-            System.out.println(item.toString());
-            catalog.add(item);
             con.disconnect();
+            return item;
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
             errorMessage(name);
             e.printStackTrace();
+            return null;
         }
     }
 
