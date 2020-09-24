@@ -31,7 +31,6 @@ public class CashierScreenController {
     @FXML
     private void initialize() {
         catalogListView.setItems(productCatalog.getCatalog());
-        System.out.println("hi from cashier");
     }
 
     @FXML
@@ -44,24 +43,12 @@ public class CashierScreenController {
     @FXML
     private void searchItem() {
         System.out.println(barcodeTextField.getText());
-        try {
-            Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+        Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+        if (item != null){
             transaction.addItem(item);
-        } catch (Exception e) {
-           e.printStackTrace();
-        }
-        /*try {
-            Item item = productCatalog.getProductByName(barcodeTextField.getText());
-            transaction.addItem(item);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            productCatalog.getProductByKeyWord(barcodeTextField.getText());
+            customerScreenController.updateAmountFields();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+        }
     }
 
     @FXML
@@ -92,12 +79,20 @@ public class CashierScreenController {
     private void addItem() {
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
         transaction.addItem(selectedItem);
+
+        customerScreenController.updateAmountFields();
     }
 
     @FXML
     private void removeItem() {
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
+        customerScreenController.updateAmountFields();
+
+    }
+
+    public void setCustomerScreenController(CustomerScreenController customerScreenController){
+        this.customerScreenController = customerScreenController;
     }
 
 }

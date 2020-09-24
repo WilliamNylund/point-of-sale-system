@@ -56,7 +56,6 @@ public class ProductCatalog {
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             item.setPrice(3.00);
             System.out.println(item.toString());
-            catalog.add(item); //TODO: remove
             con.disconnect();
             return item;
 

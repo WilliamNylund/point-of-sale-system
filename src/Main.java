@@ -20,9 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ProductCatalog productCatalog = ProductCatalog.getInstance();
-        productCatalog.run();
-        productCatalog.getAllProducts();
+
 
 
 
@@ -55,9 +53,15 @@ public class Main extends Application {
         secondStage.setY(yy);
 
 
+        ProductCatalog productCatalog = ProductCatalog.getInstance();
+        productCatalog.run();
+        productCatalog.getAllProducts();
+
 
         CustomerScreenController customerScreenController = loader.getController();
         CashierScreenController cashierScreenController = secondLoader.getController();
+        cashierScreenController.setCustomerScreenController(customerScreenController);
+        customerScreenController.setCashierScreenController(cashierScreenController);
 
         Transaction transaction = new Transaction();
         customerScreenController.setTransaction(transaction);

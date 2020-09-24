@@ -89,11 +89,7 @@ public class CustomerScreenController {
     private void addItem(){ //id: addItemButton
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
         transaction.addItem(selectedItem);
-        totalTextField.setText(Double.toString(transaction.getTotalCost()));
-
-        //refresh outstanding
-        transaction.setOutstanding();
-        outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+        updateAmountFields();
 
     }
 
@@ -101,11 +97,7 @@ public class CustomerScreenController {
     private void removeItem(){ //id: removeItemButton
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
-        totalTextField.setText(Double.toString(transaction.getTotalCost()));
-
-        //refresh outstanding
-        transaction.setOutstanding();
-        outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+        updateAmountFields();
 
     }
 
@@ -161,5 +153,15 @@ public class CustomerScreenController {
     public void setTransaction(Transaction transaction){
         this.transaction = transaction;
         itemListView.setItems((ObservableList) transaction.getItemList());
+    }
+
+    public void setCashierScreenController(CashierScreenController cashierScreenController){
+        this.cashierScreenController = cashierScreenController;
+    }
+
+    public void updateAmountFields(){
+        totalTextField.setText(Double.toString(transaction.getTotalCost()));
+        transaction.setOutstanding();
+        outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
     }
 }
