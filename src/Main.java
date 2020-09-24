@@ -36,6 +36,7 @@ public class Main extends Application {
         primaryStage.setTitle("Customer");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
+        primaryStage.show();
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
         double x = bounds.getMinX();
         double y = bounds.getMinY();
@@ -46,13 +47,14 @@ public class Main extends Application {
 
         secondStage.setTitle("Cashier");
         secondStage.setScene(secondScene);
+        secondStage.show();
         Rectangle2D bounds2 = Screen.getPrimary().getVisualBounds();
         double xx = bounds2.getMinX() + (bounds2.getWidth() - secondScene.getWidth()) * 1;
         double yy = bounds2.getMinY();
         secondStage.setX(xx);
         secondStage.setY(yy);
-        primaryStage.show();
-        secondStage.show();
+
+
 
         CustomerScreenController customerScreenController = loader.getController();
         CashierScreenController cashierScreenController = secondLoader.getController();
