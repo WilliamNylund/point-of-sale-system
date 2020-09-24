@@ -20,10 +20,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
-
         ProductCatalog productCatalog = ProductCatalog.getInstance();
+        productCatalog.run();
         productCatalog.getAllProducts();
+
+
 
         Stage secondStage = new Stage();
 

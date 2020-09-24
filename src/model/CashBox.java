@@ -42,4 +42,8 @@ public class CashBox {
             return "something went terrible wrong in CashBox.getStatus() :(((";
         }
     }
+
+    public void run(){
+
+    }
 }

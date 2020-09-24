@@ -3,9 +3,11 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import model.CardReader;
 import model.Item;
 import model.ProductCatalog;
 import model.Transaction;
@@ -40,32 +42,42 @@ public class CustomerScreenController {
     Transaction transaction;
 
     ProductCatalog productCatalog = ProductCatalog.getInstance();
+    CardReader cardReader = CardReader.getInstance();
 
     @FXML
     private void initialize() {
         catalogListView.setItems(productCatalog.getCatalog());
-        System.out.println("hi from cust");
     }
 
     @FXML
     private void pay(){ //id: payButton
-        try {
-            System.out.println("paying");
 
-            if (receiptCheckBox.isSelected()) { //if receipt
-
-            }
-            Runtime.getRuntime().exec("java -jar CashBox.jar");
-            URL url = new URL("http://localhost:9001/cashbox/open");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setDoOutput(true);
-            con.getInputStream();
-
-        } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("urmmommagay");
+        if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Pay up bitch");
+            alert.setHeaderText(null);
+            alert.setContentText("Your poor ass need to pay "  + (transaction.getTotalCost() - (transaction.getCardAmount() + transaction.getCashAmount())) + "€ more, bitch.");
+            alert.showAndWait();
         }
+        if (transaction.getTotalCost() < transaction.getCardAmount() + transaction.getCashAmount()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("I aint taking no charity");
+            alert.setHeaderText(null);
+            alert.setContentText("you tried to donate "  + ((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()) + "€ , bitch.");
+            alert.showAndWait();
+        }
+
+        System.out.println("Payment by card: " + transaction.getCardAmount());
+        cardReader.run();
+        cardReader.waitForPayment(transaction.getCardAmount());
+
+        if (receiptCheckBox.isSelected()) { //if receipt
+
+        }
+
+
+
+
     }
 
     @FXML

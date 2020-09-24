@@ -15,8 +15,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
+
+
 public class CardReader {
 
+    private static CardReader instance = new CardReader();
+
+    private CardReader(){
+
+    }
+
+    public static CardReader getInstance(){
+        return instance;
+    }
 
     public void waitForPayment(double amount){
         try{
@@ -109,5 +121,14 @@ public class CardReader {
             e.printStackTrace();
             return "something went terrible wrong in CardReader.getResult() :(((";
         }
+    }
+
+    public void run(){
+        try{
+            Runtime.getRuntime().exec("java -jar CardReader.jar");
+        } catch(Exception e){
+            System.out.println("Couldnt start CardReader.jar");
+        }
+
     }
 }
