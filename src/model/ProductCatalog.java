@@ -14,6 +14,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductCatalog {
 
@@ -67,7 +69,10 @@ public class ProductCatalog {
     }
 
 
-    public void getProductByKeyWord(String keyword){
+    public List getProductByKeyWord(String keyword){
+
+        List<Item> itemList = new ArrayList<>();
+
         try{
             URL url = new URL("http://localhost:9003/rest/findByKeyword/" + keyword);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -91,13 +96,15 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 item.setPrice(3.00); //TODO: remove
-                catalog.add(item);
+                itemList.add(item);
             }
             con.disconnect();
+            return itemList;
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
             errorMessage(keyword);
             e.printStackTrace();
+            return null;
         }
     }
 

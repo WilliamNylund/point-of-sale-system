@@ -58,6 +58,7 @@ public class CustomerScreenController {
             alert.setHeaderText(null);
             alert.setContentText("Your poor ass need to pay "  + (transaction.getTotalCost() - (transaction.getCardAmount() + transaction.getCashAmount())) + "€ more, bitch.");
             alert.showAndWait();
+            return;
         }
         if (transaction.getTotalCost() < transaction.getCardAmount() + transaction.getCashAmount()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -65,11 +66,15 @@ public class CustomerScreenController {
             alert.setHeaderText(null);
             alert.setContentText("you tried to donate "  + ((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()) + "€ , bitch.");
             alert.showAndWait();
+            return;
         }
 
-        System.out.println("Payment by card: " + transaction.getCardAmount());
-        cardReader.run();
-        cardReader.waitForPayment(transaction.getCardAmount());
+        if(transaction.getCardAmount() != 0.0){ //paying with card
+            //cardReader.run();
+            cardReader.waitForPayment(transaction.getCardAmount());
+
+
+        }
 
         if (receiptCheckBox.isSelected()) { //if receipt
 
@@ -106,7 +111,7 @@ public class CustomerScreenController {
 
     @FXML
     private void holdTransaction(){ //id: holdTransactionButton
-
+        cardReader.getResult();
     }
 
     @FXML
