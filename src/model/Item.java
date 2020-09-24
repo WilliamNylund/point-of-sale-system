@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
@@ -9,9 +10,10 @@ public class Item {
     private double price;
     private int barCode;
     private double vat;
+    private List<String> keywords = new ArrayList<String>();
 
     public String toString(){
-        return this.name + " - " + this.price + "€";
+        return this.barCode + " -- " +this.name + " -- " + this.price + "€";
     }
 
     public String getName() {
@@ -52,5 +54,13 @@ public class Item {
 
     public void setVat(double vat) {
         this.vat = vat;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
     }
 }

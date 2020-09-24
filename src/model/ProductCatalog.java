@@ -55,7 +55,10 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             item.setPrice(3.00);
-            System.out.println(item.toString());
+            NodeList keywords = eElement.getElementsByTagName("keyword");
+            for (int i = 0; i < keywords.getLength(); i++){
+                item.getKeywords().add(keywords.item(i).getTextContent());
+            }
             con.disconnect();
             return item;
 
@@ -95,6 +98,10 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 item.setPrice(3.00); //TODO: remove
+                NodeList keywords = eElement.getElementsByTagName("keyword");
+                for (int j = 0; j < keywords.getLength(); j++){
+                    item.getKeywords().add(keywords.item(j).getTextContent());
+                }
                 itemList.add(item);
             }
             con.disconnect();
@@ -130,6 +137,10 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             item.setPrice(3.00); //TODO: remove
+            NodeList keywords = eElement.getElementsByTagName("keyword");
+            for (int i = 0; i < keywords.getLength(); i++){
+                item.getKeywords().add(keywords.item(i).getTextContent());
+            }
             con.disconnect();
             return item;
 
@@ -164,6 +175,10 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 item.setPrice(3.00); //TODO: remove
+                NodeList keywords = eElement.getElementsByTagName("keyword");
+                for (int j = 0; j < keywords.getLength(); j++){
+                    item.getKeywords().add(keywords.item(j).getTextContent());
+                }
                 catalog.add(item);
             }
 
