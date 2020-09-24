@@ -33,12 +33,12 @@
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                             <children>
-                                <Button id="openProductCatalogButton" layoutX="347.0" layoutY="187.0" mnemonicParsing="false" onAction="#openProductCatalog" prefHeight="101.0" prefWidth="155.0" text="Open product catalog" />
-                                <Button id="enterButton" layoutX="403.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchItem" text="Enter" />
-                                <TextField fx:id="barcodeTextField" layoutX="128.0" layoutY="14.0" onAction="#searchItem" prefHeight="25.0" prefWidth="260.0" promptText="Enter search term (barcode, name or keyword)" />
-                                <Button id="pauseSaleButton" layoutX="75.0" layoutY="68.0" mnemonicParsing="false" onAction="#pauseSale" prefHeight="101.0" prefWidth="155.0" text="Pause sale" />
-                                <Button id="addDiscountButton" layoutX="347.0" layoutY="68.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="101.0" prefWidth="155.0" text="Add discount" />
-                                <Button id="openCashBoxButton" layoutX="75.0" layoutY="187.0" mnemonicParsing="false" onAction="#fetchCashBox" prefHeight="101.0" prefWidth="155.0" text="Cashbox" />
+                                <Button fx:id="addButton" layoutX="161.0" layoutY="30.0" mnemonicParsing="false" onAction="#addItem" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: GREEN" text="Add from catalog" />
+                                <TextField fx:id="barcodeTextField" layoutX="299.0" layoutY="30.0" onAction="#searchItem" prefHeight="32.0" prefWidth="260.0" promptText="Enter search term (barcode, name or keyword)" />
+                                <Button fx:id="pauseSaleButton" layoutX="83.0" layoutY="146.0" mnemonicParsing="false" onAction="#pauseSale" prefHeight="101.0" prefWidth="155.0" text="Pause sale" />
+                                <Button fx:id="addDiscountButton" layoutX="351.0" layoutY="146.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="101.0" prefWidth="155.0" text="Add discount" />
+                                <Button fx:id="removeButton" layoutX="16.0" layoutY="30.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #ff0000" text="Remove" />
+                                <Button fx:id="enterButton" layoutX="374.0" layoutY="74.0" mnemonicParsing="false" onAction="#searchItem" prefHeight="25.0" prefWidth="110.0" text="Enter" />
                             </children>
                         </AnchorPane>
                     </items>

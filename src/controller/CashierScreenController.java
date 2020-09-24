@@ -45,23 +45,23 @@ public class CashierScreenController {
     private void searchItem() {
         System.out.println(barcodeTextField.getText());
         try {
-            productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
-            catalogListView.setItems(productCatalog.getCatalog());
+            Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+            transaction.addItem(item);
         } catch (Exception e) {
            e.printStackTrace();
         }
-        try {
-            productCatalog.getProductByName(barcodeTextField.getText());
-            catalogListView.setItems(productCatalog.getCatalog());
+        /*try {
+            Item item = productCatalog.getProductByName(barcodeTextField.getText());
+            transaction.addItem(item);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             productCatalog.getProductByKeyWord(barcodeTextField.getText());
-            catalogListView.setItems(productCatalog.getCatalog());
+
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @FXML
@@ -88,8 +88,16 @@ public class CashierScreenController {
         itemListView.setItems((ObservableList) transaction.getItemList());
     }
 
-    public void addItem(Item item){
-        transaction.addItem(item);
+    @FXML
+    private void addItem() {
+        Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
+        transaction.addItem(selectedItem);
+    }
+
+    @FXML
+    private void removeItem() {
+        Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
+        transaction.removeItem(selectedItem);
     }
 
 }
