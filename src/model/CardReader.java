@@ -1,6 +1,7 @@
 package model;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -100,7 +101,7 @@ public class CardReader {
         }
     }
 
-    public String getResult() {
+    public void getResult() {
         try{
             URL url = new URL("http://localhost:9002/cardreader/result");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -111,15 +112,27 @@ public class CardReader {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(xml);
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("result");
+            Node node = nList.item(0);
+            Element eElement = (Element) node;
 
-            //doc is now a Document con containing xml data
+            //TODO: set these to transaction?
+            String paymentCardNumber = getPropertiesSafely(eElement, "paymentCardNumber");
+            String bonusCardNumber = getPropertiesSafely(eElement, "bonusCardNumber");
+            String bonusState = getPropertiesSafely(eElement, "bonusState");
+            String paymentState = getPropertiesSafely(eElement, "paymentState");
+            String paymentCardType = getPropertiesSafely(eElement, "paymentCardType");
 
+            System.out.println(paymentCardNumber);
             con.disconnect();
-            return "yoo";
 
-        } catch(IOException | ParserConfigurationException | SAXException e) {
+
+        } catch(SAXException SAXE){
+            System.out.println("Card has not been swiped!");
+        } catch(IOException | ParserConfigurationException e) {
             e.printStackTrace();
-            return "something went terrible wrong in CardReader.getResult() :(((";
+            System.out.println("something went wrong in cardreader");
         }
     }
 
@@ -130,5 +143,14 @@ public class CardReader {
             System.out.println("Couldnt start CardReader.jar");
         }
 
+    }
+
+    private String getPropertiesSafely(Element eElement, String tagName){
+        try{
+            return eElement.getElementsByTagName(tagName).item(0).getTextContent();
+        } catch(Exception e){
+            System.out.println("Could not find " + tagName);
+            return null;
+        }
     }
 }
