@@ -19,6 +19,7 @@ public class CashierScreenController {
 
     @FXML
     private TextField barcodeTextField;
+
     @FXML
     private ListView catalogListView;
 
@@ -43,10 +44,22 @@ public class CashierScreenController {
     @FXML
     private void searchItem() {
         System.out.println(barcodeTextField.getText());
-        Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
-        if (item != null){
-            transaction.addItem(item);
-            customerScreenController.updateAmountFields();
+        try {
+            Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+            if (item != null) {
+                transaction.addItem(item);
+                customerScreenController.updateAmountFields();
+            }
+        } catch (Exception e) {
+
+        }
+        try {
+            Item item = productCatalog.getProductByName(barcodeTextField.getText());
+            if (item != null) {
+                transaction.addItem(item);
+                customerScreenController.updateAmountFields();
+            }
+        } catch (Exception e) {
 
         }
     }

@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
+import java.util.HashMap;
 
 
 public class CustomerScreenController {
@@ -44,6 +46,8 @@ public class CustomerScreenController {
     ProductCatalog productCatalog = ProductCatalog.getInstance();
     CardReader cardReader = CardReader.getInstance();
 
+    HashMap<String, Integer> soldProducts = new HashMap<>(); // TODO
+
     @FXML
     private void initialize() {
         catalogListView.setItems(productCatalog.getCatalog());
@@ -70,7 +74,7 @@ public class CustomerScreenController {
         }
 
         if(transaction.getCardAmount() != 0.0){ //paying with card
-            //cardReader.run();
+            cardReader.run();
             cardReader.waitForPayment(transaction.getCardAmount());
 
 
@@ -80,9 +84,9 @@ public class CustomerScreenController {
 
         }
 
-
-
-
+        soldProducts.entrySet().forEach(entry->{
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        });
     }
 
     @FXML
@@ -91,6 +95,8 @@ public class CustomerScreenController {
         transaction.addItem(selectedItem);
         updateAmountFields();
 
+        int count = soldProducts.containsKey(selectedItem.toString()) ? soldProducts.get(selectedItem.toString()) : 0;
+        soldProducts.put(selectedItem.toString(), count + 1);
     }
 
     @FXML
@@ -99,6 +105,8 @@ public class CustomerScreenController {
         transaction.removeItem(selectedItem);
         updateAmountFields();
 
+        int count = soldProducts.containsKey(selectedItem.toString()) ? soldProducts.get(selectedItem.toString()) : 0;
+        soldProducts.put(selectedItem.toString(), count - 1);
     }
 
     @FXML
