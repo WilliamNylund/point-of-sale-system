@@ -52,8 +52,9 @@ public class ProductCatalog {
             item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
+            item.setPrice(3.00);
             System.out.println(item.toString());
-            catalog.add(item);
+            catalog.add(item); //TODO: remove
             con.disconnect();
             return item;
 
@@ -89,7 +90,7 @@ public class ProductCatalog {
                 item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
-                System.out.println(item.toString());
+                item.setPrice(3.00); //TODO: remove
                 catalog.add(item);
             }
             con.disconnect();
@@ -122,6 +123,7 @@ public class ProductCatalog {
             item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
+            item.setPrice(3.00); //TODO: remove
             con.disconnect();
             return item;
 
@@ -155,7 +157,7 @@ public class ProductCatalog {
                 item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
-                System.out.println(item.toString());
+                item.setPrice(3.00); //TODO: remove
                 catalog.add(item);
             }
 

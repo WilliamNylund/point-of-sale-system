@@ -10,6 +10,7 @@ import model.Item;
 import model.ProductCatalog;
 import model.Transaction;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -69,33 +70,31 @@ public class CustomerScreenController {
 
     @FXML
     private void addItem(){ //id: addItemButton
-        System.out.println("adding item");
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
         transaction.addItem(selectedItem);
-        System.out.println(transaction.getItemList());
+        totalTextField.setText(Double.toString(transaction.getTotalCost()));
 
-        itemListView.setItems((ObservableList) transaction.getItemList());
-        totalTextField.setText(Double.toString(transaction.calculateCost(transaction.getItemList())));
+        //refresh outstanding
+        transaction.setOutstanding();
+        outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+
     }
 
     @FXML
     private void removeItem(){ //id: removeItemButton
-        System.out.println("removing item");
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
-        transaction.getItemList().remove(selectedItem);
-        System.out.println(transaction.getItemList());
+        transaction.removeItem(selectedItem);
+        totalTextField.setText(Double.toString(transaction.getTotalCost()));
 
-        totalTextField.setText(Double.toString(transaction.calculateCost(transaction.getItemList())));
-        itemListView.refresh();
+        //refresh outstanding
+        transaction.setOutstanding();
+        outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
 
     }
 
     @FXML
     private void holdTransaction(){ //id: holdTransactionButton
-        System.out.println("holding transaction");
-        productCatalog.getAllProducts();
-        catalogListView.setItems(productCatalog.getCatalog());
-        itemListView.setItems((ObservableList) transaction.getItemList());
+
     }
 
     @FXML
@@ -109,6 +108,16 @@ public class CustomerScreenController {
             if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
                 cashTextField.setText(oldValue);
             }
+            //if empty
+            if (cashTextField.getText() == null || cashTextField.getText().trim().isEmpty()){
+                transaction.setCashAmount(0);
+                transaction.setOutstanding();
+                outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+            } else{ //not empty
+                transaction.setCashAmount(Double.parseDouble(cashTextField.getText()));
+                transaction.setOutstanding();
+                outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+            }
         });
     }
 
@@ -118,6 +127,17 @@ public class CustomerScreenController {
             if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
                 cardTextField.setText(oldValue);
             }
+            //if empty
+            if (cardTextField.getText() == null || cardTextField.getText().trim().isEmpty()){
+                transaction.setCardAmount(0);
+                transaction.setOutstanding();
+                outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+            } else{ //not empty
+                transaction.setCardAmount(Double.parseDouble(cardTextField.getText()));
+                transaction.setOutstanding();
+                outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+            }
+
         });
     }
 

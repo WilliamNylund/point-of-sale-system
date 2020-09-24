@@ -47,7 +47,6 @@ public class CashierScreenController {
         try {
             productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
             catalogListView.setItems(productCatalog.getCatalog());
-
         } catch (Exception e) {
            e.printStackTrace();
         }
@@ -68,7 +67,6 @@ public class CashierScreenController {
     @FXML
     private void pauseSale() throws IOException {
         System.out.println("Pause Sale");
-        //pc.findBarcode();
     }
 
     @FXML
@@ -88,7 +86,6 @@ public class CashierScreenController {
     public void setTransaction(Transaction transaction){
         this.transaction = transaction;
         itemListView.setItems((ObservableList) transaction.getItemList());
-
     }
 
     public void addItem(Item item){

@@ -22,6 +22,7 @@ public class CashBox {
             System.out.println("something went terrible wrong in CashBox.open() :(((");
         }
     }
+
     public String getStatus() {
         try{
             URL url = new URL("http://localhost:9001/cashbox/status");

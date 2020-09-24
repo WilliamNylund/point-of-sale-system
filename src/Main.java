@@ -22,23 +22,16 @@ public class Main extends Application {
 
         Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
 
-
         ProductCatalog productCatalog = ProductCatalog.getInstance();
         productCatalog.getAllProducts();
-
-
 
         Stage secondStage = new Stage();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/CustomerScreen.fxml"));
         FXMLLoader secondLoader = new FXMLLoader(getClass().getResource("view/CashierScreen.fxml"));
 
-
-
         Parent root = loader.load();
         Scene scene = new Scene(root);
-
-
         primaryStage.setTitle("Customer");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
@@ -57,7 +50,6 @@ public class Main extends Application {
         double yy = bounds2.getMinY();
         secondStage.setX(xx);
         secondStage.setY(yy);
-
         primaryStage.show();
         secondStage.show();
 
