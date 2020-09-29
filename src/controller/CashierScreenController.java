@@ -24,7 +24,7 @@ public class CashierScreenController {
     public TextField totalTextField;
 
     @FXML
-    private TextField changeTextField;
+    public TextField changeTextField;
 
     @FXML
     private TextField discountTextField;
@@ -81,7 +81,7 @@ public class CashierScreenController {
     @FXML
     private void startPayment() {
         customerScreenController.pay();
-        Double change = (transaction.getCashAmount() - transaction.getTotalCost());
+        Double change = ((transaction.getCashAmount() + transaction.getCardAmount()) - transaction.getTotalCost());
         if (change > 0.0)
             changeTextField.setText(String.valueOf(change));
         else
@@ -90,7 +90,20 @@ public class CashierScreenController {
 
     @FXML
     private void addDiscount() {
+        // TODO update price view in real time, right now only updates when adding/removing items
+        Double discount = 0.0;
         System.out.println("Add discount");
+        if (discountTextField.getText().contains(".")) {
+            Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
+            discount = selectedItem.getPrice() * Double.parseDouble(discountTextField.getText());
+            selectedItem.setPrice(selectedItem.getPrice() - discount);
+            System.out.println(selectedItem.getPrice());
+        } else {
+            Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
+            discount = selectedItem.getPrice() * (Double.parseDouble(discountTextField.getText()) / 100);
+            selectedItem.setPrice(selectedItem.getPrice() - discount);
+            System.out.println(selectedItem.getPrice());
+        }
     }
 
     @FXML

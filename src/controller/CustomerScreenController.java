@@ -65,6 +65,7 @@ public class CustomerScreenController {
             return;
         }
         if (transaction.getTotalCost() < transaction.getCardAmount() + transaction.getCashAmount()){
+            cashierScreenController.changeTextField.setText(String.valueOf((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()));
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("I aint taking no charity");
             alert.setHeaderText(null);
