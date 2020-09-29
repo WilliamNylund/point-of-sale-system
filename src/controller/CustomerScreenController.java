@@ -54,7 +54,7 @@ public class CustomerScreenController {
     }
 
     @FXML
-    private void pay(){ //id: payButton
+    public void pay(){ //id: payButton
 
         if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -169,6 +169,7 @@ public class CustomerScreenController {
 
     public void updateAmountFields(){
         totalTextField.setText(Double.toString(transaction.getTotalCost()));
+        cashierScreenController.totalTextField.setText(Double.toString(transaction.getTotalCost()));
         transaction.setOutstanding();
         outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
     }

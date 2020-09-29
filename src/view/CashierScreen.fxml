@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <VBox prefHeight="755.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CashierScreenController">
     <children>
@@ -33,12 +29,19 @@
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                             <children>
-                                <Button fx:id="addButton" layoutX="161.0" layoutY="30.0" mnemonicParsing="false" onAction="#addItem" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: GREEN" text="Add from catalog" />
+                                <Button fx:id="addButton" layoutX="161.0" layoutY="30.0" mnemonicParsing="false" onAction="#addItem" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #03b003" text="Add from catalog" />
                                 <TextField fx:id="barcodeTextField" layoutX="299.0" layoutY="30.0" onAction="#searchItem" prefHeight="32.0" prefWidth="260.0" promptText="Enter search term (barcode, name or keyword)" />
-                                <Button fx:id="pauseSaleButton" layoutX="83.0" layoutY="146.0" mnemonicParsing="false" onAction="#pauseSale" prefHeight="101.0" prefWidth="155.0" text="Pause sale" />
-                                <Button fx:id="addDiscountButton" layoutX="351.0" layoutY="146.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="101.0" prefWidth="155.0" text="Add discount" />
+                                <Button fx:id="pauseSaleButton" layoutX="336.0" layoutY="302.0" mnemonicParsing="false" onAction="#pauseSale" prefHeight="57.0" prefWidth="185.0" style="-fx-background-color: #ffc800" text="Pause sale" />
+                                <Button fx:id="addDiscountButton" layoutX="299.0" layoutY="241.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="25.0" prefWidth="110.0" text="Add discount" />
                                 <Button fx:id="removeButton" layoutX="16.0" layoutY="30.0" mnemonicParsing="false" onAction="#removeItem" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #ff0000" text="Remove" />
                                 <Button fx:id="enterButton" layoutX="374.0" layoutY="74.0" mnemonicParsing="false" onAction="#searchItem" prefHeight="25.0" prefWidth="110.0" text="Enter" />
+                                <Label fx:id="totalLabel" layoutX="33.0" layoutY="127.0" prefHeight="17.0" prefWidth="37.0" text="Total:" />
+                                <TextField fx:id="totalTextField" editable="false" layoutX="126.0" layoutY="123.0" />
+                                <Label fx:id="changeLabel" layoutX="33.0" layoutY="187.0" text="Change:" />
+                                <TextField fx:id="changeTextField" editable="false" layoutX="126.0" layoutY="183.0" />
+                                <Label fx:id="discountLabel" layoutX="33.0" layoutY="245.0" text="Add discount:" />
+                                <TextField fx:id="discountTextField" layoutX="126.0" layoutY="241.0" promptText=" Add percentage (%)" />
+                                <Button fx:id="paymentButton" layoutX="52.0" layoutY="302.0" mnemonicParsing="false" onAction="#startPayment" prefHeight="57.0" prefWidth="185.0" text="Start payment" style="-fx-background-color: #03b003" />
                             </children>
                         </AnchorPane>
                     </items>

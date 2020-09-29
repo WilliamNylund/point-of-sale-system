@@ -21,6 +21,15 @@ public class CashierScreenController {
     private TextField barcodeTextField;
 
     @FXML
+    public TextField totalTextField;
+
+    @FXML
+    private TextField changeTextField;
+
+    @FXML
+    private TextField discountTextField;
+
+    @FXML
     private ListView catalogListView;
 
     @FXML
@@ -70,6 +79,16 @@ public class CashierScreenController {
     }
 
     @FXML
+    private void startPayment() {
+        customerScreenController.pay();
+        Double change = (transaction.getCashAmount() - transaction.getTotalCost());
+        if (change > 0.0)
+            changeTextField.setText(String.valueOf(change));
+        else
+            changeTextField.setText("No change");
+    }
+
+    @FXML
     private void addDiscount() {
         System.out.println("Add discount");
     }
@@ -93,6 +112,7 @@ public class CashierScreenController {
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
         transaction.addItem(selectedItem);
 
+        //totalTextField.setText(Double.toString(transaction.getTotalCost()));
         customerScreenController.updateAmountFields();
     }
 
@@ -100,6 +120,8 @@ public class CashierScreenController {
     private void removeItem() {
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
+
+        //totalTextField.setText(Double.toString(transaction.getTotalCost()));
         customerScreenController.updateAmountFields();
 
     }
