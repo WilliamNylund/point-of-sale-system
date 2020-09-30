@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,13 +10,9 @@ import model.CardReader;
 import model.Item;
 import model.ProductCatalog;
 import model.Transaction;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class CustomerScreenController {
@@ -75,8 +70,9 @@ public class CustomerScreenController {
         }
 
         if(transaction.getCardAmount() != 0.0){ //paying with card
-            cardReader.run();
+            //cardReader.run();
             cardReader.waitForPayment(transaction.getCardAmount());
+            cardReader.listenForPayment();
 
 
         }
@@ -118,6 +114,7 @@ public class CustomerScreenController {
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
         System.out.println("continue transaction");
+        cardReader.reset();
     }
 
     @FXML
@@ -145,17 +142,16 @@ public class CustomerScreenController {
             if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
                 cardTextField.setText(oldValue);
             }
-            //if empty
+            //if CardTextField is empty
             if (cardTextField.getText() == null || cardTextField.getText().trim().isEmpty()){
                 transaction.setCardAmount(0);
                 transaction.setOutstanding();
                 outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
-            } else{ //not empty
+            } else{
                 transaction.setCardAmount(Double.parseDouble(cardTextField.getText()));
                 transaction.setOutstanding();
                 outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
             }
-
         });
     }
 

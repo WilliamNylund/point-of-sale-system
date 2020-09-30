@@ -15,8 +15,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class CardReader {
@@ -67,7 +67,7 @@ public class CardReader {
 
     public void reset(){
         try{
-            System.out.println("cardreader aborting");
+            System.out.println("cardreader resetting");
             URL url = new URL("http://localhost:9002/cardreader/reset");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -119,14 +119,19 @@ public class CardReader {
 
             //TODO: set these to transaction?
             String paymentCardNumber = getPropertiesSafely(eElement, "paymentCardNumber");
-            String bonusCardNumber = getPropertiesSafely(eElement, "bonusCardNumber");
-            String bonusState = getPropertiesSafely(eElement, "bonusState");
             String paymentState = getPropertiesSafely(eElement, "paymentState");
             String paymentCardType = getPropertiesSafely(eElement, "paymentCardType");
 
-            System.out.println(paymentCardNumber);
-            con.disconnect();
+            //
+            String bonusCardNumber = getPropertiesSafely(eElement, "bonusCardNumber");
+            String bonusState = getPropertiesSafely(eElement, "bonusState");
 
+            System.out.println(paymentCardNumber);
+            System.out.println(paymentCardType);
+            System.out.println(paymentState);
+            System.out.println(bonusState);
+            System.out.println(bonusCardNumber);
+            con.disconnect();
 
         } catch(SAXException SAXE){
             System.out.println("Card has not been swiped!");
@@ -142,7 +147,6 @@ public class CardReader {
         } catch(Exception e){
             System.out.println("Couldnt start CardReader.jar");
         }
-
     }
 
     private String getPropertiesSafely(Element eElement, String tagName){
@@ -152,5 +156,24 @@ public class CardReader {
             System.out.println("Could not find " + tagName);
             return null;
         }
+    }
+
+    public void listenForPayment(){
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(getStatus().equals("DONE")){
+                    System.out.println("jaus den blev betald");
+                    getResult(); //TODO: get Customer object from cardReader and set transaction customer
+
+                    reset();
+                    this.cancel();
+                } else {
+                    System.out.println("waiting for payment yo");
+                }
+            }
+        }, 0, 1000);
+
     }
 }

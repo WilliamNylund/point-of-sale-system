@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import controller.CustomerScreenController;
+import model.CardReader;
 import model.ProductCatalog;
 import model.Transaction;
 
@@ -53,6 +54,9 @@ public class Main extends Application {
         ProductCatalog productCatalog = ProductCatalog.getInstance();
         productCatalog.run();
         productCatalog.getAllProducts();
+
+        CardReader cardReader = CardReader.getInstance();
+        cardReader.run();
 
 
         CustomerScreenController customerScreenController = loader.getController();
