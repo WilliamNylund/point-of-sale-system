@@ -40,7 +40,7 @@
                                 <Label fx:id="changeLabel" layoutX="33.0" layoutY="187.0" text="Change:" />
                                 <TextField fx:id="changeTextField" editable="false" layoutX="126.0" layoutY="183.0" />
                                 <Label fx:id="discountLabel" layoutX="33.0" layoutY="245.0" text="Add discount:" />
-                                <TextField fx:id="discountTextField" layoutX="126.0" layoutY="241.0" promptText=" Add percentage (%)" />
+                                <TextField fx:id="discountTextField" layoutX="126.0" layoutY="241.0" promptText="For example 0.25 or 25" />
                                 <Button fx:id="paymentButton" layoutX="52.0" layoutY="302.0" mnemonicParsing="false" onAction="#startPayment" prefHeight="57.0" prefWidth="185.0" text="Start payment" style="-fx-background-color: #03b003" />
                             </children>
                         </AnchorPane>

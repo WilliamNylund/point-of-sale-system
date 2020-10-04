@@ -79,6 +79,13 @@ public class Transaction {
         return totalCost;
     }
 
+    public double calculateDiscount(Double price, Double discount) {
+
+        Double amount = price * discount;
+        Double newPrice = price - amount;
+        return newPrice;
+    }
+
 
 
 

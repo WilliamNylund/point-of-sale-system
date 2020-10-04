@@ -9,6 +9,7 @@ import model.ProductCatalog;
 import model.Transaction;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CashierScreenController {
 
@@ -71,6 +72,12 @@ public class CashierScreenController {
         } catch (Exception e) {
 
         }
+        try {
+            List item = productCatalog.getProductByKeyWord((barcodeTextField.getText()));
+            System.out.println(item);
+        } catch (Exception e) {
+            System.out.println("sum ting wong");
+        }
     }
 
     @FXML
@@ -91,18 +98,25 @@ public class CashierScreenController {
     @FXML
     private void addDiscount() {
         // TODO update price view in real time, right now only updates when adding/removing items
-        Double discount = 0.0;
         System.out.println("Add discount");
-        if (discountTextField.getText().contains(".")) {
-            Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
-            discount = selectedItem.getPrice() * Double.parseDouble(discountTextField.getText());
-            selectedItem.setPrice(selectedItem.getPrice() - discount);
-            System.out.println(selectedItem.getPrice());
+        Double discount = 0.0;
+        Double price = 0.0;
+        Double newPrice = 0.0;
+        Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
+        if (Double.parseDouble(discountTextField.getText()) <= 100) {
+            if (discountTextField.getText().contains(".")) {
+                price = selectedItem.getPrice();
+                discount = Double.parseDouble(discountTextField.getText());
+                newPrice = transaction.calculateDiscount(price, discount);
+                selectedItem.setPrice(newPrice);
+            } else {
+                price = selectedItem.getPrice();
+                discount = (Double.parseDouble(discountTextField.getText()) / 100);
+                newPrice = transaction.calculateDiscount(price, discount);
+                selectedItem.setPrice(newPrice);
+            }
         } else {
-            Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
-            discount = selectedItem.getPrice() * (Double.parseDouble(discountTextField.getText()) / 100);
-            selectedItem.setPrice(selectedItem.getPrice() - discount);
-            System.out.println(selectedItem.getPrice());
+            discountTextField.setText("Invalid discount");
         }
     }
 
