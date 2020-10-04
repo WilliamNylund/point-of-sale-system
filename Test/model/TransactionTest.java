@@ -93,12 +93,31 @@ class TransactionTest {
 
 
     @Test
-    void addItem() {
+    void addItemAndRemoveItem() {
+        try {
+            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ProductCatalog testProductCatalog;
+        testProductCatalog = ProductCatalog.getInstance();
+        Transaction testTransaction = new Transaction();
+
+        Item testItem = testProductCatalog.getProductByName("Banana");
+        testTransaction.addItem(testItem);
+        assertTrue(testTransaction.getItemList().contains(testItem), "Banana should be in item list");
+
+        Item testItem2 = testProductCatalog.getProductByBarCode(1);
+        testTransaction.addItem(testItem2);
+        assertTrue(testTransaction.getItemList().contains(testItem2), "Item with barcode 1 should be in item list");
+
+        testTransaction.removeItem(testItem);
+        assertFalse(testTransaction.getItemList().contains(testItem), "Banana should be removed from item list");
+        assertTrue(testTransaction.getItemList().contains(testItem2), "Item with barcode 1 should be in item list");
+
     }
 
-    @Test
-    void removeItem() {
-    }
+
 
 
 }
