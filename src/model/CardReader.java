@@ -9,10 +9,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Timer;
@@ -143,10 +140,18 @@ public class CardReader {
 
     public void run(){
         try{
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "CardReader.jar");
+            pb.directory(new File("project-pvp20-grupp4"));
+            Process p = pb.start();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        /*try{
             Runtime.getRuntime().exec("java -jar CardReader.jar");
         } catch(Exception e){
             System.out.println("Couldnt start CardReader.jar");
-        }
+        }*/
     }
 
     private String getPropertiesSafely(Element eElement, String tagName){
