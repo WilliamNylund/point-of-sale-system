@@ -6,10 +6,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.CardReader;
-import model.Item;
-import model.ProductCatalog;
-import model.Transaction;
+import model.*;
+
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +38,7 @@ public class CustomerScreenController {
 
     ProductCatalog productCatalog = ProductCatalog.getInstance();
     CardReader cardReader = CardReader.getInstance();
+    CustomerRegister customerRegister = CustomerRegister.getInstance();
 
     HashMap<String, Integer> soldProducts = new HashMap<>(); // TODO
 
@@ -50,6 +49,7 @@ public class CustomerScreenController {
 
     @FXML
     public void pay(){ //id: payButton
+
 
         if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -73,8 +73,6 @@ public class CustomerScreenController {
             //cardReader.run();
             cardReader.waitForPayment(transaction.getCardAmount());
             cardReader.listenForPayment();
-
-
         }
 
         if (receiptCheckBox.isSelected()) { //if receipt
@@ -114,7 +112,7 @@ public class CustomerScreenController {
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
         System.out.println("continue transaction");
-        cardReader.reset();
+
     }
 
     @FXML

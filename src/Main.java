@@ -7,19 +7,20 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import controller.CustomerScreenController;
-import model.CardReader;
-import model.ProductCatalog;
-import model.Transaction;
+import model.*;
+
+import java.text.ParseException;
 
 public class Main extends Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
 
 
         Stage secondStage = new Stage();
@@ -54,6 +55,9 @@ public class Main extends Application {
         ProductCatalog productCatalog = ProductCatalog.getInstance();
         productCatalog.run();
         productCatalog.getAllProducts();
+
+        CustomerRegister customerRegister = CustomerRegister.getInstance();
+        customerRegister.run();
 
         CardReader cardReader = CardReader.getInstance();
         cardReader.run();
