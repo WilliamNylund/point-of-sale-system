@@ -2,11 +2,11 @@ package controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.Item;
-import model.ProductCatalog;
-import model.Transaction;
+import model.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 public class CashierScreenController {
 
     private ProductCatalog productCatalog = ProductCatalog.getInstance();
+    private TransactionLog transactionLog = TransactionLog.getInstance();
 
     private CustomerScreenController customerScreenController;
 
@@ -36,12 +37,16 @@ public class CashierScreenController {
     @FXML
     private ListView itemListView;
 
+    @FXML
+    private ComboBox transactionComboBox;
+
     Transaction transaction;
 
 
     @FXML
     private void initialize() {
         catalogListView.setItems(productCatalog.getCatalog());
+        transactionComboBox.setItems(transactionLog.getPausedTransactions());
     }
 
     @FXML
@@ -81,8 +86,60 @@ public class CashierScreenController {
     }
 
     @FXML
-    private void pauseSale() throws IOException {
-        System.out.println("Pause Sale");
+    private void pauseTransaction() {
+        System.out.println("Pause transaction");
+
+        if(transaction.getItemList().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("");
+            alert.setHeaderText(null);
+            alert.setContentText("Transaction is empty! Nothing to pause dumbass..");
+            alert.showAndWait();
+            return;
+        }
+
+        transactionLog.getPausedTransactions().add(transaction);
+        Transaction newTransaction = new Transaction();
+        this.setTransaction(newTransaction);
+        customerScreenController.setTransaction(newTransaction);
+        customerScreenController.clearTextFields();
+    }
+
+    @FXML
+    private void continueTransaction() {
+
+        if(transactionComboBox.getSelectionModel().getSelectedItem() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("");
+            alert.setHeaderText(null);
+            alert.setContentText("Select a transaction");
+            alert.showAndWait();
+            return;
+        }
+
+        if(transaction.getItemList().isEmpty()){
+            Transaction continuedTransaction = (Transaction)transactionComboBox.getSelectionModel().getSelectedItem();
+            this.setTransaction(continuedTransaction);
+            customerScreenController.setTransaction(continuedTransaction);
+            customerScreenController.clearTextFields();
+            customerScreenController.updateAmountFields();
+
+            //remove transaction from paused
+            for(int i = 0; i < transactionLog.getPausedTransactions().size(); i++){
+                if(transactionLog.getPausedTransactions().get(i).getId() == continuedTransaction.getId()){
+                    transactionLog.getPausedTransactions().remove(i);
+                }
+            }
+
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("");
+            alert.setHeaderText(null);
+            alert.setContentText("Complete / pause ongoing transactionen before continuing");
+            alert.showAndWait();
+            return;
+
+        }
     }
 
     @FXML
@@ -116,17 +173,9 @@ public class CashierScreenController {
                 newPrice = item.calculateDiscount(price, discount);
                 selectedItem.setPrice(newPrice);
             }
+
         } else {
             discountTextField.setText("Invalid discount");
-        }
-    }
-
-    @FXML
-    private void fetchCashBox() {
-        try {
-            Runtime.getRuntime().exec("java -jar CashBox.jar");
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -164,5 +213,17 @@ public class CashierScreenController {
 
     public void setTotalTextField(TextField totalTextField) {
         this.totalTextField = totalTextField;
+    }
+
+    public ComboBox getTransactionComboBox() {
+        return transactionComboBox;
+    }
+
+    public void setTransactionComboBox(ComboBox transactionComboBox) {
+        this.transactionComboBox = transactionComboBox;
+    }
+
+    public void startPause(){
+        pauseTransaction();
     }
 }

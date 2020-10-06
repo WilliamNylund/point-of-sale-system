@@ -8,7 +8,7 @@ import java.util.ArrayList;
 //Singleton
 public class TransactionLog {
 
-    private ObservableList<Transaction> shelvedTransactions = FXCollections.observableArrayList();
+    private ObservableList<Transaction> pausedTransactions = FXCollections.observableArrayList();
 
     private ArrayList<Transaction> completedTransactions = new ArrayList<Transaction>();
 
@@ -27,12 +27,12 @@ public class TransactionLog {
 
 
 
-    public ObservableList<Transaction> getShelvedTransactions() {
-        return shelvedTransactions;
+    public ObservableList<Transaction> getPausedTransactions() {
+        return pausedTransactions;
     }
 
-    public void setShelvedTransactions(ObservableList<Transaction> shelvedTransactions) {
-        this.shelvedTransactions = shelvedTransactions;
+    public void setPausedTransactions(ObservableList<Transaction> shelvedTransactions) {
+        this.pausedTransactions = shelvedTransactions;
     }
 
     public ArrayList<Transaction> getCompletedTransactions() {

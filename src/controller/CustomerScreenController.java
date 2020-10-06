@@ -106,7 +106,7 @@ public class CustomerScreenController {
 
     @FXML
     private void holdTransaction(){ //id: holdTransactionButton
-        cardReader.getResult();
+        cashierScreenController.startPause();
     }
 
     @FXML
@@ -198,7 +198,7 @@ public class CustomerScreenController {
 
     }
 
-    private void clearTextFields(){
+    public void clearTextFields(){
         this.cashTextField.setText("");
         this.cardTextField.setText("");
         this.outstandingTextField.setText("");
