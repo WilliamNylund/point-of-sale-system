@@ -123,12 +123,6 @@ public class CardReader {
             String bonusCardNumber = getPropertiesSafely(eElement, "bonusCardNumber");
             String bonusState = getPropertiesSafely(eElement, "bonusState");
 
-            System.out.println(paymentCardNumber);
-            System.out.println(paymentCardType);
-            System.out.println(paymentState);
-            System.out.println(bonusState);
-            System.out.println(bonusCardNumber);
-
             String[] paymentInformation = new String[5];
             paymentInformation[0] = paymentCardNumber;
             paymentInformation[1] = paymentCardType;

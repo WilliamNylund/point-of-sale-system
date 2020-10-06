@@ -175,16 +175,16 @@ public class CustomerScreenController {
             @Override
             public void run() {
                 if(cardReader.getStatus().equals("DONE")){
-                    System.out.println("jaus den blev betald");
+                    System.out.println("paid");
 
-                    //save payment
                     String[] paymentInformation = cardReader.getResult();
+                    //INDEX: 0 => paymentCardNumber 1 => paymentCardType 2 => paymentState 3=> bonusState 4=> bonusCardNumber
                     transaction.setPaymentInformation(paymentInformation);
 
                     cardReader.reset();
                     this.cancel();
                 } else {
-                    System.out.println("waiting for payment yo");
+                    System.out.println("waiting for payment...");
                 }
             }
         }, 0, 1000);
