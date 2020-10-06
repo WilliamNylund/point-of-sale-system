@@ -191,7 +191,7 @@ public class ProductCatalog {
     public void run(){
         try{
             ProcessBuilder pb = new ProcessBuilder("java", "-jar", "ProductCatalog.jar");
-            pb.directory(new File("project-pvp20-grupp4"));
+            pb.directory(new File(System.getenv("ENV_CATALOG")));
             Process p = pb.start();
         } catch(Exception e){
             e.printStackTrace();
