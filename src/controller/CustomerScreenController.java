@@ -72,7 +72,7 @@ public class CustomerScreenController {
         if(transaction.getCardAmount() != 0.0){ //paying with card
             //cardReader.run();
             cardReader.waitForPayment(transaction.getCardAmount());
-            cardReader.listenForPayment();
+            listenForPayment();
         }
 
         if (receiptCheckBox.isSelected()) { //if receipt
@@ -167,5 +167,27 @@ public class CustomerScreenController {
         cashierScreenController.totalTextField.setText(Double.toString(transaction.getTotalCost()));
         transaction.setOutstanding();
         outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
+    }
+
+    public void listenForPayment(){
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(cardReader.getStatus().equals("DONE")){
+                    System.out.println("jaus den blev betald");
+
+                    //save payment
+                    String[] paymentInformation = cardReader.getResult();
+                    transaction.setPaymentInformation(paymentInformation);
+
+                    cardReader.reset();
+                    this.cancel();
+                } else {
+                    System.out.println("waiting for payment yo");
+                }
+            }
+        }, 0, 1000);
+
     }
 }

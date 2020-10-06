@@ -98,7 +98,7 @@ public class CardReader {
         }
     }
 
-    public void getResult() {
+    public String[] getResult() {
         try{
             URL url = new URL("http://localhost:9002/cardreader/result");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -128,30 +128,34 @@ public class CardReader {
             System.out.println(paymentState);
             System.out.println(bonusState);
             System.out.println(bonusCardNumber);
+
+            String[] paymentInformation = new String[5];
+            paymentInformation[0] = paymentCardNumber;
+            paymentInformation[1] = paymentCardType;
+            paymentInformation[2] = paymentState;
+            paymentInformation[3] = bonusState;
+            paymentInformation[4] = bonusCardNumber;
             con.disconnect();
+
+            return paymentInformation;
 
         } catch(SAXException SAXE){
             System.out.println("Card has not been swiped!");
+            return null;
         } catch(IOException | ParserConfigurationException e) {
             e.printStackTrace();
             System.out.println("something went wrong in cardreader");
+            return null;
         }
     }
 
     public void run(){
-        try{
-            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "CardReader.jar");
-            pb.directory(new File("project-pvp20-grupp4"));
-            Process p = pb.start();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
 
-        /*try{
+        try{
             Runtime.getRuntime().exec("java -jar CardReader.jar");
         } catch(Exception e){
             System.out.println("Couldnt start CardReader.jar");
-        }*/
+        }
     }
 
     private String getPropertiesSafely(Element eElement, String tagName){
@@ -161,24 +165,5 @@ public class CardReader {
             System.out.println("Could not find " + tagName);
             return null;
         }
-    }
-
-    public void listenForPayment(){
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if(getStatus().equals("DONE")){
-                    System.out.println("jaus den blev betald");
-                    getResult(); //TODO: get Customer object from cardReader and set transaction customer
-
-                    reset();
-                    this.cancel();
-                } else {
-                    System.out.println("waiting for payment yo");
-                }
-            }
-        }, 0, 1000);
-
     }
 }
