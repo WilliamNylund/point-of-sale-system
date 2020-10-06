@@ -158,4 +158,11 @@ public class CashierScreenController {
         this.customerScreenController = customerScreenController;
     }
 
+    public TextField getTotalTextField() {
+        return totalTextField;
+    }
+
+    public void setTotalTextField(TextField totalTextField) {
+        this.totalTextField = totalTextField;
+    }
 }

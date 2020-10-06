@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -39,6 +40,7 @@ public class CustomerScreenController {
     ProductCatalog productCatalog = ProductCatalog.getInstance();
     CardReader cardReader = CardReader.getInstance();
     CustomerRegister customerRegister = CustomerRegister.getInstance();
+    TransactionLog transactionLog = TransactionLog.getInstance();
 
     HashMap<String, Integer> soldProducts = new HashMap<>(); // TODO
 
@@ -49,7 +51,6 @@ public class CustomerScreenController {
 
     @FXML
     public void pay(){ //id: payButton
-
 
         if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -73,9 +74,8 @@ public class CustomerScreenController {
             //cardReader.run();
             cardReader.waitForPayment(transaction.getCardAmount());
             listenForPayment();
-        }
-
-        if (receiptCheckBox.isSelected()) { //if receipt
+        } else{
+            finishPayment();
 
         }
 
@@ -174,20 +174,47 @@ public class CustomerScreenController {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(cardReader.getStatus().equals("DONE")){
-                    System.out.println("paid");
+                Platform.runLater(() -> {
 
-                    String[] paymentInformation = cardReader.getResult();
-                    //INDEX: 0 => paymentCardNumber 1 => paymentCardType 2 => paymentState 3=> bonusState 4=> bonusCardNumber
-                    transaction.setPaymentInformation(paymentInformation);
+                    if(cardReader.getStatus().equals("DONE")){
+                        System.out.println("paid");
 
-                    cardReader.reset();
-                    this.cancel();
-                } else {
-                    System.out.println("waiting for payment...");
-                }
+                        String[] paymentInformation = cardReader.getResult();
+                        //INDEX: 0 => paymentCardNumber 1 => paymentCardType 2 => paymentState 3=> bonusState 4=> bonusCardNumber
+
+                        transaction.setPaymentInformation(paymentInformation);
+                        finishPayment();
+
+                        cardReader.reset();
+                        this.cancel();
+
+                    } else {
+                        System.out.println("waiting for payment...");
+                    }
+
+                });
             }
         }, 0, 1000);
 
+    }
+
+    private void clearTextFields(){
+        this.cashTextField.setText("");
+        this.cardTextField.setText("");
+        this.outstandingTextField.setText("");
+        this.totalTextField.setText("");
+        cashierScreenController.getTotalTextField().setText("");
+    }
+
+    private void finishPayment(){
+        transactionLog.getCompletedTransactions().add(transaction);
+        Transaction newTransaction = new Transaction();
+        this.setTransaction(newTransaction);
+        cashierScreenController.setTransaction(newTransaction);
+        this.clearTextFields();
+
+        if (receiptCheckBox.isSelected()) { //if receipt
+
+        }
     }
 }
