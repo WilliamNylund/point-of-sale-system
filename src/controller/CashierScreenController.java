@@ -186,6 +186,9 @@ public class CashierScreenController {
 
     @FXML
     private void addItem() {
+        if (catalogListView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
         transaction.addItem(selectedItem);
 
@@ -195,6 +198,10 @@ public class CashierScreenController {
 
     @FXML
     private void removeItem() {
+        if(itemListView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
+
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
 

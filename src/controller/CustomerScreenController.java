@@ -51,6 +51,14 @@ public class CustomerScreenController {
 
     @FXML
     public void pay(){ //id: payButton
+        if(transaction.getItemList().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("");
+            alert.setHeaderText(null);
+            alert.setContentText("Add some items");
+            alert.showAndWait();
+            return;
+        }
 
         if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -86,6 +94,10 @@ public class CustomerScreenController {
 
     @FXML
     private void addItem(){ //id: addItemButton
+        if(catalogListView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
+
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
         transaction.addItem(selectedItem);
         updateAmountFields();
@@ -96,6 +108,10 @@ public class CustomerScreenController {
 
     @FXML
     private void removeItem(){ //id: removeItemButton
+        if (itemListView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
+
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
         updateAmountFields();
@@ -111,8 +127,7 @@ public class CustomerScreenController {
 
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
-        System.out.println("continue transaction");
-
+        System.out.println("this button should be removed");
     }
 
     @FXML
