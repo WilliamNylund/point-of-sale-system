@@ -144,12 +144,18 @@ public class CardReader {
     }
 
     public void run(){
-
+/*
         try{
             Runtime.getRuntime().exec("java -jar CardReader.jar");
         } catch(Exception e){
             System.out.println("Couldnt start CardReader.jar");
         }
+        try{
+            Runtime.getRuntime().exec("java -Dserver.port=9002 -jar CardReader.jar");
+        } catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Cardreader.jar couldnt be started");
+        } */
     }
 
     private String getPropertiesSafely(Element eElement, String tagName){
