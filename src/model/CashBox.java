@@ -6,7 +6,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
+//Singleton CashBox
 public class CashBox {
+
+    private static CashBox instance = new CashBox();
+
+    private CashBox(){
+
+    }
+
+    public static CashBox getInstance(){
+        return instance;
+    }
 
     public void open() {
         try{
