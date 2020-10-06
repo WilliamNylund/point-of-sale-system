@@ -33,6 +33,7 @@ public class CustomerScreenController {
     @FXML
     private CheckBox receiptCheckBox;
 
+
     CashierScreenController cashierScreenController;
 
     Transaction transaction;
@@ -178,10 +179,21 @@ public class CustomerScreenController {
 
                     if(cardReader.getStatus().equals("DONE")){
                         System.out.println("paid");
-
                         String[] paymentInformation = cardReader.getResult();
                         //INDEX: 0 => paymentCardNumber 1 => paymentCardType 2 => paymentState 3=> bonusState 4=> bonusCardNumber
+                        if(paymentInformation[2].equals("ACCEPTED")){
+                            System.out.println("TRANSACTION HAS BEEN ACCEPTED");
+                            transaction.setPaymentState(paymentInformation[2]);
+                            cashierScreenController.statusTextField.setText(paymentInformation[2]);
 
+
+                        }
+                        else{
+                            System.out.println("TRANSACTION HAS NOT BEEN ACCEPTED");
+                            transaction.setPaymentState(paymentInformation[2]);
+                            cashierScreenController.statusTextField.setText(paymentInformation[2]);
+
+                        }
                         transaction.setPaymentInformation(paymentInformation);
                         finishPayment();
 

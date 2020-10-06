@@ -39,9 +39,10 @@ public class CashierScreenController {
 
     @FXML
     private ComboBox transactionComboBox;
+    @FXML
+    public TextField statusTextField;
 
     Transaction transaction;
-
 
     @FXML
     private void initialize() {
