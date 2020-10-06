@@ -99,6 +99,7 @@ public class CashierScreenController {
     private void addDiscount() {
         // TODO update price view in real time, right now only updates when adding/removing items
         System.out.println("Add discount");
+        Item item = new Item();
         Double discount = 0.0;
         Double price = 0.0;
         Double newPrice = 0.0;
@@ -107,12 +108,12 @@ public class CashierScreenController {
             if (discountTextField.getText().contains(".")) {
                 price = selectedItem.getPrice();
                 discount = Double.parseDouble(discountTextField.getText());
-                newPrice = transaction.calculateDiscount(price, discount);
+                newPrice = item.calculateDiscount(price, discount);
                 selectedItem.setPrice(newPrice);
             } else {
                 price = selectedItem.getPrice();
                 discount = (Double.parseDouble(discountTextField.getText()) / 100);
-                newPrice = transaction.calculateDiscount(price, discount);
+                newPrice = item.calculateDiscount(price, discount);
                 selectedItem.setPrice(newPrice);
             }
         } else {

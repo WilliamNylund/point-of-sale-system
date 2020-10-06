@@ -63,4 +63,11 @@ public class Item {
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
+
+    public double calculateDiscount(Double price, Double discount) {
+
+        Double amount = price * discount;
+        Double newPrice = price - amount;
+        return newPrice;
+    }
 }
