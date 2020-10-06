@@ -190,23 +190,12 @@ public class ProductCatalog {
     }
     public void run(){
 
-        /*
-        try{
-            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "ProductCatalog.jar");
-            pb.directory(new File(System.getenv("ENV_JAR")));
-            Process p = pb.start();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-
-
         try{
             Runtime.getRuntime().exec("java -Dserver.port=9003 -jar ProductCatalog.jar");
         } catch(Exception e){
             e.printStackTrace();
             System.out.println("Productcatalog.jar couldnt be started");
-        } */
+        }
     }
 
     public ObservableList<Item> getCatalog() {
