@@ -146,7 +146,7 @@ public class CardReader {
     public void run(){
         try{
             ProcessBuilder pb = new ProcessBuilder("java", "-jar", "CardReader.jar");
-            pb.directory(new File(System.getenv("ENV_CARD")));
+            pb.directory(new File(System.getenv("ENV_JAR")));
             Process p = pb.start();
         } catch(Exception e){
             e.printStackTrace();
