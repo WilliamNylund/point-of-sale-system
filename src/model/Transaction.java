@@ -3,6 +3,7 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 public class Transaction {
 
@@ -194,19 +196,19 @@ public class Transaction {
 
 
     public void printReceipt() {
-        int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like a receipt?", null, dialogButton);
-        if (dialogResult == JOptionPane.YES_OPTION) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Would you lika a receipt?",ButtonType.YES,ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.YES) {
             try {
                 String element = "";
                 int height = 200;
                 int length = 0;
                 for (int i = 0; i < getItemList().size(); i++) {
-                    element += getItemList().get(i).toString() + System.getProperty("line.separator");
+                    element += getItemList().get(i).toString() + "   "+System.getProperty("line.separator");
                     height += 20;
                 }
-                String text = "Receipt" + System.getProperty("line.separator")
-                        + System.getProperty("line.separator") + "Items:" + System.getProperty("line.separator")
+                String text = "Receipt " + System.getProperty("line.separator")
+                        + System.getProperty("line.separator") + "Items: " + System.getProperty("line.separator")
                         + element + System.getProperty("line.separator") + "Total: " + getTotalCost();
                 char[] array = text.toCharArray();
                 System.out.println(array);
@@ -219,6 +221,8 @@ public class Transaction {
                 System.out.println("poop");
                 e.printStackTrace();
             }
+        } else{
+            alert.close();
         }
     }
 }
