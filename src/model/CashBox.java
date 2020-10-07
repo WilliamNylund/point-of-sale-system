@@ -56,13 +56,10 @@ public class CashBox {
     }
 
     public void run(){
-        /*
         try{
             Runtime.getRuntime().exec("java -jar CashBox.jar");
         } catch(Exception e){
             System.out.println("Couldnt start CashBox.jar");
         }
-        */
-
     }
 }

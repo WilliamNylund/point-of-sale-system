@@ -144,20 +144,12 @@ public class CardReader {
     }
 
     public void run() {
-
-        try {
-            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "CardReader.jar");
-            pb.directory(new File(System.getenv("ENV_JAR")));
-            Process p = pb.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-        /*try{
+        try{
             Runtime.getRuntime().exec("java -jar CardReader.jar");
         } catch(Exception e){
             System.out.println("Couldnt start CardReader.jar");
-    }*/
+        }
+    }
 
     private String getPropertiesSafely(Element eElement, String tagName){
         try{

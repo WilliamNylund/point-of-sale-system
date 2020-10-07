@@ -33,6 +33,7 @@ public class CustomerScreenController {
     @FXML
     private CheckBox receiptCheckBox;
 
+
     CashierScreenController cashierScreenController;
 
     Transaction transaction;
@@ -51,6 +52,14 @@ public class CustomerScreenController {
 
     @FXML
     public void pay(){ //id: payButton
+        if(transaction.getItemList().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("");
+            alert.setHeaderText(null);
+            alert.setContentText("Add some items");
+            alert.showAndWait();
+            return;
+        }
 
         if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -86,6 +95,10 @@ public class CustomerScreenController {
 
     @FXML
     private void addItem(){ //id: addItemButton
+        if(catalogListView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
+
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
         transaction.addItem(selectedItem);
         updateAmountFields();
@@ -96,6 +109,10 @@ public class CustomerScreenController {
 
     @FXML
     private void removeItem(){ //id: removeItemButton
+        if (itemListView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
+
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
         updateAmountFields();
@@ -106,13 +123,12 @@ public class CustomerScreenController {
 
     @FXML
     private void holdTransaction(){ //id: holdTransactionButton
-        cardReader.getResult();
+        cashierScreenController.startPause();
     }
 
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
-        System.out.println("continue transaction");
-
+        System.out.println("this button should be removed");
     }
 
     @FXML
@@ -178,10 +194,21 @@ public class CustomerScreenController {
 
                     if(cardReader.getStatus().equals("DONE")){
                         System.out.println("paid");
-
                         String[] paymentInformation = cardReader.getResult();
                         //INDEX: 0 => paymentCardNumber 1 => paymentCardType 2 => paymentState 3=> bonusState 4=> bonusCardNumber
+                        if(paymentInformation[2].equals("ACCEPTED")){
+                            System.out.println("TRANSACTION HAS BEEN ACCEPTED");
+                            transaction.setPaymentState(paymentInformation[2]);
+                            cashierScreenController.statusTextField.setText(paymentInformation[2]);
 
+
+                        }
+                        else{
+                            System.out.println("TRANSACTION HAS NOT BEEN ACCEPTED");
+                            transaction.setPaymentState(paymentInformation[2]);
+                            cashierScreenController.statusTextField.setText(paymentInformation[2]);
+
+                        }
                         transaction.setPaymentInformation(paymentInformation);
                         finishPayment();
 
@@ -198,7 +225,7 @@ public class CustomerScreenController {
 
     }
 
-    private void clearTextFields(){
+    public void clearTextFields(){
         this.cashTextField.setText("");
         this.cardTextField.setText("");
         this.outstandingTextField.setText("");

@@ -20,6 +20,8 @@ public class Transaction {
 
     private double outstanding;
 
+    private final int id;
+
     private boolean paid;
     private String paymentCardNumber;
     private String paymentCardType;
@@ -27,8 +29,12 @@ public class Transaction {
     private String bonusState;
     private String bonusCardNumber;
 
+    private static int idCounter = 0;
+
     public Transaction(){
         totalCost = 0.0;
+        id = this.idCounter;
+        idCounter++;
     }
 
     public List getItemList() {
@@ -151,6 +157,7 @@ public class Transaction {
     public void setBonusCardNumber(String bonusCardNumber) {
         this.bonusCardNumber = bonusCardNumber;
     }
+
     /*
             paymentInformation[0] = paymentCardNumber;
             paymentInformation[1] = paymentCardType;
@@ -165,5 +172,16 @@ public class Transaction {
         alert.setHeaderText(null);
         alert.setContentText(name + " expires soon! (BBE: " + date + ")");
         alert.showAndWait();
+
+    }
+
+    public String toString(){
+
+        return "Transaction " + this.id;
+    }
+
+    public int getId() {
+        return id;
+
     }
 }
