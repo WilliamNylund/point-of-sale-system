@@ -14,6 +14,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +58,7 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             item.setPrice(3.00);
+            item.setBestBefore(createRandomDate(2020,2020));
             NodeList keywords = eElement.getElementsByTagName("keyword");
             for (int i = 0; i < keywords.getLength(); i++){
                 item.getKeywords().add(keywords.item(i).getTextContent());
@@ -98,6 +102,7 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 item.setPrice(3.00); //TODO: remove
+                item.setBestBefore(createRandomDate(2020,2020));
                 NodeList keywords = eElement.getElementsByTagName("keyword");
                 for (int j = 0; j < keywords.getLength(); j++){
                     item.getKeywords().add(keywords.item(j).getTextContent());
@@ -137,6 +142,7 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             item.setPrice(3.00); //TODO: remove
+            item.setBestBefore(createRandomDate(2020,2020));
             NodeList keywords = eElement.getElementsByTagName("keyword");
             for (int i = 0; i < keywords.getLength(); i++){
                 item.getKeywords().add(keywords.item(i).getTextContent());
@@ -175,6 +181,7 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 item.setPrice(3.00); //TODO: remove
+                item.setBestBefore(createRandomDate(2020,2020));
                 NodeList keywords = eElement.getElementsByTagName("keyword");
                 for (int j = 0; j < keywords.getLength(); j++){
                     item.getKeywords().add(keywords.item(j).getTextContent());
@@ -190,23 +197,12 @@ public class ProductCatalog {
     }
     public void run(){
 
-        /*
-        try{
-            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "ProductCatalog.jar");
-            pb.directory(new File(System.getenv("ENV_JAR")));
-            Process p = pb.start();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-
-
-        try{
-            Runtime.getRuntime().exec("java -Dserver.port=9003 -jar ProductCatalog.jar");
+      try{
+            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
         } catch(Exception e){
             e.printStackTrace();
             System.out.println("Productcatalog.jar couldnt be started");
-        } */
+        }
     }
 
     public ObservableList<Item> getCatalog() {
@@ -224,6 +220,23 @@ public class ProductCatalog {
         alert.setContentText("'" + msg + "'" + " did not match any items\nPlease try another search term");
         alert.showAndWait();
     }
+    public int createRandomIntBetween(int start, int end) {
+        return start + (int) Math.round(Math.random() * (end - start));
+    }
 
+    public LocalDate createRandomDate(int startYear, int endYear) {
+        int day;
+        int month;
+        int year;
+        while (true) {
+            day = createRandomIntBetween(1, 28);
+            month = createRandomIntBetween(1, 12);
+            year = createRandomIntBetween(startYear, endYear);
+            if (LocalDate.of(year, month, day).isAfter(LocalDate.now())) {
+                break;
+            }
+        }
+        return LocalDate.of(year, month, day);
+    }
 
 }

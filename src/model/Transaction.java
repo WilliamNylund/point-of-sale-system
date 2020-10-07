@@ -2,7 +2,10 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class Transaction {
@@ -69,8 +72,12 @@ public class Transaction {
     }
 
     public void addItem(Item item){
+        if(ChronoUnit.DAYS.between(LocalDate.now(), item.getBestBefore()) <= 2){
+            infoMessage(item.getName(), item.getBestBefore());
+        }
         itemList.add(item);
         totalCost += item.getPrice();
+
     }
 
     public void removeItem(Item item){
@@ -151,4 +158,12 @@ public class Transaction {
             paymentInformation[3] = bonusState;
             paymentInformation[4] = bonusCardNumber;
     * */
+
+    private void infoMessage(String name, LocalDate date) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("INFO");
+        alert.setHeaderText(null);
+        alert.setContentText(name + " expires soon! (BBE: " + date + ")");
+        alert.showAndWait();
+    }
 }

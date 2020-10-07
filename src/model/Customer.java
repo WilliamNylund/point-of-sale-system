@@ -1,13 +1,13 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Customer {
 
     private int customerNo;
     String firstName;
     String lastName;
-    Date birthDate;
+    LocalDate birthDate;
 
     String streetAddress;
     String postalCode;
@@ -42,11 +42,11 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

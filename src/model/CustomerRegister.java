@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class CustomerRegister {
 
@@ -49,7 +50,8 @@ public class CustomerRegister {
             customer.setFirstName(eElement.getElementsByTagName("firstName").item(0).getTextContent());
             customer.setLastName(eElement.getElementsByTagName("lastName").item(0).getTextContent());
             try{
-                customer.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(eElement.getElementsByTagName("birthDate").item(0).getTextContent()));
+                customer.setBirthDate(LocalDate.parse(eElement.getElementsByTagName("birthdate").item(0).getTextContent()));
+                //customer.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(eElement.getElementsByTagName("birthDate").item(0).getTextContent()));
             } catch(Exception e){
                 System.out.println("couldnt parse date");
             }
@@ -93,7 +95,8 @@ public class CustomerRegister {
             customer.setFirstName(eElement.getElementsByTagName("firstName").item(0).getTextContent());
             customer.setLastName(eElement.getElementsByTagName("lastName").item(0).getTextContent());
             try{
-                customer.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(eElement.getElementsByTagName("birthDate").item(0).getTextContent()));
+                customer.setBirthDate(LocalDate.parse(eElement.getElementsByTagName("birthdate").item(0).getTextContent()));
+                //customer.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(eElement.getElementsByTagName("birthDate").item(0).getTextContent()));
             } catch(Exception e){
                 System.out.println("couldnt parse date");
             }
