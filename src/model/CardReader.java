@@ -150,6 +150,7 @@ public class CardReader {
         } catch (Exception e) {
             System.out.println("Couldnt start CardReader.jar");
         }
+
     }
 
     private String getPropertiesSafely(Element eElement, String tagName){

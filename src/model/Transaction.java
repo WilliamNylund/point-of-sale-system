@@ -6,6 +6,10 @@ import javafx.scene.control.Alert;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.List;
 
 public class Transaction {
@@ -28,6 +32,7 @@ public class Transaction {
     private String paymentState;
     private String bonusState;
     private String bonusCardNumber;
+    private ImageGenerator imageGenerator;
 
     private static int idCounter = 0;
 
@@ -169,6 +174,7 @@ public class Transaction {
             paymentInformation[4] = bonusCardNumber;
     * */
 
+
     private void infoMessage(String name, LocalDate date) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("INFO");
@@ -184,6 +190,35 @@ public class Transaction {
 
     public int getId() {
         return id;
+    }
 
+
+    public void printReceipt() {
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like a receipt?", null, dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            try {
+                String element = "";
+                int height = 200;
+                int length = 0;
+                for (int i = 0; i < getItemList().size(); i++) {
+                    element += getItemList().get(i).toString() + System.getProperty("line.separator");
+                    height += 20;
+                }
+                String text = "Receipt" + System.getProperty("line.separator")
+                        + System.getProperty("line.separator") + "Items:" + System.getProperty("line.separator")
+                        + element + System.getProperty("line.separator") + "Total: " + getTotalCost();
+                char[] array = text.toCharArray();
+                System.out.println(array);
+                length += array.length;
+                BufferedImage bi = imageGenerator.createImageWithText(array, length, height);
+                File outputfile = new File("receipt.png");
+                ImageIO.write(bi, "png", outputfile);
+
+            } catch (Exception e) {
+                System.out.println("poop");
+                e.printStackTrace();
+            }
+        }
     }
 }

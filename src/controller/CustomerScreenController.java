@@ -9,6 +9,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.*;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +41,7 @@ public class CustomerScreenController {
     CashierScreenController cashierScreenController;
 
     Transaction transaction;
+    ImageGenerator imageGenerator;
 
     ProductCatalog productCatalog = ProductCatalog.getInstance();
     CardReader cardReader = CardReader.getInstance();
@@ -129,6 +134,8 @@ public class CustomerScreenController {
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
         System.out.println("this button should be removed");
+
+        System.out.println("continue transaction");
     }
 
     @FXML
@@ -234,14 +241,11 @@ public class CustomerScreenController {
     }
 
     private void finishPayment(){
+        transaction.printReceipt();
         transactionLog.getCompletedTransactions().add(transaction);
         Transaction newTransaction = new Transaction();
         this.setTransaction(newTransaction);
         cashierScreenController.setTransaction(newTransaction);
         this.clearTextFields();
-
-        if (receiptCheckBox.isSelected()) { //if receipt
-
-        }
     }
 }

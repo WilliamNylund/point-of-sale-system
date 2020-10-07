@@ -71,5 +71,7 @@ public class Main extends Application {
         Transaction transaction = new Transaction();
         customerScreenController.setTransaction(transaction);
         cashierScreenController.setTransaction(transaction);
+
+
     }
 }

@@ -200,6 +200,7 @@ public class ProductCatalog {
       try {
           Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
 
+
       } catch(Exception e){
             e.printStackTrace();
             System.out.println("Productcatalog.jar couldnt be started");
