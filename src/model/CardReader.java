@@ -144,9 +144,10 @@ public class CardReader {
     }
 
     public void run() {
-        try{
+
+        try {
             Runtime.getRuntime().exec("java -jar CardReader.jar");
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Couldnt start CardReader.jar");
         }
     }
