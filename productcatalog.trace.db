@@ -768,3 +768,80 @@ ALTER TABLE Product_KEYWORDS ADD CONSTRAINT FK_Product_KEYWORDS_Product_ID FOREI
 09-20 19:20:59 jdbc[2]: exception
 org.h2.jdbc.JdbcSQLException: Table "SEQUENCE" already exists; SQL statement:
 CREATE TABLE SEQUENCE (SEQ_NAME VARCHAR(50) NOT NULL, SEQ_COUNT NUMERIC(38), PRIMARY KEY (SEQ_NAME)) [42101-170]
+10-07 20:06:12 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PRODUCT" already exists; SQL statement:
+CREATE TABLE PRODUCT (ID BIGINT NOT NULL, BARCODE VARCHAR NOT NULL UNIQUE, NAME VARCHAR NOT NULL, OPTLOCKVERSION BIGINT, VAT NUMERIC(5,2), PRIMARY KEY (ID)) [42101-170]
+10-07 20:06:12 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PRODUCT_KEYWORDS" already exists; SQL statement:
+CREATE TABLE Product_KEYWORDS (Product_ID BIGINT, KEYWORDS VARCHAR) [42101-170]
+10-07 20:06:12 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Constraint "FK_PRODUCT_KEYWORDS_PRODUCT_ID" already exists; SQL statement:
+ALTER TABLE Product_KEYWORDS ADD CONSTRAINT FK_Product_KEYWORDS_Product_ID FOREIGN KEY (Product_ID) REFERENCES PRODUCT (ID) [90045-170]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.command.ddl.AlterTableAddConstraint.tryUpdate(AlterTableAddConstraint.java:89)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:68)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:75)
+	at org.h2.command.Command.executeUpdate(Command.java:230)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:156)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:142)
+	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.executeDirectNoSelect(DatabaseAccessor.java:831)
+	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.executeNoSelect(DatabaseAccessor.java:906)
+	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.basicExecuteCall(DatabaseAccessor.java:592)
+	at org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.executeCall(DatabaseAccessor.java:535)
+	at org.eclipse.persistence.internal.sessions.AbstractSession.basicExecuteCall(AbstractSession.java:1717)
+	at org.eclipse.persistence.sessions.server.ServerSession.executeCall(ServerSession.java:566)
+	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:207)
+	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeCall(DatasourceCallQueryMechanism.java:193)
+	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeNoSelectCall(DatasourceCallQueryMechanism.java:236)
+	at org.eclipse.persistence.internal.queries.DatasourceCallQueryMechanism.executeNoSelect(DatasourceCallQueryMechanism.java:216)
+	at org.eclipse.persistence.queries.DataModifyQuery.executeDatabaseQuery(DataModifyQuery.java:85)
+	at org.eclipse.persistence.queries.DatabaseQuery.execute(DatabaseQuery.java:844)
+	at org.eclipse.persistence.internal.sessions.AbstractSession.internalExecuteQuery(AbstractSession.java:2831)
+	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1516)
+	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1498)
+	at org.eclipse.persistence.internal.sessions.AbstractSession.executeQuery(AbstractSession.java:1449)
+	at org.eclipse.persistence.internal.sessions.AbstractSession.priviledgedExecuteNonSelectingCall(AbstractSession.java:4545)
+	at org.eclipse.persistence.tools.schemaframework.TableDefinition.createForeignConstraintsOnDatabase(TableDefinition.java:794)
+	at org.eclipse.persistence.tools.schemaframework.SchemaManager.createForeignConstraints(SchemaManager.java:167)
+	at org.eclipse.persistence.tools.schemaframework.TableCreator.createTables(TableCreator.java:145)
+	at org.eclipse.persistence.tools.schemaframework.SchemaManager.createDefaultTables(SchemaManager.java:920)
+	at org.eclipse.persistence.internal.jpa.EntityManagerFactoryProvider.createOrReplaceDefaultTables(EntityManagerFactoryProvider.java:92)
+	at org.eclipse.persistence.internal.jpa.EntityManagerFactoryProvider.writeDDLToDatabase(EntityManagerFactoryProvider.java:365)
+	at org.eclipse.persistence.internal.jpa.EntityManagerSetupImpl.generateDDL(EntityManagerSetupImpl.java:2824)
+	at org.eclipse.persistence.internal.jpa.EntityManagerSetupImpl.deploy(EntityManagerSetupImpl.java:493)
+	at org.eclipse.persistence.internal.jpa.EntityManagerFactoryDelegate.getDatabaseSession(EntityManagerFactoryDelegate.java:188)
+	at org.eclipse.persistence.internal.jpa.EntityManagerFactoryDelegate.createEntityManagerImpl(EntityManagerFactoryDelegate.java:277)
+	at org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl.createEntityManagerImpl(EntityManagerFactoryImpl.java:294)
+	at org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl.createEntityManager(EntityManagerFactoryImpl.java:272)
+	at foo.initech.productcatalog.entity.ProductCrud.findAll(ProductCrud.java:41)
+	at foo.initech.productcatalog.ui.ProductBrowserView.refresh(ProductBrowserView.java:87)
+	at foo.initech.productcatalog.ui.ProductBrowserView.attach(ProductBrowserView.java:82)
+	at com.vaadin.server.AbstractClientConnector.setParent(AbstractClientConnector.java:586)
+	at com.vaadin.ui.AbstractComponent.setParent(AbstractComponent.java:457)
+	at com.vaadin.ui.AbstractSingleComponentContainer.setContent(AbstractSingleComponentContainer.java:137)
+	at com.vaadin.ui.UI.setContent(UI.java:1040)
+	at foo.initech.productcatalog.ui.ProductCatalogUI.init(ProductCatalogUI.java:11)
+	at com.vaadin.ui.UI.doInit(UI.java:524)
+	at com.vaadin.server.AbstractCommunicationManager.getBrowserDetailsUI(AbstractCommunicationManager.java:2468)
+	at com.vaadin.server.AbstractCommunicationManager.handleBrowserDetailsRequest(AbstractCommunicationManager.java:2362)
+	at com.vaadin.server.VaadinServlet.service(VaadinServlet.java:325)
+	at com.vaadin.server.VaadinServlet.service(VaadinServlet.java:201)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:401)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+10-07 20:06:12 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SEQUENCE" already exists; SQL statement:
+CREATE TABLE SEQUENCE (SEQ_NAME VARCHAR(50) NOT NULL, SEQ_COUNT NUMERIC(38), PRIMARY KEY (SEQ_NAME)) [42101-170]
