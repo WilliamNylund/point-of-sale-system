@@ -31,6 +31,8 @@ public class Transaction {
 
     private static int idCounter = 0;
 
+    public boolean testInfoMessage;  //ONLY FOR TESTING
+
     public Transaction(){
         totalCost = 0.0;
         id = this.idCounter;
@@ -78,12 +80,13 @@ public class Transaction {
     }
 
     public void addItem(Item item){
+        //testInfoMessage = false;      //ONLY FOR TESTING
         if(ChronoUnit.DAYS.between(LocalDate.now(), item.getBestBefore()) <= 2){
-            infoMessage(item.getName(), item.getBestBefore());
+            //testInfoMessage = true;    //ONLY FOR TESTING
+            infoMessage(item.getName(), item.getBestBefore());    // DISABLE FOR TESTING
         }
         itemList.add(item);
         totalCost += item.getPrice();
-
     }
 
     public void removeItem(Item item){
@@ -172,7 +175,6 @@ public class Transaction {
         alert.setHeaderText(null);
         alert.setContentText(name + " expires soon! (BBE: " + date + ")");
         alert.showAndWait();
-
     }
 
     public String toString(){
