@@ -11,13 +11,7 @@ public class BonusCard {
     double points;
 
     Transaction transaction;
-
-/*    public BonusCard(){
-        number="";
-        goodThruMonth="";
-        goodThruYear="";
-        points=0;
-    }*/
+    
 
 
     public String getNumber() {
