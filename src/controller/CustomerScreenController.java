@@ -8,6 +8,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.*;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -239,6 +241,8 @@ public class CustomerScreenController {
         transaction.printReceipt();
         bonusCard = new BonusCard();
         bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
+        transaction.setPaymentDate(LocalDate.now());
+        transaction.setPaid(true);
         transactionLog.getCompletedTransactions().add(transaction);
         Transaction newTransaction = new Transaction();
         this.setTransaction(newTransaction);
