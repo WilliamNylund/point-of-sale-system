@@ -60,29 +60,35 @@ public class CashierScreenController {
     @FXML
     private void searchItem() {
         System.out.println(barcodeTextField.getText());
-        try {
-            Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
-            if (item != null) {
-                transaction.addItem(item);
-                customerScreenController.updateAmountFields();
-            }
-        } catch (Exception e) {
+        if (barcodeTextField.getText().isEmpty()) {
+            System.out.println("cant search with empty");
+        } else {
+            try {
+                Item item = productCatalog.getProductByName(barcodeTextField.getText());
+                if (item != null) {
+                    transaction.addItem(item);
+                    customerScreenController.updateAmountFields();
+                }
+            } catch (Exception e) {
 
-        }
-        try {
-            Item item = productCatalog.getProductByName(barcodeTextField.getText());
-            if (item != null) {
-                transaction.addItem(item);
-                customerScreenController.updateAmountFields();
             }
-        } catch (Exception e) {
 
-        }
-        try {
+            try {
+                Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+                if (item != null) {
+                    transaction.addItem(item);
+                    customerScreenController.updateAmountFields();
+                }
+            } catch (Exception e) {
+
+            }
+
+        /*try {
             List item = productCatalog.getProductByKeyWord((barcodeTextField.getText()));
             System.out.println(item);
         } catch (Exception e) {
             System.out.println("sum ting wong");
+        }*/
         }
     }
 
@@ -158,9 +164,9 @@ public class CashierScreenController {
         // TODO update price view in real time, right now only updates when adding/removing items
         System.out.println("Add discount");
         Item item = new Item();
-        Double discount = 0.0;
-        Double price = 0.0;
-        Double newPrice = 0.0;
+        Double discount;
+        Double price;
+        Double newPrice;
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         if (Double.parseDouble(discountTextField.getText()) <= 100) {
             if (discountTextField.getText().contains(".")) {
