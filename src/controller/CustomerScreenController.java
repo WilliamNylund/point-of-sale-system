@@ -8,11 +8,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +42,7 @@ public class CustomerScreenController {
     CardReader cardReader = CardReader.getInstance();
     CustomerRegister customerRegister = CustomerRegister.getInstance();
     TransactionLog transactionLog = TransactionLog.getInstance();
+    CashBox cashbox = CashBox.getInstance();
 
     HashMap<String, Integer> soldProducts = new HashMap<>(); // TODO
 
@@ -85,10 +81,11 @@ public class CustomerScreenController {
         }
 
         if(transaction.getCardAmount() != 0.0){ //paying with card
-            //cardReader.run();
             cardReader.waitForPayment(transaction.getCardAmount());
             listenForPayment();
-        } else{
+        }
+        if(transaction.getCashAmount() != 0.0){ //open cashbox if paying with cash
+            cashbox.open();
             finishPayment();
 
         }
@@ -207,21 +204,16 @@ public class CustomerScreenController {
                             System.out.println("TRANSACTION HAS BEEN ACCEPTED");
                             transaction.setPaymentState(paymentInformation[2]);
                             cashierScreenController.statusTextField.setText(paymentInformation[2]);
-
-
                         }
                         else{
                             System.out.println("TRANSACTION HAS NOT BEEN ACCEPTED");
                             transaction.setPaymentState(paymentInformation[2]);
                             cashierScreenController.statusTextField.setText(paymentInformation[2]);
-
                         }
                         transaction.setPaymentInformation(paymentInformation);
-                        finishPayment();
-
-                        cardReader.reset();
                         this.cancel();
-
+                        finishPayment();
+                        cardReader.reset();
                     } else {
                         System.out.println("waiting for payment...");
                     }
