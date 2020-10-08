@@ -200,25 +200,31 @@ public class CustomerScreenController {
             @Override
             public void run() {
                 Platform.runLater(() -> {
+                    /* TODO: Swipe Bonus => Bonus state:Accepted
+                     TODO Swipe Payment => Bonus state:va som helst Payment Satae:Accepted
+                     TODO Swipe Combined => Bonus state: ACCEPTED Payment state: Accepted
 
+                     */
                     if(cardReader.getStatus().equals("DONE")){
-                        System.out.println("paid");
+                        System.out.println("fösöker betala");
                         String[] paymentInformation = cardReader.getResult();
-                        //INDEX: 0 => paymentCardNumber 1 => paymentCardType 2 => paymentState 3=> bonusState 4=> bonusCardNumber
-                        if(paymentInformation[2] != null && paymentInformation[2].equals("ACCEPTED")){
-                            System.out.println("TRANSACTION HAS BEEN ACCEPTED");
-                            transaction.setPaymentState(paymentInformation[2]);
-                            cashierScreenController.statusTextField.setText(paymentInformation[2]);
-                        }
-                        else{
-                            System.out.println("TRANSACTION HAS NOT BEEN ACCEPTED");
-                            transaction.setPaymentState(paymentInformation[2]);
-                            cashierScreenController.statusTextField.setText(paymentInformation[2]);
-                        }
+                        //INDEX: 0=paymentCardNumber 1 =paymentCardType 2=paymentState 3=bonusState 4=bonusCardNumber
+                        //paymentInformation[1].equals("")
+                        System.out.println("------------");
+                        System.out.println(paymentInformation[0]);
+                        System.out.println(paymentInformation[1]);
+                        System.out.println(paymentInformation[2]);
+                        System.out.println(paymentInformation[3]);
+                        System.out.println(paymentInformation[4]);
+                        Boolean checker=paymentCheck(paymentInformation);
+                        System.out.println(checker);
                         transaction.setPaymentInformation(paymentInformation);
-                        this.cancel();
-                        finishPayment();
+                        if(checker==true) {
+                            finishPayment();
+                        }
                         cardReader.reset();
+                        this.cancel();
+
                     } else {
                         System.out.println("waiting for payment...");
                     }
@@ -229,12 +235,64 @@ public class CustomerScreenController {
 
     }
 
+    private boolean paymentCheck(String[] paymentInformation) {
+
+        // paymentCardNumber[0]= behövs int testas
+        // paymentCardType[1]= behvös int testas
+        // paymentState[2]=null
+        // bonusState[3]=ACCEPTED
+        // bonusCardnumber[4]=skall finnas, bara nummror
+        // Bonuscard payment
+        if(paymentInformation[2]==null && paymentInformation[3].contains("ACCEPTED")&&paymentInformation[4]!=null ){//Betala med Bonus
+            System.out.println("Betala med Bonus kort");
+            cashierScreenController.statusTextField.setText(transaction.getBonusState());
+            return true;
+        }
+        // paymentCardNumber[0]= skall finnas
+        // paymentCardType[1]=skall vara credit eller debit
+        // paymentState[2]=Accepted
+        else if(paymentInformation[0]!=null&&(paymentInformation[1].contains("CREDIT")||paymentInformation[1].contains("DEBIT"))&& paymentInformation[2].contains("ACCEPTED") ){
+            System.out.println("GOT HERE");
+
+            // bonusState[3]=null
+            // bonusCardnumber[4]=null
+            //Betala med Paymentcard
+            if(paymentInformation[3]==null&&paymentInformation[4]==null){
+                System.out.println("Betala med Paymentcard");
+                cashierScreenController.statusTextField.setText(transaction.getPaymentState());
+                return true;
+            }
+            // bonusState[3]=ACCEPTED
+            //bonusCardnumber[4]!=null
+            //Betala med Combined
+            else if(paymentInformation[3].contains("ACCEPTED")&& paymentInformation[4]!=null){
+                System.out.println("Betala med Combined");
+                cashierScreenController.statusTextField.setText(transaction.getPaymentState());
+                return true;
+            }
+
+
+        }
+
+        else{
+            System.out.println("TRANSACTION FAILED");
+            if(paymentInformation[0]==null&& paymentInformation[1]==null){
+                cashierScreenController.statusTextField.setText(paymentInformation[3]);//Bonus va problemet
+            }
+            else{
+                cashierScreenController.statusTextField.setText(paymentInformation[2]);
+            }
+        }
+        return false;
+    }
+
     public void clearTextFields(){
         this.cashTextField.setText("");
         this.cardTextField.setText("");
         this.outstandingTextField.setText("");
         this.totalTextField.setText("");
         cashierScreenController.getTotalTextField().setText("");
+        cashierScreenController.statusTextField.setText("");
     }
 
     private void finishPayment(){
