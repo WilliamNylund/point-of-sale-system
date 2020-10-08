@@ -8,6 +8,16 @@ public class BonusCard {
     Boolean blocked;
     Boolean expired;
     String holderName;
+    double points;
+
+    Transaction transaction;
+
+/*    public BonusCard(){
+        number="";
+        goodThruMonth="";
+        goodThruYear="";
+        points=0;
+    }*/
 
 
     public String getNumber() {
@@ -56,5 +66,25 @@ public class BonusCard {
 
     public void setHolderName(String holderName) {
         this.holderName = holderName;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
+    }
+
+    public void addBonusPoints(Transaction transaction, String bonusCardNo) {
+        try {
+            if (transaction.getBonusCardNumber() != null && transaction.getBonusCardNumber().equals(bonusCardNo) && transaction.getBonusState().equals("ACCEPTED")) {
+                points += transaction.getTotalCost() * 0.05;
+                System.out.println("Added 5% of total cost worth of bonus points!");
+                System.out.println("Your points: "+points);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

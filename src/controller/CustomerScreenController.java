@@ -36,7 +36,7 @@ public class CustomerScreenController {
     CashierScreenController cashierScreenController;
 
     Transaction transaction;
-    ImageGenerator imageGenerator;
+    BonusCard bonusCard;
 
     ProductCatalog productCatalog = ProductCatalog.getInstance();
     CardReader cardReader = CardReader.getInstance();
@@ -172,6 +172,9 @@ public class CustomerScreenController {
             }
         });
     }
+/*    public void setBonusCard(BonusCard bonusCard){
+        this.bonusCard = bonusCard;
+    }*/
 
     public void setTransaction(Transaction transaction){
         this.transaction = transaction;
@@ -200,7 +203,7 @@ public class CustomerScreenController {
                         System.out.println("paid");
                         String[] paymentInformation = cardReader.getResult();
                         //INDEX: 0 => paymentCardNumber 1 => paymentCardType 2 => paymentState 3=> bonusState 4=> bonusCardNumber
-                        if(paymentInformation[2].equals("ACCEPTED")){
+                        if(paymentInformation[2] != null && paymentInformation[2].equals("ACCEPTED")){
                             System.out.println("TRANSACTION HAS BEEN ACCEPTED");
                             transaction.setPaymentState(paymentInformation[2]);
                             cashierScreenController.statusTextField.setText(paymentInformation[2]);
@@ -234,6 +237,8 @@ public class CustomerScreenController {
 
     private void finishPayment(){
         transaction.printReceipt();
+        bonusCard = new BonusCard();
+        bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
         transactionLog.getCompletedTransactions().add(transaction);
         Transaction newTransaction = new Transaction();
         this.setTransaction(newTransaction);
