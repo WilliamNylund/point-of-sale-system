@@ -2,14 +2,16 @@ package controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import model.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class CashierScreenController {
 
@@ -44,6 +46,8 @@ public class CashierScreenController {
 
     Transaction transaction;
 
+    private boolean boolPass;
+
     @FXML
     private void initialize() {
         catalogListView.setItems(productCatalog.getCatalog());
@@ -51,10 +55,25 @@ public class CashierScreenController {
     }
 
     @FXML
-    private void openProductCatalog() throws IOException {
+    private void openAdminWindow() {
+        passwordAlert();
+        if (boolPass) {
+            try {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AdminScreen.fxml"));
 
-        System.out.println("Open Product Catalog");
-        Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                stage.setTitle("Administrator");
+                stage.setResizable(false);
+                stage.setScene(scene);
+                stage.show();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -239,5 +258,24 @@ public class CashierScreenController {
 
     public void startPause(){
         pauseTransaction();
+    }
+
+    private boolean passwordAlert() {
+        boolPass = false;
+
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Enter password");
+        dialog.setHeaderText("Restricted access, enter password to continue");
+        dialog.setContentText("Enter password:");
+        //PasswordField password = new PasswordField();
+        //password.setPromptText("Password");
+
+        Optional<String> correct = dialog.showAndWait();
+
+        if (correct.isPresent()) {
+            boolPass = true;
+        }
+
+        return boolPass;
     }
 }

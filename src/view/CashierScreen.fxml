@@ -18,7 +18,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Admin">
             <items>
-              <MenuItem mnemonicParsing="false" text="Login " />
+              <MenuItem mnemonicParsing="false" onAction="#openAdminWindow" text="Login" />
             </items>
           </Menu>
         </menus>
