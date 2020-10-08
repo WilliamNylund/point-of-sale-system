@@ -21,7 +21,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
+        ProductCatalog productCatalog = ProductCatalog.getInstance();
+        productCatalog.getAllProducts();
 
         Stage secondStage = new Stage();
 
@@ -50,18 +51,6 @@ public class Main extends Application {
         double yy = bounds2.getMinY();
         secondStage.setX(xx);
         secondStage.setY(yy);
-
-
-        ProductCatalog productCatalog = ProductCatalog.getInstance();
-        productCatalog.run();
-        productCatalog.getAllProducts();
-
-        CustomerRegister customerRegister = CustomerRegister.getInstance();
-        customerRegister.run();
-
-        CardReader cardReader = CardReader.getInstance();
-        cardReader.run();
-
 
         CustomerScreenController customerScreenController = loader.getController();
         CashierScreenController cashierScreenController = secondLoader.getController();
