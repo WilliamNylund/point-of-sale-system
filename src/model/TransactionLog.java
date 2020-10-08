@@ -3,7 +3,12 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import model.Item;
 
 //Singleton
 public class TransactionLog {
@@ -11,6 +16,7 @@ public class TransactionLog {
     private ObservableList<Transaction> pausedTransactions = FXCollections.observableArrayList();
 
     private ArrayList<Transaction> completedTransactions = new ArrayList<Transaction>();
+    ProductCatalog productCatalog = ProductCatalog.getInstance();
 
 
     private static TransactionLog instance = new TransactionLog();
@@ -41,5 +47,73 @@ public class TransactionLog {
 
     public void setCompletedTransactions(ArrayList<Transaction> completedTransactions) {
         this.completedTransactions = completedTransactions;
+    }
+
+    public void createMockTransactions(){
+        Transaction transaction = new Transaction();
+        transaction.getItemList().add(productCatalog.getCatalog().get(0));
+        transaction.getItemList().add(productCatalog.getCatalog().get(0));
+        transaction.getItemList().add(productCatalog.getCatalog().get(0));
+        transaction.getItemList().add(productCatalog.getCatalog().get(1));
+        String[] temp = new String[]{"99", "CREDIT", "ACCEPTED", null, null};
+        transaction.setPaymentInformation(temp);
+        transaction.setTotalCost(20.0);
+        transaction.setCardAmount(10);
+        transaction.setCashAmount(10);
+        transaction.setPaid(true);
+        transaction.setPaymentDate(LocalDate.of(2020, 10, 6));
+        this.getCompletedTransactions().add(transaction);
+
+
+
+        Transaction transaction1 = new Transaction();
+        transaction1.getItemList().add(productCatalog.getCatalog().get(0));
+        transaction1.getItemList().add(productCatalog.getCatalog().get(2));
+        transaction1.getItemList().add(productCatalog.getCatalog().get(2));
+        transaction1.getItemList().add(productCatalog.getCatalog().get(2));
+        transaction1.getItemList().add(productCatalog.getCatalog().get(3));
+        transaction1.getItemList().add(productCatalog.getCatalog().get(3));
+
+
+        String[] temp1 = new String[]{"13", "DEBIT", "ACCEPTED", null, null};
+        transaction1.setPaymentInformation(temp1);
+        transaction1.setTotalCost(20.0);
+        transaction1.setCardAmount(10);
+        transaction1.setCashAmount(10);
+        transaction1.setPaid(true);
+        transaction1.setPaymentDate(LocalDate.of(2020, 10, 7));
+        this.getCompletedTransactions().add(transaction1);
+    }
+
+    public Map getProductsSoldByDate(LocalDate startDate, LocalDate endDate){
+        Map<String, Integer> productsSold = new HashMap<String, Integer>();
+        //for every completed transaction
+
+
+        for (int i = 0; i < this.getCompletedTransactions().size(); i++){
+            //check if payment date is between startdate and enddate
+            if (this.getCompletedTransactions().get(i).getPaymentDate().isAfter(startDate) && this.getCompletedTransactions().get(i).getPaymentDate().isBefore(endDate)){
+                List itemList = this.getCompletedTransactions().get(i).getItemList();
+                //for every item in that transaction
+
+                for (int j = 0; j < itemList.size(); j++){
+                    //if contains product already, add +1 to value
+                    Item item = (Item)itemList.get(j);
+
+                    if(productsSold.containsKey(item.getName())){
+                        int currAmount = productsSold.get(item.getName());
+                        System.out.println(currAmount);
+                        productsSold.replace(item.getName(), currAmount+1);
+                    } else{
+                        System.out.println("new Product: " + item.getName());
+                        productsSold.put(item.getName(), 1);
+                    }
+                }
+            }
+        }
+        productsSold.entrySet().forEach(entry->{
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        });
+        return productsSold;
     }
 }

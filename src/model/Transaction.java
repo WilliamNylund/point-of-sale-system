@@ -8,9 +8,9 @@ import javafx.scene.control.ButtonType;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +35,7 @@ public class Transaction {
     private String bonusState;
     private String bonusCardNumber;
     private ImageGenerator imageGenerator;
+    private LocalDate paymentDate;
 
     private static int idCounter = 0;
 
@@ -85,6 +86,8 @@ public class Transaction {
     public void setCashAmount(double cashAmount) {
         this.cashAmount = cashAmount;
     }
+
+
 
     public void addItem(Item item){
         //testInfoMessage = false;      //ONLY FOR TESTING
@@ -168,14 +171,13 @@ public class Transaction {
         this.bonusCardNumber = bonusCardNumber;
     }
 
-    /*
-            paymentInformation[0] = paymentCardNumber;
-            paymentInformation[1] = paymentCardType;
-            paymentInformation[2] = paymentState;
-            paymentInformation[3] = bonusState;
-            paymentInformation[4] = bonusCardNumber;
-    * */
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
 
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
 
     private void infoMessage(String name, LocalDate date) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -186,7 +188,6 @@ public class Transaction {
     }
 
     public String toString(){
-
         return "Transaction " + this.id;
     }
 
@@ -225,4 +226,5 @@ public class Transaction {
             alert.close();
         }
     }
+
 }
