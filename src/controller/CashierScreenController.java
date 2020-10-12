@@ -180,7 +180,7 @@ public class CashierScreenController {
 
     @FXML
     private void addDiscount() {
-        // TODO update price view in real time, right now only updates when adding/removing items
+
         System.out.println("Add discount");
         Item item = new Item();
         Double discount;
@@ -188,17 +188,10 @@ public class CashierScreenController {
         Double newPrice;
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         if (Double.parseDouble(discountTextField.getText()) <= 100) {
-            if (discountTextField.getText().contains(".")) {
-                price = selectedItem.getPrice();
-                discount = Double.parseDouble(discountTextField.getText());
-                newPrice = item.calculateDiscount(price, discount);
-                selectedItem.setPrice(newPrice);
-            } else {
-                price = selectedItem.getPrice();
-                discount = (Double.parseDouble(discountTextField.getText()) / 100);
-                newPrice = item.calculateDiscount(price, discount);
-                selectedItem.setPrice(newPrice);
-            }
+            price = selectedItem.getPrice();
+            discount = (Double.parseDouble(discountTextField.getText()) / 100);
+            newPrice = item.calculateDiscount(price, discount);
+            selectedItem.setPrice(newPrice);
             itemListView.refresh();
 
         } else {
@@ -277,5 +270,14 @@ public class CashierScreenController {
         }
 
         return boolPass;
+    }
+
+    @FXML
+    private void validateDiscountField() {
+        discountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d+")) {
+                discountTextField.setText(oldValue);
+            }
+        });
     }
 }

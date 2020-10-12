@@ -81,7 +81,7 @@ public class Item implements Cloneable{
 
         Double amount = price * discount;
         Double newPrice = price - amount;
-        return newPrice;
+        return Math.round(newPrice*100.0)/100.0;
     }
 
     @Override
