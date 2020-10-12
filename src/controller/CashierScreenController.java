@@ -193,7 +193,7 @@ public class CashierScreenController {
             newPrice = item.calculateDiscount(price, discount);
             selectedItem.setPrice(newPrice);
             itemListView.refresh();
-
+            customerScreenController.getItemListView().refresh();
         } else {
             discountTextField.setText("Invalid discount");
         }
@@ -223,8 +223,6 @@ public class CashierScreenController {
 
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
-
-        //totalTextField.setText(Double.toString(transaction.getTotalCost()));
         customerScreenController.updateAmountFields();
 
     }
