@@ -95,7 +95,7 @@ public class CustomerScreenController {
     private void addItem() throws CloneNotSupportedException { //id: addItemButton
         if(catalogListView.getSelectionModel().getSelectedItem() == null){
             return;
-        } // TODO try to create clone of file
+        }
         Item selectedItem = (Item)catalogListView.getSelectionModel().getSelectedItem();
         Item clonedItem = (Item) selectedItem.clone();
         transaction.addItem(clonedItem);

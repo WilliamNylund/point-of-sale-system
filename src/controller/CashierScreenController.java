@@ -199,6 +199,7 @@ public class CashierScreenController {
                 newPrice = item.calculateDiscount(price, discount);
                 selectedItem.setPrice(newPrice);
             }
+            itemListView.refresh();
 
         } else {
             discountTextField.setText("Invalid discount");
@@ -211,14 +212,13 @@ public class CashierScreenController {
     }
 
     @FXML
-    private void addItem() {
+    private void addItem() throws CloneNotSupportedException {
         if (catalogListView.getSelectionModel().getSelectedItem() == null){
             return;
         }
         Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
-        transaction.addItem(selectedItem);
-
-        //totalTextField.setText(Double.toString(transaction.getTotalCost()));
+        Item clonedItem = (Item) selectedItem.clone();
+        transaction.addItem(clonedItem);
         customerScreenController.updateAmountFields();
     }
 
