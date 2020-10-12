@@ -46,8 +46,6 @@ public class CustomerScreenController {
     TransactionLog transactionLog = TransactionLog.getInstance();
     CashBox cashbox = CashBox.getInstance();
 
-    HashMap<String, Integer> soldProducts = new HashMap<>(); // TODO
-
     @FXML
     private void initialize() {
         catalogListView.setItems(productCatalog.getCatalog());
@@ -91,24 +89,17 @@ public class CustomerScreenController {
             finishPayment();
 
         }
-
-        soldProducts.entrySet().forEach(entry->{
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        });
     }
 
     @FXML
-    private void addItem(){ //id: addItemButton
+    private void addItem() throws CloneNotSupportedException { //id: addItemButton
         if(catalogListView.getSelectionModel().getSelectedItem() == null){
             return;
-        }
-
-        Item selectedItem = (Item) catalogListView.getSelectionModel().getSelectedItem();
-        transaction.addItem(selectedItem);
+        } // TODO try to create clone of file
+        Item selectedItem = (Item)catalogListView.getSelectionModel().getSelectedItem();
+        Item clonedItem = (Item) selectedItem.clone();
+        transaction.addItem(clonedItem);
         updateAmountFields();
-
-        int count = soldProducts.containsKey(selectedItem.toString()) ? soldProducts.get(selectedItem.toString()) : 0;
-        soldProducts.put(selectedItem.toString(), count + 1);
     }
 
     @FXML
@@ -120,9 +111,6 @@ public class CustomerScreenController {
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         transaction.removeItem(selectedItem);
         updateAmountFields();
-
-        int count = soldProducts.containsKey(selectedItem.toString()) ? soldProducts.get(selectedItem.toString()) : 0;
-        soldProducts.put(selectedItem.toString(), count - 1);
     }
 
     @FXML
@@ -133,7 +121,6 @@ public class CustomerScreenController {
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
         System.out.println("this button should be removed");
-
         System.out.println("continue transaction");
     }
 
@@ -200,30 +187,18 @@ public class CustomerScreenController {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    /* TODO: Swipe Bonus => Bonus state:Accepted
-                     TODO Swipe Payment => Bonus state:va som helst Payment Satae:Accepted
-                     TODO Swipe Combined => Bonus state: ACCEPTED Payment state: Accepted
 
-                     */
                     if(cardReader.getStatus().equals("DONE")){
-                        System.out.println("fösöker betala");
                         String[] paymentInformation = cardReader.getResult();
                         //INDEX: 0=paymentCardNumber 1 =paymentCardType 2=paymentState 3=bonusState 4=bonusCardNumber
-                        //paymentInformation[1].equals("")
-                        System.out.println("------------");
-                        System.out.println(paymentInformation[0]);
-                        System.out.println(paymentInformation[1]);
-                        System.out.println(paymentInformation[2]);
-                        System.out.println(paymentInformation[3]);
-                        System.out.println(paymentInformation[4]);
-                        Boolean checker=paymentCheck(paymentInformation);
-                        System.out.println(checker);
+
                         transaction.setPaymentInformation(paymentInformation);
-                        if(checker==true) {
+                        if(paymentCheck(paymentInformation)) {
+                            this.cancel();
                             finishPayment();
                         }
-                        cardReader.reset();
                         this.cancel();
+                        cardReader.reset();
 
                     } else {
                         System.out.println("waiting for payment...");
