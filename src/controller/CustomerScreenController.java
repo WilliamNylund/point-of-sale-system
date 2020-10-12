@@ -49,6 +49,7 @@ public class CustomerScreenController {
     @FXML
     private void initialize() {
         catalogListView.setItems(productCatalog.getCatalog());
+        transactionLog.createMockTransactions();
     }
 
     @FXML
@@ -161,9 +162,6 @@ public class CustomerScreenController {
             }
         });
     }
-/*    public void setBonusCard(BonusCard bonusCard){
-        this.bonusCard = bonusCard;
-    }*/
 
     public void setTransaction(Transaction transaction){
         this.transaction = transaction;
@@ -282,4 +280,14 @@ public class CustomerScreenController {
         cashierScreenController.setTransaction(newTransaction);
         this.clearTextFields();
     }
+
+    public ListView getItemListView() {
+        return itemListView;
+    }
+
+    public void setItemListView(ListView itemListView) {
+        this.itemListView = itemListView;
+    }
+
+
 }

@@ -4,10 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import model.Item;
 
 //Singleton
@@ -55,6 +53,13 @@ public class TransactionLog {
         transaction.getItemList().add(productCatalog.getCatalog().get(0));
         transaction.getItemList().add(productCatalog.getCatalog().get(0));
         transaction.getItemList().add(productCatalog.getCatalog().get(1));
+        transaction.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction.getItemList().add(productCatalog.getCatalog().get(4));
         String[] temp = new String[]{"99", "CREDIT", "ACCEPTED", null, null};
         transaction.setPaymentInformation(temp);
         transaction.setTotalCost(20.0);
@@ -73,6 +78,7 @@ public class TransactionLog {
         transaction1.getItemList().add(productCatalog.getCatalog().get(2));
         transaction1.getItemList().add(productCatalog.getCatalog().get(3));
         transaction1.getItemList().add(productCatalog.getCatalog().get(3));
+        transaction1.getItemList().add(productCatalog.getCatalog().get(0));
 
 
         String[] temp1 = new String[]{"13", "DEBIT", "ACCEPTED", null, null};
@@ -81,39 +87,55 @@ public class TransactionLog {
         transaction1.setCardAmount(10);
         transaction1.setCashAmount(10);
         transaction1.setPaid(true);
-        transaction1.setPaymentDate(LocalDate.of(2020, 10, 7));
+        transaction1.setPaymentDate(LocalDate.of(2020, 10, 8));
         this.getCompletedTransactions().add(transaction1);
     }
 
-    public Map getProductsSoldByDate(LocalDate startDate, LocalDate endDate){
+    public Map getProductsSoldByDate(LocalDate startDate, LocalDate endDate, String searchWord){
         Map<String, Integer> productsSold = new HashMap<String, Integer>();
         //for every completed transaction
+        if(endDate == null){
+            endDate = LocalDate.now();
+        }
+        if(startDate == null){
+            startDate = LocalDate.of(2000,1,1);
+        }
 
 
         for (int i = 0; i < this.getCompletedTransactions().size(); i++){
             //check if payment date is between startdate and enddate
-            if (this.getCompletedTransactions().get(i).getPaymentDate().isAfter(startDate) && this.getCompletedTransactions().get(i).getPaymentDate().isBefore(endDate)){
+            if ((this.getCompletedTransactions().get(i).getPaymentDate().isAfter(startDate) || this.getCompletedTransactions().get(i).getPaymentDate().isEqual(startDate))&& (this.getCompletedTransactions().get(i).getPaymentDate().isBefore(endDate) || this.getCompletedTransactions().get(i).getPaymentDate().isEqual(endDate))){
+                System.out.println("passed");
                 List itemList = this.getCompletedTransactions().get(i).getItemList();
                 //for every item in that transaction
-
                 for (int j = 0; j < itemList.size(); j++){
                     //if contains product already, add +1 to value
                     Item item = (Item)itemList.get(j);
-
-                    if(productsSold.containsKey(item.getName())){
-                        int currAmount = productsSold.get(item.getName());
-                        System.out.println(currAmount);
-                        productsSold.replace(item.getName(), currAmount+1);
-                    } else{
-                        System.out.println("new Product: " + item.getName());
-                        productsSold.put(item.getName(), 1);
+                    if(item.getName().toLowerCase().contains(searchWord.toLowerCase()) || String.valueOf(item.getBarCode()).equals(searchWord)){
+                        if(productsSold.containsKey(item.getName())){
+                            int currAmount = productsSold.get(item.getName());
+                            productsSold.replace(item.getName(), currAmount+1);
+                        } else{
+                            productsSold.put(item.getName(), 1);
+                        }
                     }
                 }
             }
         }
-        productsSold.entrySet().forEach(entry->{
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        });
+
+        productsSold = sortByValue(productsSold);
         return productsSold;
+    }
+
+    //sorts hashmap by
+    public <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 }

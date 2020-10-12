@@ -85,7 +85,7 @@ public class Item implements Cloneable{
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {    // Compliant
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 }
