@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-public class Item {
+public class Item implements Cloneable{
 
     private String name;
     private int id;
@@ -84,4 +84,8 @@ public class Item {
         return newPrice;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {    // Compliant
+        return super.clone();
+    }
 }
