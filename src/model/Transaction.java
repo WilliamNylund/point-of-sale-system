@@ -41,6 +41,9 @@ public class Transaction {
 
     public boolean testInfoMessage;  //ONLY FOR TESTING
 
+    private Customer customer;
+    private BonusCard bonuscard;
+
     public Transaction(){
         totalCost = 0.0;
         id = this.idCounter;
@@ -227,4 +230,13 @@ public class Transaction {
         }
     }
 
+    public Customer getCustomer() {
+        try{
+            customer = CustomerRegister.getInstance().findByCustomerBonusCard(Integer.parseInt(getBonusCardNumber()), 2023, 4);
+
+        } catch (Exception e){
+            System.out.println("wrong bonus card number/mm/yyyy combination");
+        }
+        return customer;
+    }
 }

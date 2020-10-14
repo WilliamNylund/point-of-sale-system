@@ -270,7 +270,21 @@ public class CustomerScreenController {
 
     private void finishPayment(){
         transaction.printReceipt();
-        bonusCard = new BonusCard();
+        //bonusCard = new BonusCard();
+        //Customer customer = CustomerRegister.getInstance().findByCustomerBonusCard(Integer.parseInt(transaction.getBonusCardNumber()),2023,4);
+        Customer customer = transaction.getCustomer();
+        System.out.println(customer.getCustomerNo());
+        System.out.println(customer.getFirstName());
+        System.out.println(customer.getLastName());
+        System.out.println(customer.getBirthDate());
+        System.out.println(customer.getSex());
+        System.out.println(customer.getStreetAddress());
+        System.out.println(customer.getBonusCard().getNumber());
+        System.out.println(customer.getBonusCard().getGoodThruMonth());
+        System.out.println(customer.getBonusCard().getGoodThruYear());
+        System.out.println(customer.getBonusCard().getHolderName());
+        System.out.println(customer.getAge());
+        bonusCard = transaction.getCustomer().getBonusCard();
         bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
         transaction.setPaymentDate(LocalDate.now());
         transaction.setPaid(true);

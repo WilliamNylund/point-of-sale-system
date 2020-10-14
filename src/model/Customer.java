@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Customer {
 
@@ -8,6 +9,7 @@ public class Customer {
     String firstName;
     String lastName;
     LocalDate birthDate;
+    int age;
 
     String streetAddress;
     String postalCode;
@@ -96,5 +98,9 @@ public class Customer {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public int getAge(){
+      return Period.between(birthDate, LocalDate.now()).getYears();
     }
 }

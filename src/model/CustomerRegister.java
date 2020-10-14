@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 
 public class CustomerRegister {
 
@@ -50,11 +51,14 @@ public class CustomerRegister {
             customer.setFirstName(eElement.getElementsByTagName("firstName").item(0).getTextContent());
             customer.setLastName(eElement.getElementsByTagName("lastName").item(0).getTextContent());
             try{
-                customer.setBirthDate(LocalDate.parse(eElement.getElementsByTagName("birthdate").item(0).getTextContent()));
+                String bday = eElement.getElementsByTagName("birthDate").item(0).getTextContent();
+                String bdayFormat = bday.substring(0,10);
+                customer.setBirthDate(LocalDate.parse((bdayFormat)));;
                 //customer.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(eElement.getElementsByTagName("birthDate").item(0).getTextContent()));
             } catch(Exception e){
                 System.out.println("couldnt parse date");
             }
+            customer.setSex(eElement.getElementsByTagName("sex").item(0).getTextContent());
             customer.setStreetAddress(eElement.getElementsByTagName("streetAddress").item(0).getTextContent());
             customer.setPostalCode(eElement.getElementsByTagName("postalCode").item(0).getTextContent());
             customer.setPostOffice(eElement.getElementsByTagName("postOffice").item(0).getTextContent());
@@ -94,12 +98,16 @@ public class CustomerRegister {
             customer.setCustomerNo(Integer.parseInt(eElement.getAttribute("customerNo")));
             customer.setFirstName(eElement.getElementsByTagName("firstName").item(0).getTextContent());
             customer.setLastName(eElement.getElementsByTagName("lastName").item(0).getTextContent());
+
             try{
-                customer.setBirthDate(LocalDate.parse(eElement.getElementsByTagName("birthdate").item(0).getTextContent()));
+                String bday = eElement.getElementsByTagName("birthDate").item(0).getTextContent();
+                String bdayFormat = bday.substring(0,10);
+                customer.setBirthDate(LocalDate.parse((bdayFormat)));
                 //customer.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(eElement.getElementsByTagName("birthDate").item(0).getTextContent()));
             } catch(Exception e){
                 System.out.println("couldnt parse date");
             }
+            customer.setSex(eElement.getElementsByTagName("sex").item(0).getTextContent());
             customer.setStreetAddress(eElement.getElementsByTagName("streetAddress").item(0).getTextContent());
             customer.setPostalCode(eElement.getElementsByTagName("postalCode").item(0).getTextContent());
             customer.setPostOffice(eElement.getElementsByTagName("postOffice").item(0).getTextContent());
@@ -109,8 +117,7 @@ public class CustomerRegister {
             customer.setBonusCard(getBonusCardFromXml(eElement));
             con.disconnect();
 
-            System.out.println(customer.getBonusCard().getHolderName());
-            System.out.println(customer.getStreetAddress());
+
             return customer;
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
