@@ -304,4 +304,9 @@ public class CustomerScreenController {
     }
 
 
+    public ListView getCatalogListView(){
+
+        ListView catalogListView = this.catalogListView;
+        return catalogListView;
+    }
 }

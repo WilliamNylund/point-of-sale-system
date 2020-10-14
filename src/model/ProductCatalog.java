@@ -3,16 +3,14 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,19 +24,19 @@ public class ProductCatalog {
 
     private static ProductCatalog instance = new ProductCatalog();
 
-    private ProductCatalog(){
+    private ProductCatalog() {
 
     }
 
-    public static ProductCatalog getInstance(){
+    public static ProductCatalog getInstance() {
         return instance;
     }
 
 
-    public Item getProductByBarCode(int barCode){
+    public Item getProductByBarCode(int barCode) {
         Item item = new Item();
 
-        try{
+        try {
             URL url = new URL("http://localhost:9003/rest/findByBarCode/" + barCode);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -58,15 +56,15 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             item.setPrice(3.00);
-            item.setBestBefore(createRandomDate(2020,2020));
+            item.setBestBefore(createRandomDate(2020, 2020));
             NodeList keywords = eElement.getElementsByTagName("keyword");
-            for (int i = 0; i < keywords.getLength(); i++){
+            for (int i = 0; i < keywords.getLength(); i++) {
                 item.getKeywords().add(keywords.item(i).getTextContent());
             }
             con.disconnect();
             return item;
 
-        } catch(IOException | ParserConfigurationException | SAXException e) {
+        } catch (IOException | ParserConfigurationException | SAXException e) {
             errorMessage(Integer.toString(barCode));
             System.out.println("error404");
             e.printStackTrace();
@@ -75,11 +73,11 @@ public class ProductCatalog {
     }
 
 
-    public List getProductByKeyWord(String keyword){
+    public List getProductByKeyWord(String keyword) {
 
         List<Item> itemList = new ArrayList<>();
 
-        try{
+        try {
             URL url = new URL("http://localhost:9003/rest/findByKeyword/" + keyword);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -93,7 +91,7 @@ public class ProductCatalog {
 
             NodeList nList = doc.getElementsByTagName("product");
 
-            for(int i=0; i< nList.getLength(); i++){
+            for (int i = 0; i < nList.getLength(); i++) {
                 Node node = nList.item(i);
                 Element eElement = (Element) node;
                 Item item = new Item();
@@ -102,9 +100,9 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 item.setPrice(3.00); //TODO: remove
-                item.setBestBefore(createRandomDate(2020,2020));
+                item.setBestBefore(createRandomDate(2020, 2020));
                 NodeList keywords = eElement.getElementsByTagName("keyword");
-                for (int j = 0; j < keywords.getLength(); j++){
+                for (int j = 0; j < keywords.getLength(); j++) {
                     item.getKeywords().add(keywords.item(j).getTextContent());
                 }
                 itemList.add(item);
@@ -112,15 +110,15 @@ public class ProductCatalog {
             con.disconnect();
             return itemList;
 
-        } catch(IOException | ParserConfigurationException | SAXException e) {
+        } catch (IOException | ParserConfigurationException | SAXException e) {
             errorMessage(keyword);
             e.printStackTrace();
             return null;
         }
     }
 
-    public Item getProductByName(String name){
-        try{
+    public Item getProductByName(String name) {
+        try {
             URL url = new URL("http://localhost:9003/rest/findByName/" + name);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -142,23 +140,23 @@ public class ProductCatalog {
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
             item.setPrice(3.00); //TODO: remove
-            item.setBestBefore(createRandomDate(2020,2020));
+            item.setBestBefore(createRandomDate(2020, 2020));
             NodeList keywords = eElement.getElementsByTagName("keyword");
-            for (int i = 0; i < keywords.getLength(); i++){
+            for (int i = 0; i < keywords.getLength(); i++) {
                 item.getKeywords().add(keywords.item(i).getTextContent());
             }
             con.disconnect();
             return item;
 
-        } catch(IOException | ParserConfigurationException | SAXException e) {
+        } catch (IOException | ParserConfigurationException | SAXException e) {
             errorMessage(name);
             e.printStackTrace();
             return null;
         }
     }
 
-    public void getAllProducts(){
-        try{
+    public void getAllProducts() {
+        try {
             URL url = new URL("http://localhost:9003/rest/findByName/*");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -172,7 +170,7 @@ public class ProductCatalog {
 
             NodeList nList = doc.getElementsByTagName("product");
 
-            for(int i=0; i< nList.getLength(); i++){
+            for (int i = 0; i < nList.getLength(); i++) {
                 Node node = nList.item(i);
                 Element eElement = (Element) node;
                 Item item = new Item();
@@ -181,9 +179,9 @@ public class ProductCatalog {
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
                 item.setPrice(3.00); //TODO: remove
-                item.setBestBefore(createRandomDate(2020,2020));
+                item.setBestBefore(createRandomDate(2020, 2020));
                 NodeList keywords = eElement.getElementsByTagName("keyword");
-                for (int j = 0; j < keywords.getLength(); j++){
+                for (int j = 0; j < keywords.getLength(); j++) {
                     item.getKeywords().add(keywords.item(j).getTextContent());
                 }
                 catalog.add(item);
@@ -191,17 +189,18 @@ public class ProductCatalog {
 
             con.disconnect();
 
-        } catch(IOException | ParserConfigurationException | SAXException e) {
+        } catch (IOException | ParserConfigurationException | SAXException e) {
             e.printStackTrace();
         }
     }
-    public void run(){
 
-      try {
-          Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
+    public void run() {
+
+        try {
+            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
 
 
-      } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Productcatalog.jar couldnt be started");
         }
@@ -215,13 +214,14 @@ public class ProductCatalog {
         this.catalog = catalog;
     }
 
-    private void errorMessage (String msg) {
+    private void errorMessage(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("No matches");
         alert.setHeaderText("No matches");
         alert.setContentText("'" + msg + "'" + " did not match any items\nPlease try another search term");
         alert.showAndWait();
     }
+
     public int createRandomIntBetween(int start, int end) {
         return start + (int) Math.round(Math.random() * (end - start));
     }
@@ -241,4 +241,27 @@ public class ProductCatalog {
         return LocalDate.of(year, month, day);
     }
 
-}
+    public void uppdatePrices(List<Item> allitems) throws IOException, ParserConfigurationException, SAXException {
+        System.out.println("----------");
+
+
+
+
+       /* for (int i=0;i<nList.getLength();i++) {
+            Node node=nList.item(i);
+            System.out.println(node.getAttributes());
+            System.out.println(node.getTextContent());
+            System.out.println(node.getFirstChild());
+
+            }
+            */
+
+
+        }
+
+
+
+
+
+    }
+

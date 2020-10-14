@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import model.*;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 public class CashierScreenController {
@@ -62,11 +61,15 @@ public class CashierScreenController {
                 Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/AdminScreen.fxml"));
 
+
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setTitle("Administrator");
                 stage.setResizable(false);
                 stage.setScene(scene);
+                AdminScreenController adminScreenController = loader.getController();
+                adminScreenController.setcustomerScreenController(this.customerScreenController);
+
                 stage.show();
 
 
@@ -268,6 +271,11 @@ public class CashierScreenController {
         }
 
         return boolPass;
+    }
+    public ListView getCatalogListView(){
+
+        ListView catalogListView = this.catalogListView;
+        return catalogListView;
     }
 
     @FXML

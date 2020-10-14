@@ -1,13 +1,17 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import model.Item;
 import model.ProductCatalog;
-import model.Transaction;
 import model.TransactionLog;
+import org.xml.sax.SAXException;
 
-import java.security.KeyStore;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -44,6 +48,7 @@ public class AdminScreenController {
     @FXML
     private DatePicker endDateDatePicker;
 
+    private CustomerScreenController customerScreenController;
     @FXML
     public void initialize() {
         allProductsListView.setItems(productCatalog.getCatalog());
@@ -53,6 +58,8 @@ public class AdminScreenController {
     public void setSelectedItem() {
         selectedItemTextFieldPrice.setText(allProductsListView.getSelectionModel().getSelectedItem().toString());
     }
+
+
 
     @FXML
     private void showStats() {
@@ -76,5 +83,51 @@ public class AdminScreenController {
         for(int i=productNames.size()-1; i >= 0; i--){
             productsTextArea.appendText(productNames.get(i) + "  ---  " + amountsSold.get(i) + "\n");
         }
+
+
+
+    }
+    @FXML
+    private void setSelectedItemPrice(){
+        Item item=getSelectedItem();
+        Double newprice=getNewPrice();
+        item.setPrice(newprice);
+        uppdateViewAfterPriceUppdate();
+
+
+    }
+    @FXML
+    private void uppdatePricesToProductCatalog() throws ParserConfigurationException, SAXException, IOException, SQLException {
+
+        List<Item> allitems= allProductsListView.getItems();
+        productCatalog.uppdatePrices(allitems);
+
+    }
+
+    private void uppdateViewAfterPriceUppdate() {
+        allProductsListView.refresh();
+        selectedItemTextFieldPrice.clear();
+        setPriceTextField.clear();
+        customerScreenController.getCatalogListView().refresh();
+        customerScreenController.cashierScreenController.getCatalogListView().refresh();
+
+
+
+
+
+    }
+
+    private Item getSelectedItem() {
+
+        return (Item) allProductsListView.getSelectionModel().getSelectedItem();
+    }
+    private double getNewPrice() {
+        return Double.parseDouble(setPriceTextField.getText());
+    }
+
+
+    public void setcustomerScreenController(CustomerScreenController customerScreenController) {
+        this.customerScreenController = customerScreenController;
     }
 }
+
