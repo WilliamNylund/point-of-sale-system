@@ -195,6 +195,7 @@ public class CashierScreenController {
             discount = (Double.parseDouble(discountTextField.getText()) / 100);
             newPrice = item.calculateDiscount(price, discount);
             selectedItem.setPrice(newPrice);
+            customerScreenController.updateAmountFields();
             itemListView.refresh();
             customerScreenController.getItemListView().refresh();
         } else {

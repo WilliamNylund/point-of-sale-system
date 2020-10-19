@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,10 +49,30 @@ public class AdminScreenController {
     @FXML
     private DatePicker endDateDatePicker;
 
+    @FXML
+    private ComboBox sexComboBox;
+
+    @FXML
+    private Spinner startAgeSpinner;
+
+    @FXML
+    private Spinner endAgeSpinner;
+
     private CustomerScreenController customerScreenController;
     @FXML
     public void initialize() {
         allProductsListView.setItems(productCatalog.getCatalog());
+
+        ObservableList<String> gender =
+                FXCollections.observableArrayList(
+                        "",
+                        "MALE",
+                        "FEMALE",
+                        "UNSPECIFIED"
+
+                );
+
+        sexComboBox.setItems(gender);
 
     }
 
@@ -71,7 +92,7 @@ public class AdminScreenController {
         LocalDate endDate = endDateDatePicker.getValue();
         String searchWord = selectedItemTextFieldDates.getText();
             //get all transactionItems sold inbetween startDate and endDate
-        Map<String, Integer> productsSold = transactionLog.getProductsSoldByDate(startDate, endDate, searchWord);
+        Map<String, Integer> productsSold = transactionLog.getProductsSoldByDate(startDate, endDate, searchWord, "FEMALE");
 
         ArrayList<String> productNames = new ArrayList<>();
         ArrayList<Integer> amountsSold = new ArrayList<>();
