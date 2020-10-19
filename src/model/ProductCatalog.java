@@ -139,7 +139,7 @@ public class ProductCatalog {
             item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
             item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
             item.setId(Integer.parseInt(eElement.getAttribute("id")));
-            item.setPrice(3.00); //TODO: remove
+            item.getPrice();
             item.setBestBefore(createRandomDate(2020, 2020));
             NodeList keywords = eElement.getElementsByTagName("keyword");
             for (int i = 0; i < keywords.getLength(); i++) {
@@ -178,7 +178,7 @@ public class ProductCatalog {
                 item.setVat(Double.parseDouble(eElement.getElementsByTagName("vat").item(0).getTextContent()));
                 item.setBarCode(Integer.parseInt(eElement.getElementsByTagName("barCode").item(0).getTextContent()));
                 item.setId(Integer.parseInt(eElement.getAttribute("id")));
-                item.setPrice(3.00); //TODO: remove
+                item.setPrice(createRandomIntBetween(0,10));
                 item.setBestBefore(createRandomDate(2020, 2020));
                 NodeList keywords = eElement.getElementsByTagName("keyword");
                 for (int j = 0; j < keywords.getLength(); j++) {
@@ -257,11 +257,24 @@ public class ProductCatalog {
             */
 
 
+    }
+
+    // Används i CashierScreenController.serchItem()  För att få items
+    public Item getProductByNameFromLocal(String text) throws CloneNotSupportedException {
+        for (Item item : ProductCatalog.getInstance().catalog) {
+            if (item.getName() == text) //
+                return (Item) item.clone();
         }
-
-
-
-
+        return null;
 
     }
+    // Används i CashierScreenController.serchItem()  För att få items
+    public Item getProductByBarCodeFromLocal(int barcode) throws CloneNotSupportedException {
+        for (Item item : ProductCatalog.getInstance().catalog) {
+            if (item.getBarCode() == barcode) //
+                return (Item) item.clone();
+        }
+        return null;
+    }
+}
 
