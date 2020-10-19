@@ -71,7 +71,7 @@ public class AdminScreenController {
         LocalDate endDate = endDateDatePicker.getValue();
         String searchWord = selectedItemTextFieldDates.getText();
             //get all transactionItems sold inbetween startDate and endDate
-        Map<String, Integer> productsSold = transactionLog.getProductsSoldByDate(startDate, endDate, searchWord);
+       Map<String, Integer> productsSold = transactionLog.getProductsSoldByDate(startDate, endDate, searchWord,"FEMALE");
 
         ArrayList<String> productNames = new ArrayList<>();
         ArrayList<Integer> amountsSold = new ArrayList<>();
@@ -93,7 +93,7 @@ public class AdminScreenController {
         Double newprice=getNewPrice();
         item.setPrice(newprice);
         uppdateViewAfterPriceUppdate();
-
+        // TODO se till att get item by name, id ska ha nya värdet
 
     }
     @FXML

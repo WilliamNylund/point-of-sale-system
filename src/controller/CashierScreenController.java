@@ -86,7 +86,9 @@ public class CashierScreenController {
             System.out.println("cant search with empty");
         } else {
             try {
-                Item item = productCatalog.getProductByName(barcodeTextField.getText());
+               // Item item = productCatalog.getProductByName(barcodeTextField.getText());
+
+                Item item= productCatalog.getProductByNameFromLocal(barcodeTextField.getText());
                 if (item != null) {
                     transaction.addItem(item);
                     customerScreenController.updateAmountFields();
@@ -96,7 +98,7 @@ public class CashierScreenController {
             }
 
             try {
-                Item item = productCatalog.getProductByBarCode(Integer.parseInt(barcodeTextField.getText()));
+                Item item = productCatalog.getProductByBarCodeFromLocal(Integer.parseInt(barcodeTextField.getText()));
                 if (item != null) {
                     transaction.addItem(item);
                     customerScreenController.updateAmountFields();
