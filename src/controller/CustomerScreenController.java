@@ -72,7 +72,7 @@ public class CustomerScreenController {
             return;
         }
         if (transaction.getTotalCost() < transaction.getCardAmount() + transaction.getCashAmount()){
-            cashierScreenController.changeTextField.setText(String.valueOf((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()));
+            cashierScreenController.getChangeTextField().setText(String.valueOf((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()));
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("I aint taking no charity");
             alert.setHeaderText(null);
@@ -174,7 +174,7 @@ public class CustomerScreenController {
 
     public void updateAmountFields(){
         totalTextField.setText(Double.toString(transaction.getTotalCost()));
-        cashierScreenController.totalTextField.setText(Double.toString(transaction.getTotalCost()));
+        cashierScreenController.getTotalTextField().setText(Double.toString(transaction.getTotalCost()));
         transaction.setOutstanding();
         outstandingTextField.setText(Double.toString(transaction.getOutstanding()));
     }
@@ -260,12 +260,15 @@ public class CustomerScreenController {
     }
 
     public void clearTextFields(){
-        this.cashTextField.setText("");
-        this.cardTextField.setText("");
-        this.outstandingTextField.setText("");
-        this.totalTextField.setText("");
-        cashierScreenController.getTotalTextField().setText("");
-        cashierScreenController.statusTextField.setText("");
+        this.cashTextField.clear();
+        this.cardTextField.clear();
+        this.outstandingTextField.clear();
+        this.totalTextField.clear();
+        cashierScreenController.getTotalTextField().clear();
+        cashierScreenController.statusTextField.clear();
+        cashierScreenController.getDiscountTextField().clear();
+        cashierScreenController.getChangeTextField().clear();
+        cashierScreenController.getBarcodeTextField().clear();
     }
 
     private void finishPayment(){

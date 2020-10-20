@@ -19,15 +19,14 @@ public class CashierScreenController {
 
     private CustomerScreenController customerScreenController;
 
-
     @FXML
     private TextField barcodeTextField;
 
     @FXML
-    public TextField totalTextField;
+    private TextField totalTextField;
 
     @FXML
-    public TextField changeTextField;
+    private TextField changeTextField;
 
     @FXML
     private TextField discountTextField;
@@ -245,6 +244,30 @@ public class CashierScreenController {
 
     public void setTotalTextField(TextField totalTextField) {
         this.totalTextField = totalTextField;
+    }
+
+    public TextField getBarcodeTextField() {
+        return barcodeTextField;
+    }
+
+    public void setBarcodeTextField(TextField barcodeTextField) {
+        this.barcodeTextField = barcodeTextField;
+    }
+
+    public TextField getDiscountTextField() {
+        return discountTextField;
+    }
+
+    public void setDiscountTextField(TextField discountTextField) {
+        this.discountTextField = discountTextField;
+    }
+
+    public TextField getChangeTextField() {
+        return changeTextField;
+    }
+
+    public void setChangeTextField(TextField changeTextField) {
+        this.changeTextField = changeTextField;
     }
 
     public ComboBox getTransactionComboBox() {
