@@ -59,7 +59,7 @@ public class Transaction {
     }
 
     public double getTotalCost() {
-        return totalCost;
+        return Math.round(totalCost*100.0)/100.0;
     }
 
     public void setTotalCost(double totalCost) {
