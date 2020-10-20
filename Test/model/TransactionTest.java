@@ -1,5 +1,7 @@
 package model;
 
+import controller.CashierScreenController;
+import controller.CustomerScreenController;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -12,11 +14,7 @@ class TransactionTest {
 
     @Test
     void getItemList() {
-        try {
-            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         ProductCatalog testProductCatalog;
         testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
@@ -45,11 +43,7 @@ class TransactionTest {
 
     @Test
     void getTotalCost() {
-        try {
-            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         ProductCatalog testProductCatalog;
         testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
@@ -71,11 +65,7 @@ class TransactionTest {
 
     @Test
     void getOutstanding() {
-        try {
-            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         ProductCatalog testProductCatalog;
         testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
@@ -88,62 +78,35 @@ class TransactionTest {
     }
 
     @Test
-    void setOutstanding() {
-    }
+    void transactionLogTest() {
 
-
-
-    @Test
-    void addItemAndRemoveItem() {
-        try {
-            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ProductCatalog testProductCatalog;
-        testProductCatalog = ProductCatalog.getInstance();
+        ProductCatalog testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
+        TransactionLog testTransactionLog = TransactionLog.getInstance();
+        CustomerScreenController customerScreenController = new CustomerScreenController();
+        CashierScreenController cashierScreenController = new CashierScreenController();
 
-        Item testItem = testProductCatalog.getProductByName("Banana");
-        testTransaction.addItem(testItem);
-        assertTrue(testTransaction.getItemList().contains(testItem), "Banana should be in item list");
-
-        Item testItem2 = testProductCatalog.getProductByBarCode(1);
-        testTransaction.addItem(testItem2);
-        assertTrue(testTransaction.getItemList().contains(testItem2), "Item with barcode 1 should be in item list");
-
-        testTransaction.removeItem(testItem);
-        assertFalse(testTransaction.getItemList().contains(testItem), "Banana should be removed from item list");
-        assertTrue(testTransaction.getItemList().contains(testItem2), "Item with barcode 1 should be in item list");
-
-    }
-
-    @Test
-    void verifyBestBeforeAlert() {  // BEFORE RUNNING, DISABLE THE ALERT CALL IN ADDITEM() AND CHECK THE BOOLEAN
-        try {
-            Runtime.getRuntime().exec("java -jar ProductCatalog.jar");
-        } catch (IOException e) {
-            e.printStackTrace();
+        Item item = testProductCatalog.getProductByBarCode(0);
+        for (int i = 0; i < 5; i++){
+            testTransaction.addItem(item);
         }
+        assertTrue(testTransactionLog.getPausedTransactions().isEmpty());
+        assertTrue(testTransaction.getItemList().size() == 5);
 
-        ProductCatalog testProductCatalog;
-        testProductCatalog = ProductCatalog.getInstance();
-        Transaction testTransaction = new Transaction();
+        testTransactionLog.getPausedTransactions().add(testTransaction);
 
-        Item oldItem = testProductCatalog.getProductByName("Milk");
-        oldItem.setBestBefore(LocalDate.now().plusDays(1));
-        System.out.println(LocalDate.now().plusDays(1));
-        testTransaction.addItem(oldItem);
-        assertTrue(testTransaction.testInfoMessage == true, "The BBE alert should have been called");
+        Transaction testTransaction2 = new Transaction();
 
-        Item newItem = testProductCatalog.getProductByName("Dildo");
-        newItem.setBestBefore(LocalDate.now().plusDays(3));
-        System.out.println(LocalDate.now().plusDays(3));
-        testTransaction.addItem(newItem);
-        assertTrue(testTransaction.testInfoMessage == false, "The BBE alert should --NOT-- have been called");
+        assertTrue(testTransactionLog.getPausedTransactions().size() == 1);
+
+        Item item2 = testProductCatalog.getProductByName("Banana");
+
+        testTransaction2.addItem(item2);
+        testTransactionLog.getPausedTransactions().add(testTransaction2);
+
+        assertTrue(testTransactionLog.getPausedTransactions().size() == 2);
+
     }
-
-
 
 
 }
