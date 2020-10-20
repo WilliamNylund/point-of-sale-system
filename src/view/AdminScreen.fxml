@@ -55,7 +55,7 @@
                                     </Label>
                                     <Label layoutX="32.0" layoutY="290.0" text="Search bonus customer" />
                                     <TextField fx:id="bonusCustomerTextField" layoutX="169.0" layoutY="286.0" promptText="enter customer id" />
-                                    <Button layoutX="334.0" layoutY="286.0" mnemonicParsing="false" text="ENTER" />
+                                    <Button layoutX="334.0" layoutY="286.0" mnemonicParsing="false" text="ENTER" onAction="#showCustomerStats"/>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#1f93ff00" height="142.0" layoutX="2.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#1f93ff00" height="52.0" layoutX="2.0" layoutY="71.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#1f93ff00" height="52.0" layoutX="3.0" layoutY="267.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />

@@ -89,9 +89,34 @@ public class TransactionLog {
         transaction1.setPaid(true);
         transaction1.setPaymentDate(LocalDate.of(2020, 10, 8));
         this.getCompletedTransactions().add(transaction1);
+
+        Transaction transaction2 = new Transaction();
+        transaction2.getItemList().add(productCatalog.getCatalog().get(0));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(0));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(0));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(1));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(4));
+        transaction2.getItemList().add(productCatalog.getCatalog().get(4));
+        String[] temp2 = new String[]{"99", "CREDIT", "ACCEPTED", null, null};
+        transaction2.setPaymentInformation(temp2);
+        transaction2.setTotalCost(20.0);
+        transaction2.setCardAmount(10);
+        transaction2.setCashAmount(10);
+        transaction2.setPaid(true);
+        transaction2.setPaymentDate(LocalDate.of(2020, 10, 6));
+        Customer customer = new Customer();
+        customer.setSex("MALE");
+        customer.setBirthDate(LocalDate.now().minusYears(18));
+        //transaction2.setCustomer(customer);
+        this.getCompletedTransactions().add(transaction2);
     }
 
-    public Map getProductsSoldByDate(LocalDate startDate, LocalDate endDate, String searchWord, String sex){
+    public Map getProductsSoldByDate(LocalDate startDate, LocalDate endDate, String searchWord, String sex, int startAge, int endAge){
         Map<String, Integer> productsSold = new HashMap<String, Integer>();
         if(endDate == null){
             endDate = LocalDate.now();
@@ -99,24 +124,28 @@ public class TransactionLog {
         if(startDate == null){
             startDate = LocalDate.of(2000,1,1);
         }
-
+        System.out.println(searchWord +" "+ sex + " " + startAge + " " + endAge);
         //for every completed transaction
         for (int i = 0; i < this.getCompletedTransactions().size(); i++){
             //check if payment date is between startdate and enddate
             if ((this.getCompletedTransactions().get(i).getPaymentDate().isAfter(startDate) || this.getCompletedTransactions().get(i).getPaymentDate().isEqual(startDate))&& (this.getCompletedTransactions().get(i).getPaymentDate().isBefore(endDate) || this.getCompletedTransactions().get(i).getPaymentDate().isEqual(endDate))){
-                //if SEX is correct
-                if(sex == null || this.getCompletedTransactions().get(i).getCustomer().getSex().equals(sex)) {
-                    List itemList = this.getCompletedTransactions().get(i).getItemList();
-                    //for every item in that transaction
-                    for (int j = 0; j < itemList.size(); j++) {
-                        //if contains product already, add +1 to value
-                        Item item = (Item) itemList.get(j);
-                        if (item.getName().toLowerCase().contains(searchWord.toLowerCase()) || String.valueOf(item.getBarCode()).equals(searchWord)) {
-                            if (productsSold.containsKey(item.getName())) {
-                                int currAmount = productsSold.get(item.getName());
-                                productsSold.replace(item.getName(), currAmount + 1);
-                            } else {
-                                productsSold.put(item.getName(), 1);
+                //if sex is correct
+                if(sex == null || (this.getCompletedTransactions().get(i).getCustomer() != null  && this.getCompletedTransactions().get(i).getCustomer().getSex().contains(sex))) {
+                    //if age is correct
+                    if (startAge < 0 || (this.getCompletedTransactions().get(i).getCustomer() != null && (this.getCompletedTransactions().get(i).getCustomer().getAge() >= startAge && this.getCompletedTransactions().get(i).getCustomer().getAge() <= endAge))) {
+
+                        List itemList = this.getCompletedTransactions().get(i).getItemList();
+                        //for every item in that transaction
+                        for (int j = 0; j < itemList.size(); j++) {
+                            //if contains product already, add +1 to value
+                            Item item = (Item) itemList.get(j);
+                            if (item.getName().toLowerCase().contains(searchWord.toLowerCase()) || String.valueOf(item.getBarCode()).equals(searchWord)) {
+                                if (productsSold.containsKey(item.getName())) {
+                                    int currAmount = productsSold.get(item.getName());
+                                    productsSold.replace(item.getName(), currAmount + 1);
+                                } else {
+                                    productsSold.put(item.getName(), 1);
+                                }
                             }
                         }
                     }
@@ -133,7 +162,7 @@ public class TransactionLog {
 
         //for every completed transaction
         for (int i = 0; i < this.getCompletedTransactions().size(); i++){
-            if (customerNo == this.getCompletedTransactions().get(i).getCustomer().getCustomerNo()){
+            if (this.getCompletedTransactions().get(i).getCustomer() != null && customerNo == this.getCompletedTransactions().get(i).getCustomer().getCustomerNo()){
                 List itemList = this.getCompletedTransactions().get(i).getItemList();
                 for (int j = 0; j < itemList.size(); j++) {
                     //if contains product already, add +1 to value
