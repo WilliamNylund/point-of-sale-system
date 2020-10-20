@@ -66,7 +66,6 @@ public class ProductCatalog {
 
         } catch (IOException | ParserConfigurationException | SAXException e) {
             errorMessage(Integer.toString(barCode));
-            System.out.println("error404");
             e.printStackTrace();
             return null;
         }
@@ -262,18 +261,20 @@ public class ProductCatalog {
     // Används i CashierScreenController.serchItem()  För att få items
     public Item getProductByNameFromLocal(String text) throws CloneNotSupportedException {
         for (Item item : ProductCatalog.getInstance().catalog) {
-            if (item.getName() == text) //
+            if (item.getName().toLowerCase().equals(text.toLowerCase())) //
                 return (Item) item.clone();
         }
+
         return null;
 
     }
     // Används i CashierScreenController.serchItem()  För att få items
     public Item getProductByBarCodeFromLocal(int barcode) throws CloneNotSupportedException {
         for (Item item : ProductCatalog.getInstance().catalog) {
-            if (item.getBarCode() == barcode) //
+            if (item.getBarCode() == barcode)//
                 return (Item) item.clone();
         }
+
         return null;
     }
 }

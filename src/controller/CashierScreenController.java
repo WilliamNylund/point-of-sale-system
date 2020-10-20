@@ -81,30 +81,38 @@ public class CashierScreenController {
 
     @FXML
     private void searchItem() {
-        System.out.println(barcodeTextField.getText());
+
+        int itemsBefore = itemListView.getItems().size();
+        //System.out.println(barcodeTextField.getText());   // FOR DEBUGGING
         if (barcodeTextField.getText().isEmpty()) {
-            System.out.println("cant search with empty");
+            errorMessage("' " + "'" + " did not match any items\nPlease try another search term");
         } else {
             try {
                // Item item = productCatalog.getProductByName(barcodeTextField.getText());
-
-                Item item= productCatalog.getProductByNameFromLocal(barcodeTextField.getText());
+                Item item= productCatalog.getProductByNameFromLocal(barcodeTextField.getText().trim());
                 if (item != null) {
                     transaction.addItem(item);
                     customerScreenController.updateAmountFields();
                 }
+
+            } catch (Exception e) {
+
+            }
+            try {
+                Item item = productCatalog.getProductByBarCodeFromLocal(Integer.parseInt(barcodeTextField.getText().trim()));
+                if (item != null) {
+                    transaction.addItem(item);
+                    customerScreenController.updateAmountFields();
+                }
+
             } catch (Exception e) {
 
             }
 
-            try {
-                Item item = productCatalog.getProductByBarCodeFromLocal(Integer.parseInt(barcodeTextField.getText()));
-                if (item != null) {
-                    transaction.addItem(item);
-                    customerScreenController.updateAmountFields();
-                }
-            } catch (Exception e) {
+            int itemsAfter = itemListView.getItems().size();
 
+            if (itemsBefore == itemsAfter) {
+                errorMessage("'" + barcodeTextField.getText() + "'" + " did not match any items\nPlease try another search term");
             }
 
         /*try {
@@ -112,6 +120,8 @@ public class CashierScreenController {
             System.out.println(item);
         } catch (Exception e) {
             System.out.println("sum ting wong");
+        }
+    }
         }*/
         }
     }
@@ -121,11 +131,7 @@ public class CashierScreenController {
         System.out.println("Pause transaction");
 
         if(transaction.getItemList().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("");
-            alert.setHeaderText(null);
-            alert.setContentText("Transaction is empty! Nothing to pause dumbass..");
-            alert.showAndWait();
+           errorMessage("Transaction is empty!\nOnly ongoing sales can be paused");
             return;
         }
 
@@ -140,11 +146,7 @@ public class CashierScreenController {
     private void continueTransaction() {
 
         if(transactionComboBox.getSelectionModel().getSelectedItem() == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("");
-            alert.setHeaderText(null);
-            alert.setContentText("Select a transaction");
-            alert.showAndWait();
+            errorMessage("No transaction selected");
             return;
         }
 
@@ -163,11 +165,7 @@ public class CashierScreenController {
             }
 
         } else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("");
-            alert.setHeaderText(null);
-            alert.setContentText("Complete / pause ongoing transaction before continuing");
-            alert.showAndWait();
+            errorMessage("Complete / Pause ongoing transaction before continuing");
             return;
 
         }
@@ -204,11 +202,7 @@ public class CashierScreenController {
                 customerScreenController.getItemListView().refresh();
             }
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid discount");
-            alert.showAndWait();
+            errorMessage("Invalid discount");
         }
         discountTextField.clear();
     }
@@ -283,18 +277,19 @@ public class CashierScreenController {
 
         return boolPass;
     }
+
+    private void errorMessage(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error");
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
     public ListView getCatalogListView(){
 
         ListView catalogListView = this.catalogListView;
         return catalogListView;
     }
 
-    @FXML
-    private void validateDiscountField() {
-        /*discountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d+")) {
-                discountTextField.setText(oldValue);
-            }
-        });*/
-    }
 }

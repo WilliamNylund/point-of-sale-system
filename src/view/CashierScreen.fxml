@@ -58,7 +58,7 @@
                                 <Label fx:id="changeLabel" layoutX="33.0" layoutY="147.0" text="Change:" />
                                 <TextField fx:id="changeTextField" editable="false" layoutX="126.0" layoutY="143.0" />
                                 <Label fx:id="discountLabel" layoutX="34.0" layoutY="195.0" text="Add discount:" />
-                                <TextField fx:id="discountTextField" layoutX="126.0" layoutY="191.0" onMouseClicked="#validateDiscountField" promptText="Only whole numbers allowed" />
+                                <TextField fx:id="discountTextField" layoutX="126.0" layoutY="191.0" promptText="Only whole numbers allowed" />
                                 <Button fx:id="paymentButton" layoutX="15.0" layoutY="238.0" mnemonicParsing="false" onAction="#startPayment" prefHeight="32.0" prefWidth="260.0" style="-fx-background-color: #03b003" text="Start payment" />
                                 <ComboBox fx:id="transactionComboBox" layoutX="194.0" layoutY="311.0" prefHeight="25.0" prefWidth="185.0" />
                                 <Button fx:id="continueTransactionButton" layoutX="421.0" layoutY="295.0" mnemonicParsing="false" onAction="#continueTransaction" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #03b003" text="Continue sale" />
