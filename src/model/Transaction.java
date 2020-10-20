@@ -231,12 +231,9 @@ public class Transaction {
     }
 
     public Customer getCustomer() {
-        try{
-            customer = CustomerRegister.getInstance().findByCustomerBonusCard(Integer.parseInt(getBonusCardNumber()), 2023, 4);
-
-        } catch (Exception e){
-            System.out.println("wrong bonus card number/mm/yyyy combination");
-        }
         return customer;
+    }
+    public void setCustomer(Customer customer){
+        this.customer = customer;
     }
 }

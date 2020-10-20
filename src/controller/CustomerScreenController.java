@@ -209,6 +209,8 @@ public class CustomerScreenController {
     }
 
     private boolean paymentCheck(String[] paymentInformation) {
+        transaction.setCustomer(customerRegister.findByCustomerNo(101));
+        bonusCard = transaction.getCustomer().getBonusCard();
 
         // paymentCardNumber[0]= behövs int testas
         // paymentCardType[1]= behvös int testas
@@ -219,6 +221,7 @@ public class CustomerScreenController {
         if(paymentInformation[2]==null && paymentInformation[3].contains("ACCEPTED")&&paymentInformation[4]!=null ){//Betala med Bonus
             System.out.println("Betala med Bonus kort");
             cashierScreenController.statusTextField.setText(transaction.getBonusState());
+            bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
             return true;
         }
         // paymentCardNumber[0]= skall finnas
@@ -241,6 +244,7 @@ public class CustomerScreenController {
             else if(paymentInformation[3].contains("ACCEPTED")&& paymentInformation[4]!=null){
                 System.out.println("Betala med Combined");
                 cashierScreenController.statusTextField.setText(transaction.getPaymentState());
+                bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
                 return true;
             }
 
@@ -271,7 +275,7 @@ public class CustomerScreenController {
         cashierScreenController.getBarcodeTextField().clear();
     }
 
-    private void finishPayment(){
+    /*private void finishPayment(){
         transaction.printReceipt();
         //bonusCard = new BonusCard();
         //Customer customer = CustomerRegister.getInstance().findByCustomerBonusCard(Integer.parseInt(transaction.getBonusCardNumber()),2023,4);
@@ -289,6 +293,20 @@ public class CustomerScreenController {
         System.out.println(customer.getAge());
         bonusCard = transaction.getCustomer().getBonusCard();
         bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
+        transaction.setPaymentDate(LocalDate.now());
+        transaction.setPaid(true);
+        transactionLog.getCompletedTransactions().add(transaction);
+        Transaction newTransaction = new Transaction();
+        this.setTransaction(newTransaction);
+        cashierScreenController.setTransaction(newTransaction);
+        this.clearTextFields();
+    }*/
+
+    private void finishPayment(){
+        transaction.printReceipt();
+        //transaction.setCustomer();
+        //bonusCard = transaction.getCustomer().getBonusCard();
+        //bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
         transaction.setPaymentDate(LocalDate.now());
         transaction.setPaid(true);
         transactionLog.getCompletedTransactions().add(transaction);

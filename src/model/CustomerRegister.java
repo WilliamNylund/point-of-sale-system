@@ -16,6 +16,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 
 public class CustomerRegister {
 
@@ -25,6 +26,9 @@ public class CustomerRegister {
 
     }
 
+    private ArrayList<Customer> customerList = new ArrayList<Customer>();
+
+
     public static CustomerRegister getInstance(){
         return instance;
     }
@@ -32,6 +36,7 @@ public class CustomerRegister {
     //returns customer object with customerNo
     public Customer findByCustomerNo(int customerNo){
         Customer customer = new Customer();
+        customerList.add(customer);
         try{
             URL url = new URL("http://localhost:9004/rest/findByCustomerNo/" + customerNo);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -68,6 +73,26 @@ public class CustomerRegister {
             customer.setBonusCard(getBonusCardFromXml(eElement));
 
             con.disconnect();
+
+            for(int i = 0;i<customerList.size();i++){
+                boolean flag = false;
+                if(customer.getCustomerNo() == customerList.get(i).getCustomerNo()){
+                    System.out.println("new customerNO equals custno in custlist");
+                    flag = true;
+                } else{
+                    System.out.println("customerno doesnt equal any custno in custlist");
+                }
+                if (flag = true){
+                    System.out.println("returns custlist(i) instead of new customer object");
+                    System.out.println("custlist size");
+                    System.out.println(customerList.size());
+                    return customerList.get(i);
+                } else{
+                    customerList.add(customer);
+                    System.out.println("customer added to custlist");
+                }
+            }
+
             return customer;
 
         } catch(IOException | ParserConfigurationException | SAXException e) {
