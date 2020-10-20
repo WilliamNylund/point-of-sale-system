@@ -58,6 +58,9 @@ public class AdminScreenController {
     @FXML
     private Spinner endAgeSpinner;
 
+    @FXML
+    private TextField bonusCustomerTextField;
+
     private CustomerScreenController customerScreenController;
     @FXML
     public void initialize() {
@@ -73,6 +76,8 @@ public class AdminScreenController {
                 );
 
         sexComboBox.setItems(gender);
+        startAgeSpinner.getEditor().clear();
+        endAgeSpinner.getEditor().clear();
 
     }
 
@@ -84,16 +89,50 @@ public class AdminScreenController {
 
     @FXML
     private void showStats() {
-        System.out.println("showing stats");
         productsTextArea.clear();
         productsTextArea.appendText("Product --- Amount sold \n\n");
 
         LocalDate startDate = startDateDatePicker.getValue();
         LocalDate endDate = endDateDatePicker.getValue();
         String searchWord = selectedItemTextFieldDates.getText();
-            //get all transactionItems sold inbetween startDate and endDate
+        String sex = (String)sexComboBox.getSelectionModel().getSelectedItem();
 
-        Map<String, Integer> productsSold = transactionLog.getProductsSoldByDate(startDate, endDate, searchWord, "FEMALE");
+        int startAge = -1;
+        int endAge = -1;
+
+        try {
+            //if atleast one is not empty
+
+            String startAgeSpinnerValue = startAgeSpinner.getEditor().getText().trim();
+            String endAgeSpinnerValue = endAgeSpinner.getEditor().getText().trim();
+
+            if(!startAgeSpinnerValue.isEmpty() || !endAgeSpinnerValue.isEmpty()){
+                if((startAgeSpinnerValue.isEmpty()) && (!endAgeSpinnerValue.isEmpty())){
+                    System.out.println("1");
+                    startAge = 0;
+                    endAge = Integer.parseInt(endAgeSpinnerValue);
+                    //if endAge is empty but not startAge
+                } else if((!startAgeSpinnerValue.isEmpty()) && (endAgeSpinnerValue.isEmpty())) {
+                    System.out.println("2");
+                    startAge = Integer.parseInt(startAgeSpinnerValue);
+                    endAge = 200;
+                } else if(!(startAgeSpinnerValue.isEmpty()) && (!endAgeSpinnerValue.isEmpty())){
+                    System.out.println("3");
+                    startAge = Integer.parseInt(startAgeSpinnerValue);
+                    endAge = Integer.parseInt(endAgeSpinnerValue);
+                }
+            }
+
+        } catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Only input integers as age");
+            alert.showAndWait();
+            return;
+        }
+        //get all transactionItems sold inbetween startDate and endDate
+
+        Map<String, Integer> productsSold = transactionLog.getProductsSoldByDate(startDate, endDate, searchWord, sex, startAge, endAge);
 
 
         ArrayList<String> productNames = new ArrayList<>();
@@ -106,10 +145,12 @@ public class AdminScreenController {
         for(int i=productNames.size()-1; i >= 0; i--){
             productsTextArea.appendText(productNames.get(i) + "  ---  " + amountsSold.get(i) + "\n");
         }
-
-
-
     }
+    @FXML
+    private void showCustomerStats(){
+        bonusCustomerTextField.getText();
+    }
+
     @FXML
     private void setSelectedItemPrice(){
         Item item=getSelectedItem();
