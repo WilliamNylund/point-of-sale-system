@@ -166,7 +166,7 @@ public class CashierScreenController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("");
             alert.setHeaderText(null);
-            alert.setContentText("Complete / pause ongoing transactionen before continuing");
+            alert.setContentText("Complete / pause ongoing transaction before continuing");
             alert.showAndWait();
             return;
 
@@ -186,23 +186,31 @@ public class CashierScreenController {
     @FXML
     private void addDiscount() {
 
-        System.out.println("Add discount");
-        Item item = new Item();
         Double discount;
         Double price;
         Double newPrice;
+        System.out.println("Add discount");
+        Item item = new Item();
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
-        if (Double.parseDouble(discountTextField.getText()) <= 100) {
-            price = selectedItem.getPrice();
-            discount = (Double.parseDouble(discountTextField.getText()) / 100);
-            newPrice = item.calculateDiscount(price, discount);
-            selectedItem.setPrice(newPrice);
-            customerScreenController.updateAmountFields();
-            itemListView.refresh();
-            customerScreenController.getItemListView().refresh();
-        } else {
-            discountTextField.setText("Invalid discount");
+        try {
+            if (Double.parseDouble(discountTextField.getText()) <= 100) {
+                price = selectedItem.getPrice();
+                discount = (Double.parseDouble(discountTextField.getText()) / 100);
+                newPrice = item.calculateDiscount(price, discount);
+                selectedItem.setPrice(newPrice);
+                transaction.setTotalCost((transaction.getTotalCost() - price) + newPrice);
+                customerScreenController.updateAmountFields();
+                itemListView.refresh();
+                customerScreenController.getItemListView().refresh();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid discount");
+            alert.showAndWait();
         }
+        discountTextField.clear();
     }
 
     public void setTransaction(Transaction transaction){
@@ -283,10 +291,10 @@ public class CashierScreenController {
 
     @FXML
     private void validateDiscountField() {
-        discountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+        /*discountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d+")) {
                 discountTextField.setText(oldValue);
             }
-        });
+        });*/
     }
 }
