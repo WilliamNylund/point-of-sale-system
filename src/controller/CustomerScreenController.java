@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import model.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -109,8 +108,7 @@ public class CustomerScreenController {
 
     @FXML
     private void continueTransaction(){ //id: continueTransactionButton
-        System.out.println("this button should be removed");
-        System.out.println("continue transaction");
+
     }
 
     @FXML
@@ -168,6 +166,7 @@ public class CustomerScreenController {
     }
 
     public void listenForPayment(){
+        //Listens for cardreader status to be done every second
         Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
@@ -180,16 +179,16 @@ public class CustomerScreenController {
 
                         transaction.setPaymentInformation(paymentInformation);
                         if(paymentCheck(paymentInformation)) {
+                            cardReader.reset();
                             this.cancel();
                             finishPayment();
+                        } else{
+                            cardReader.reset();
+                            this.cancel();
                         }
-                        this.cancel();
-                        cardReader.reset();
-
                     } else {
                         System.out.println("waiting for payment...");
                     }
-
                 });
             }
         }, 0, 1000);
@@ -263,38 +262,8 @@ public class CustomerScreenController {
         cashierScreenController.getBarcodeTextField().clear();
     }
 
-    /*private void finishPayment(){
-        transaction.printReceipt();
-        //bonusCard = new BonusCard();
-        //Customer customer = CustomerRegister.getInstance().findByCustomerBonusCard(Integer.parseInt(transaction.getBonusCardNumber()),2023,4);
-        Customer customer = transaction.getCustomer();
-        System.out.println(customer.getCustomerNo());
-        System.out.println(customer.getFirstName());
-        System.out.println(customer.getLastName());
-        System.out.println(customer.getBirthDate());
-        System.out.println(customer.getSex());
-        System.out.println(customer.getStreetAddress());
-        System.out.println(customer.getBonusCard().getNumber());
-        System.out.println(customer.getBonusCard().getGoodThruMonth());
-        System.out.println(customer.getBonusCard().getGoodThruYear());
-        System.out.println(customer.getBonusCard().getHolderName());
-        System.out.println(customer.getAge());
-        bonusCard = transaction.getCustomer().getBonusCard();
-        bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
-        transaction.setPaymentDate(LocalDate.now());
-        transaction.setPaid(true);
-        transactionLog.getCompletedTransactions().add(transaction);
-        Transaction newTransaction = new Transaction();
-        this.setTransaction(newTransaction);
-        cashierScreenController.setTransaction(newTransaction);
-        this.clearTextFields();
-    }*/
-
     private void finishPayment(){
         transaction.printReceipt();
-        //transaction.setCustomer();
-        //bonusCard = transaction.getCustomer().getBonusCard();
-        //bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
         transaction.setPaymentDate(LocalDate.now());
         transaction.setPaid(true);
         transactionLog.getCompletedTransactions().add(transaction);
