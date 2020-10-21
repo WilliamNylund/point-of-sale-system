@@ -76,7 +76,7 @@ public class BonusCard {
         try {
             points += transaction.getTotalCost() * 0.05;
             System.out.println("Added 5% of total cost worth of bonus points!");
-            System.out.println("Your points: "+points);
+            System.out.println("Your points: "+points+System.getProperty("line.separator"));
         } catch (Exception e) {
             e.printStackTrace();
         }

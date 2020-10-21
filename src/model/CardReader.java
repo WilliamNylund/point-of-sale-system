@@ -30,7 +30,6 @@ public class CardReader {
 
     public void waitForPayment(double amount){
         try{
-            System.out.println("Waiting for payment");
             URL url = new URL("http://localhost:9002/cardreader/waitForPayment");
             String data = "amount=" + amount;
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -48,7 +47,6 @@ public class CardReader {
 
     public void abort(){
         try{
-            System.out.println("cardreader aborting");
             URL url = new URL("http://localhost:9002/cardreader/abort");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -64,7 +62,6 @@ public class CardReader {
 
     public void reset(){
         try{
-            System.out.println("cardreader resetting");
             URL url = new URL("http://localhost:9002/cardreader/reset");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -157,7 +154,6 @@ public class CardReader {
         try{
             return eElement.getElementsByTagName(tagName).item(0).getTextContent();
         } catch(Exception e){
-            System.out.println("Could not find " + tagName);
             return null;
         }
     }

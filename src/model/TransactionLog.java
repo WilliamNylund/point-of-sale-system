@@ -122,7 +122,6 @@ public class TransactionLog {
         if(startDate == null){
             startDate = LocalDate.of(2000,1,1);
         }
-        System.out.println(searchWord +" "+ sex + " " + startAge + " " + endAge);
         //for every completed transaction
         for (int i = 0; i < this.getCompletedTransactions().size(); i++){
             //check if payment date is between startdate and enddate

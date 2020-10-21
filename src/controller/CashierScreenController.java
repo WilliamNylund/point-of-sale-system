@@ -112,15 +112,6 @@ public class CashierScreenController {
             if (itemsBefore == itemsAfter) {
                 errorMessage("'" + barcodeTextField.getText() + "'" + " did not match any items\nPlease try another search term");
             }
-
-        /*try {
-            List item = productCatalog.getProductByKeyWord((barcodeTextField.getText()));
-            System.out.println(item);
-        } catch (Exception e) {
-            System.out.println("sum ting wong");
-        }
-    }
-        }*/
         }
     }
 
@@ -180,7 +171,6 @@ public class CashierScreenController {
         Double discount;
         Double price;
         Double newPrice;
-        System.out.println("Add discount");
         Item item = new Item();
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         try {

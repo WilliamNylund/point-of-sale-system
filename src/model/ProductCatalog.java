@@ -240,24 +240,6 @@ public class ProductCatalog {
         return LocalDate.of(year, month, day);
     }
 
-    public void uppdatePrices(List<Item> allitems) throws IOException, ParserConfigurationException, SAXException {
-        System.out.println("----------");
-
-
-
-
-       /* for (int i=0;i<nList.getLength();i++) {
-            Node node=nList.item(i);
-            System.out.println(node.getAttributes());
-            System.out.println(node.getTextContent());
-            System.out.println(node.getFirstChild());
-
-            }
-            */
-
-
-    }
-
     // Används i CashierScreenController.serchItem()  För att få items
     public Item getProductByNameFromLocal(String text) throws CloneNotSupportedException {
         for (Item item : ProductCatalog.getInstance().catalog) {

@@ -106,16 +106,13 @@ public class AdminScreenController {
 
             if(!startAgeSpinnerValue.isEmpty() || !endAgeSpinnerValue.isEmpty()){
                 if((startAgeSpinnerValue.isEmpty()) && (!endAgeSpinnerValue.isEmpty())){
-                    System.out.println("1");
                     startAge = 0;
                     endAge = Integer.parseInt(endAgeSpinnerValue);
                     //if endAge is empty but not startAge
                 } else if((!startAgeSpinnerValue.isEmpty()) && (endAgeSpinnerValue.isEmpty())) {
-                    System.out.println("2");
                     startAge = Integer.parseInt(startAgeSpinnerValue);
                     endAge = 200;
                 } else if(!(startAgeSpinnerValue.isEmpty()) && (!endAgeSpinnerValue.isEmpty())){
-                    System.out.println("3");
                     startAge = Integer.parseInt(startAgeSpinnerValue);
                     endAge = Integer.parseInt(endAgeSpinnerValue);
                 }
@@ -182,13 +179,6 @@ public class AdminScreenController {
         item.setPrice(newprice);
         uppdateViewAfterPriceUppdate();
         // TODO se till att get item by name, id ska ha nya värdet
-
-    }
-    @FXML
-    private void uppdatePricesToProductCatalog() throws ParserConfigurationException, SAXException, IOException, SQLException {
-
-        List<Item> allitems= allProductsListView.getItems();
-        productCatalog.uppdatePrices(allitems);
 
     }
 

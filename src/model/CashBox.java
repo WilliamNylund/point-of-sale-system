@@ -22,13 +22,11 @@ public class CashBox {
 
     public void open() {
         try{
-            System.out.println("opening CashBox!");
             URL url = new URL("http://localhost:9001/cashbox/open");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true);
             con.getInputStream();
-            System.out.println("CashBox opened!");
         } catch (IOException e){
             e.printStackTrace();
             System.out.println("something went terrible wrong in CashBox.open() :(((");

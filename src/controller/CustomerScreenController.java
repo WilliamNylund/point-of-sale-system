@@ -197,7 +197,6 @@ public class CustomerScreenController {
         // bonusCardnumber[4]=skall finnas, bara nummror
         // Bonuscard payment
         if(paymentInformation[2]==null && paymentInformation[3].contains("ACCEPTED")&&paymentInformation[4]!=null ){//Betala med Bonus
-            System.out.println("Betala med Bonus kort");
             cashierScreenController.statusTextField.setText(transaction.getBonusState());
             bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
             return true;
@@ -206,13 +205,11 @@ public class CustomerScreenController {
         // paymentCardType[1]=skall vara credit eller debit
         // paymentState[2]=Accepted
         else if(paymentInformation[0]!=null&&(paymentInformation[1].contains("CREDIT")||paymentInformation[1].contains("DEBIT"))&& paymentInformation[2].contains("ACCEPTED") ){
-            System.out.println("GOT HERE");
 
             // bonusState[3]=null
             // bonusCardnumber[4]=null
             //Betala med Paymentcard
             if(paymentInformation[3]==null&&paymentInformation[4]==null){
-                System.out.println("Betala med Paymentcard");
                 cashierScreenController.statusTextField.setText(transaction.getPaymentState());
                 return true;
             }
@@ -220,7 +217,6 @@ public class CustomerScreenController {
             //bonusCardnumber[4]!=null
             //Betala med Combined
             else if(paymentInformation[3].contains("ACCEPTED")&& paymentInformation[4]!=null){
-                System.out.println("Betala med Combined");
                 cashierScreenController.statusTextField.setText(transaction.getPaymentState());
                 bonusCard.addBonusPoints(this.transaction, transaction.getBonusCardNumber());
                 return true;
@@ -230,7 +226,6 @@ public class CustomerScreenController {
         }
 
         else{
-            System.out.println("TRANSACTION FAILED");
             if(paymentInformation[0]==null&& paymentInformation[1]==null){
                 cashierScreenController.statusTextField.setText(paymentInformation[3]);//Bonus va problemet
             }

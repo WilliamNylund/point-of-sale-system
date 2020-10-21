@@ -77,16 +77,12 @@ public class CustomerRegister {
 
             for(int i = 0;i<customerList.size();i++){
                 if(customer.getCustomerNo() == customerList.get(i).getCustomerNo()){
-                    System.out.println("new customerNO equals custno in custlist");
                     found = true;
                     return customerList.get(i);
-                } else{
-                    System.out.println("customerno doesnt equal any custno in custlist");
                 }
             }
             if(!found){
                 customerList.add(customer);
-                System.out.println("customer added to custlist");
             }
 
             return customer;
