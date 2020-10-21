@@ -94,7 +94,6 @@ class TransactionTest {
         assertTrue(testTransaction.getItemList().size() == 5);
 
         testTransactionLog.getPausedTransactions().add(testTransaction);
-
         Transaction testTransaction2 = new Transaction();
 
         assertTrue(testTransactionLog.getPausedTransactions().size() == 1);
@@ -106,6 +105,9 @@ class TransactionTest {
 
         assertTrue(testTransactionLog.getPausedTransactions().size() == 2);
 
+        Transaction continuedTransaction = testTransactionLog.getPausedTransactions().get(0);
+
+        assertTrue(continuedTransaction.equals(testTransaction));
     }
 
 
