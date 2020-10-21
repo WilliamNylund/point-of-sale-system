@@ -67,7 +67,7 @@ public class Transaction {
     }
 
     public double getOutstanding() {
-        return outstanding;
+        return Math.round(outstanding*100.0)/100.0;
     }
 
     public void setOutstanding() {
@@ -75,7 +75,7 @@ public class Transaction {
     }
 
     public double getCardAmount() {
-        return cardAmount;
+        return Math.round(cardAmount*100.0)/100.0;
     }
 
     public void setCardAmount(double cardAmount) {
@@ -83,7 +83,7 @@ public class Transaction {
     }
 
     public double getCashAmount() {
-        return cashAmount;
+        return Math.round(cashAmount*100.0)/100.0;
     }
 
     public void setCashAmount(double cashAmount) {

@@ -53,7 +53,7 @@ public class CashierScreenController {
     }
 
     @FXML
-    private void openAdminWindow() {
+    private void openAdminWindow() {    // Opens window for sale & marketing related activities
         passwordAlert();
         if (boolPass) {
             try {
@@ -79,7 +79,7 @@ public class CashierScreenController {
     }
 
     @FXML
-    private void searchItem() {
+    private void searchItem() {     // Utilizes try/catch to find product, returns an alert if no match found
 
         int itemsBefore = itemListView.getItems().size();
         //System.out.println(barcodeTextField.getText());   // FOR DEBUGGING
@@ -87,7 +87,6 @@ public class CashierScreenController {
             errorMessage("' " + "'" + " did not match any items\nPlease try another search term");
         } else {
             try {
-               // Item item = productCatalog.getProductByName(barcodeTextField.getText());
                 Item item= productCatalog.getProductByNameFromLocal(barcodeTextField.getText().trim());
                 if (item != null) {
                     transaction.addItem(item);
@@ -173,16 +172,11 @@ public class CashierScreenController {
     @FXML
     private void startPayment() {
         customerScreenController.pay();
-        Double change = ((transaction.getCashAmount() + transaction.getCardAmount()) - transaction.getTotalCost());
-        if (change > 0.0)
-            changeTextField.setText(String.valueOf(change));
-        else
-            changeTextField.setText("No change");
     }
 
     @FXML
-    private void addDiscount() {
-
+    private void addDiscount() {    // Handles all discount related stuff
+                                    // Discount must be between 1-100
         Double discount;
         Double price;
         Double newPrice;
@@ -190,10 +184,10 @@ public class CashierScreenController {
         Item item = new Item();
         Item selectedItem = (Item) itemListView.getSelectionModel().getSelectedItem();
         try {
-            if (Double.parseDouble(discountTextField.getText()) <= 100) {
+            if (Double.parseDouble(discountTextField.getText()) <= 100 && Double.parseDouble(discountTextField.getText()) >= 1) {
                 price = selectedItem.getPrice();
                 discount = (Double.parseDouble(discountTextField.getText()) / 100);
-                newPrice = item.calculateDiscount(price, discount);
+                newPrice = item.calculateDiscount(price, discount); //  Item/calculateDiscount()
                 selectedItem.setPrice(newPrice);
                 transaction.setTotalCost((transaction.getTotalCost() - price) + newPrice);
                 customerScreenController.updateAmountFields();
@@ -282,15 +276,14 @@ public class CashierScreenController {
         pauseTransaction();
     }
 
-    private boolean passwordAlert() {
+    private boolean passwordAlert() {   // A not-so-serious login window to restrict access to admin
+                                        // There is no password, just type whatever you fancy or leave it empty
         boolPass = false;
 
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("Enter password");
         dialog.setHeaderText("Restricted access, enter password to continue");
         dialog.setContentText("Enter password:");
-        //PasswordField password = new PasswordField();
-        //password.setPromptText("Password");
 
         Optional<String> correct = dialog.showAndWait();
 
@@ -301,7 +294,7 @@ public class CashierScreenController {
         return boolPass;
     }
 
-    private void errorMessage(String msg) {
+    private void errorMessage(String msg) {     // Helper method creating an error alert
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Error");

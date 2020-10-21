@@ -55,29 +55,17 @@ public class CustomerScreenController {
     @FXML
     public void pay(){ //id: payButton
         if(transaction.getItemList().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("");
-            alert.setHeaderText(null);
-            alert.setContentText("Add some items");
-            alert.showAndWait();
+            errorMessage("No items to pay for");
             return;
         }
 
         if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Pay up bitch");
-            alert.setHeaderText(null);
-            alert.setContentText("Your poor ass need to pay "  + (transaction.getTotalCost() - (transaction.getCardAmount() + transaction.getCashAmount())) + "€ more, bitch.");
-            alert.showAndWait();
+            errorMessage("Your poor ass need to pay "  + (transaction.getTotalCost() - (transaction.getCardAmount() + transaction.getCashAmount())) + "€ more, bitch.");
             return;
         }
         if (transaction.getTotalCost() < transaction.getCardAmount() + transaction.getCashAmount()){
-            cashierScreenController.getChangeTextField().setText(String.valueOf((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()));
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("I aint taking no charity");
-            alert.setHeaderText(null);
-            alert.setContentText("you tried to donate "  + ((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()) + "€ , bitch.");
-            alert.showAndWait();
+            cashierScreenController.getChangeTextField().setText(String.valueOf(Math.round(((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost())*100.0)/100.0));
+            errorMessage("you tried to donate "  + ((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()) + "€ , bitch.");
             return;
         }
 
@@ -329,5 +317,13 @@ public class CustomerScreenController {
 
         ListView catalogListView = this.catalogListView;
         return catalogListView;
+    }
+
+    private void errorMessage(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }
