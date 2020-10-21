@@ -6,8 +6,6 @@ import javafx.collections.ObservableList;
 import java.time.LocalDate;
 import java.util.*;
 
-import model.Item;
-
 //Singleton
 public class TransactionLog {
 

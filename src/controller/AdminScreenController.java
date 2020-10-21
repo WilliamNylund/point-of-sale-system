@@ -129,7 +129,6 @@ public class AdminScreenController {
             return;
         }
         //get all transactionItems sold inbetween startDate and endDate
-
         Map<String, Integer> productsSold = transactionLog.getProductsSoldByDate(startDate, endDate, searchWord, sex, startAge, endAge);
 
 
@@ -144,9 +143,36 @@ public class AdminScreenController {
             productsTextArea.appendText(productNames.get(i) + "  ---  " + amountsSold.get(i) + "\n");
         }
     }
+
+
     @FXML
     private void showCustomerStats(){
-        bonusCustomerTextField.getText();
+        productsTextArea.clear();
+        productsTextArea.appendText("Product --- Amount sold \n\n");
+        int customerNo;
+        try{
+            customerNo = Integer.parseInt(bonusCustomerTextField.getText());
+        } catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Input only integers");
+            alert.showAndWait();
+            return;
+        }
+        Map<String, Integer> productsSold = transactionLog.getProductsSoldByCustomer(customerNo);
+
+
+        ArrayList<String> productNames = new ArrayList<>();
+        ArrayList<Integer> amountsSold = new ArrayList<>();
+
+        productsSold.entrySet().forEach(entry->{
+            productNames.add(entry.getKey());
+            amountsSold.add(entry.getValue());
+        });
+        for(int i=productNames.size()-1; i >= 0; i--){
+            productsTextArea.appendText(productNames.get(i) + "  ---  " + amountsSold.get(i) + "\n");
+        }
     }
 
     @FXML
@@ -172,11 +198,6 @@ public class AdminScreenController {
         setPriceTextField.clear();
         customerScreenController.getCatalogListView().refresh();
         customerScreenController.cashierScreenController.getCatalogListView().refresh();
-
-
-
-
-
     }
 
     private Item getSelectedItem() {
