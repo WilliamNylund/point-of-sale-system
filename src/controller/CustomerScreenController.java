@@ -59,23 +59,24 @@ public class CustomerScreenController {
         }
 
         if (transaction.getTotalCost() > transaction.getCardAmount() + transaction.getCashAmount()){
-            errorMessage("Your poor ass need to pay "  + (transaction.getTotalCost() - (transaction.getCardAmount() + transaction.getCashAmount())) + "€ more, bitch.");
-            return;
-        }
-        if (transaction.getTotalCost() < transaction.getCardAmount() + transaction.getCashAmount()){
-            cashierScreenController.getChangeTextField().setText(String.valueOf(Math.round(((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost())*100.0)/100.0));
-            errorMessage("you tried to donate "  + ((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost()) + "€ , bitch.");
+            errorMessage("You need to pay "  + (transaction.getTotalCost() - (transaction.getCardAmount() + transaction.getCashAmount())) + "€ more.");
             return;
         }
 
         if(transaction.getCardAmount() != 0.0){ //paying with card
+            if(transaction.getCashAmount() == 0.0){ //paying with ONLY card
+                if (transaction.getTotalCost() < transaction.getCardAmount()){
+                    errorMessage("Do not donate money");
+                    return;
+                }
+            }
             cardReader.waitForPayment(transaction.getCardAmount());
             listenForPayment();
         }
         if(transaction.getCashAmount() != 0.0){ //open cashbox if paying with cash
-            cashbox.open();
-            finishPayment();
-
+            if (transaction.getCardAmount() == 0.0){ //paying with ONLY cash
+                finishPayment();
+            }
         }
     }
 
@@ -263,6 +264,14 @@ public class CustomerScreenController {
     }
 
     private void finishPayment(){
+        //check if cashier has to return cash
+        if(transaction.getCashAmount() != 0){
+            cashbox.open();
+            if(transaction.getCashAmount() + transaction.getCardAmount() > transaction.getTotalCost()){
+                errorMessage("You paid " + ((transaction.getCardAmount()+transaction.getCashAmount() - transaction.getTotalCost()) + "€ too much\n Returning " + ((transaction.getCardAmount()+transaction.getCashAmount()) - transaction.getTotalCost()) + "€ cash."));
+            }
+        }
+
         transaction.printReceipt();
         transaction.setPaymentDate(LocalDate.now());
         transaction.setPaid(true);
