@@ -72,7 +72,6 @@ public class AdminScreenController {
                         "MALE",
                         "FEMALE",
                         "UNSPECIFIED"
-
                 );
 
         sexComboBox.setItems(gender);
@@ -102,7 +101,6 @@ public class AdminScreenController {
 
         try {
             //if atleast one is not empty
-
             String startAgeSpinnerValue = startAgeSpinner.getEditor().getText().trim();
             String endAgeSpinnerValue = endAgeSpinner.getEditor().getText().trim();
 

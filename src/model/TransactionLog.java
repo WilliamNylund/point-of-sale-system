@@ -112,7 +112,7 @@ public class TransactionLog {
         Customer customer = new Customer();
         customer.setSex("MALE");
         customer.setBirthDate(LocalDate.now().minusYears(18));
-        //transaction2.setCustomer(customer);
+        transaction2.setCustomer(customer);
         this.getCompletedTransactions().add(transaction2);
     }
 
@@ -130,7 +130,7 @@ public class TransactionLog {
             //check if payment date is between startdate and enddate
             if ((this.getCompletedTransactions().get(i).getPaymentDate().isAfter(startDate) || this.getCompletedTransactions().get(i).getPaymentDate().isEqual(startDate))&& (this.getCompletedTransactions().get(i).getPaymentDate().isBefore(endDate) || this.getCompletedTransactions().get(i).getPaymentDate().isEqual(endDate))){
                 //if sex is correct
-                if(sex == null || (this.getCompletedTransactions().get(i).getCustomer() != null  && this.getCompletedTransactions().get(i).getCustomer().getSex().contains(sex))) {
+                if((sex == null || sex.trim().isEmpty()) || (this.getCompletedTransactions().get(i).getCustomer() != null  && this.getCompletedTransactions().get(i).getCustomer().getSex().contains(sex))) {
                     //if age is correct
                     if (startAge < 0 || (this.getCompletedTransactions().get(i).getCustomer() != null && (this.getCompletedTransactions().get(i).getCustomer().getAge() >= startAge && this.getCompletedTransactions().get(i).getCustomer().getAge() <= endAge))) {
 

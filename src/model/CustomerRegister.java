@@ -169,4 +169,7 @@ public class CustomerRegister {
         }
     }
 
+    public ArrayList<Customer> getCustomerList() {
+        return customerList;
+    }
 }
