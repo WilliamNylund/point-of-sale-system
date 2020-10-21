@@ -268,6 +268,7 @@ public class CustomerScreenController {
         if(transaction.getCashAmount() != 0){
             cashbox.open();
             if(transaction.getCashAmount() + transaction.getCardAmount() > transaction.getTotalCost()){
+                cashierScreenController.getChangeTextField().setText(String.valueOf(Math.round(((transaction.getCardAmount() + transaction.getCashAmount()) - transaction.getTotalCost())*100.0)/100.0));
                 errorMessage("You paid " + ((transaction.getCardAmount()+transaction.getCashAmount() - transaction.getTotalCost()) + "€ too much\n Returning " + ((transaction.getCardAmount()+transaction.getCashAmount()) - transaction.getTotalCost()) + "€ cash."));
             }
         }
