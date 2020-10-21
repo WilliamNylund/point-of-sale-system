@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.*;
@@ -28,10 +27,6 @@ public class CustomerScreenController {
     public TextField cardTextField;
     @FXML
     public TextField cashTextField;
-    @FXML
-    private TextField bonusTextField;
-    @FXML
-    private CheckBox receiptCheckBox;
 
 
     CashierScreenController cashierScreenController;
@@ -105,11 +100,6 @@ public class CustomerScreenController {
     @FXML
     private void holdTransaction(){ //id: holdTransactionButton
         cashierScreenController.startPause();
-    }
-
-    @FXML
-    private void continueTransaction(){ //id: continueTransactionButton
-
     }
 
     @FXML

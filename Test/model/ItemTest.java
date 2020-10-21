@@ -15,8 +15,7 @@ class ItemTest {
     @Test
     void addItemAndRemoveItem() {
 
-        ProductCatalog testProductCatalog;
-        testProductCatalog = ProductCatalog.getInstance();
+        ProductCatalog testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
 
         Item testItem = testProductCatalog.getProductByName("Banana");
@@ -36,8 +35,7 @@ class ItemTest {
     @Test
     void verifyBestBeforeAlert() {  // BEFORE RUNNING, DISABLE THE ALERT CALL IN ADDITEM() AND CHECK THE BOOLEAN
 
-        ProductCatalog testProductCatalog;
-        testProductCatalog = ProductCatalog.getInstance();
+        ProductCatalog testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
 
         Item oldItem = testProductCatalog.getProductByName("Milk");
@@ -53,4 +51,18 @@ class ItemTest {
         assertTrue(testTransaction.testInfoMessage == false, "The BBE alert should --NOT-- have been called");
     }
 
+    @Test
+    void correctDiscount() {
+
+        ProductCatalog testProductCatalog = ProductCatalog.getInstance();
+
+        Item item = testProductCatalog.getProductByName("Milk");
+        item.setPrice(3.50);
+        Double priceBefore = item.getPrice();
+        Double priceAfter = item.calculateDiscount(priceBefore,0.5);
+        System.out.println(priceBefore + " || " + priceAfter);
+        assertTrue(!priceBefore.equals(priceAfter), "The price should change");
+        assertTrue(priceAfter.equals(priceBefore/2), "New price should be 1.75");
+
+    }
 }
