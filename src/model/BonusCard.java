@@ -72,11 +72,9 @@ public class BonusCard {
 
     public void addBonusPoints(Transaction transaction, String bonusCardNo) {
         try {
-            if (transaction.getBonusCardNumber() != null && transaction.getBonusCardNumber().equals(bonusCardNo) && transaction.getBonusState().equals("ACCEPTED")) {
-                points += transaction.getTotalCost() * 0.05;
-                System.out.println("Added 5% of total cost worth of bonus points!");
-                System.out.println("Your points: "+points);
-            }
+            points += transaction.getTotalCost() * 0.05;
+            System.out.println("Added 5% of total cost worth of bonus points!");
+            System.out.println("Your points: "+points);
         } catch (Exception e) {
             e.printStackTrace();
         }
