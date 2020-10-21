@@ -200,7 +200,7 @@ public class Transaction {
 
 
     public void printReceipt() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Would you lika a receipt?",ButtonType.YES,ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Would you like a receipt?",ButtonType.YES,ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.YES) {
             try {
@@ -222,7 +222,6 @@ public class Transaction {
                 ImageIO.write(bi, "png", outputfile);
 
             } catch (Exception e) {
-                System.out.println("poop");
                 e.printStackTrace();
             }
         } else{
