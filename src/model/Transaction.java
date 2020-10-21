@@ -198,7 +198,9 @@ public class Transaction {
         return id;
     }
 
-
+    // Gives user a choice to either get a receipt or not. The amount of unnecessary code in this
+    // method is actually depressing, since the png file ignores EVERY kind of new line character possibly imaginable.
+    // This in turn shows its ugly head in class ImageGenerator, where the size of the BufferedImage is hardcoded...
     public void printReceipt() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Would you like a receipt?",ButtonType.YES,ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();

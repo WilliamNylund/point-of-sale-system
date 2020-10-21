@@ -70,6 +70,8 @@ public class BonusCard {
         this.points = points;
     }
 
+    // Takes in current transaction object as well as a bonuscardNo
+    // in order to award correct amount of bonus points to correct card
     public void addBonusPoints(Transaction transaction, String bonusCardNo) {
         try {
             points += transaction.getTotalCost() * 0.05;
