@@ -18,17 +18,8 @@ class ProductCatalogTest {
         ProductCatalog testProductCatalog;
         testProductCatalog = ProductCatalog.getInstance();
         testProductCatalog.getAllProducts();
-        Item z = testProductCatalog.getProductByBarCode(69);
-        try {
-            Item x = testProductCatalog.getProductByBarCode(69);
-        } catch (Exception E) {
-            System.out.println("PROBLEM");
-        }
-
-        assertTrue(z.getName().equals("Dildo"), "Borde hitta Dildo");
-        assertTrue(z.getPrice() == 3.00, "Borde vara 3.00");
-        assertFalse(z.getPrice() == 3.10, "Borde inte 3.10");
-
+        Item z = testProductCatalog.getProductByBarCode(2);
+        assertTrue(z.getName().toLowerCase().equals("milk"));
     }
 
     @Test
@@ -41,15 +32,12 @@ class ProductCatalogTest {
 
 
 
-        Item y = testProductCatalog.getProductByBarCode(69);//Dildo
         List<Item> z = testProductCatalog.getProductByKeyWord("drink");
         List<String> listStrings = new ArrayList<String>();
         listStrings.add("Leipä");
         listStrings.add("Banana");
         List<Item> breakfastList = testProductCatalog.getProductByKeyWord("breakfast");
 
-
-        assertFalse(z.contains(y), "borde inte innehålla dildo");
         assertTrue(z.get(0).getName().equals(mjölk.getName()), "borde innehålla mjölk");
         List w = testProductCatalog.getProductByKeyWord("drinkerino");//Should be empty list
         assertFalse(w.contains(mjölk), "borde inte innehålla någo");

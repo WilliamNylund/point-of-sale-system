@@ -18,7 +18,7 @@ class TransactionTest {
         ProductCatalog testProductCatalog;
         testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
-        Item testItem= testProductCatalog.getProductByBarCode(69);
+        Item testItem= testProductCatalog.getProductByBarCode(2);
         assertTrue(testTransaction.getItemList().isEmpty(), "Borde vara tomt");
         testTransaction.addItem(testItem);
         assertFalse(testTransaction.getItemList().isEmpty(), "Borde inte vara tomt");
@@ -47,7 +47,7 @@ class TransactionTest {
         ProductCatalog testProductCatalog;
         testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
-        Item testItem= testProductCatalog.getProductByBarCode(69);
+        Item testItem= testProductCatalog.getProductByBarCode(2);
         testTransaction.addItem(testItem);
         assertTrue(testTransaction.getTotalCost()==3.00, "värde ska vara 3.00");
         testTransaction.addItem(testItem);
@@ -69,7 +69,7 @@ class TransactionTest {
         ProductCatalog testProductCatalog;
         testProductCatalog = ProductCatalog.getInstance();
         Transaction testTransaction = new Transaction();
-        Item testItem= testProductCatalog.getProductByBarCode(69);
+        Item testItem= testProductCatalog.getProductByBarCode(2);
         testTransaction.addItem(testItem);
         testTransaction.addItem(testItem);
         testTransaction.setCardAmount(4.00);
@@ -94,20 +94,28 @@ class TransactionTest {
         assertTrue(testTransaction.getItemList().size() == 5);
 
         testTransactionLog.getPausedTransactions().add(testTransaction);
-        Transaction testTransaction2 = new Transaction();
 
         assertTrue(testTransactionLog.getPausedTransactions().size() == 1);
 
         Item item2 = testProductCatalog.getProductByName("Banana");
 
+        Transaction testTransaction2 = new Transaction();
+
         testTransaction2.addItem(item2);
+
         testTransactionLog.getPausedTransactions().add(testTransaction2);
 
         assertTrue(testTransactionLog.getPausedTransactions().size() == 2);
 
         Transaction continuedTransaction = testTransactionLog.getPausedTransactions().get(0);
-
+        Transaction continuedTransaction2 = testTransactionLog.getPausedTransactions().get(1);
         assertTrue(continuedTransaction.equals(testTransaction));
+        assertTrue(continuedTransaction2.equals(testTransaction2));
+        assertFalse(continuedTransaction.equals(testTransaction2));
+
+
+
+
     }
 
 

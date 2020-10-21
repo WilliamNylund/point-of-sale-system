@@ -42,10 +42,13 @@ class TransactionLogTest {
 
     @Test
     void getProductsSoldByDate() {
+        TransactionLog transactionLog = TransactionLog.getInstance();
+        System.out.println(transactionLog.getCompletedTransactions().size());
     }
 
     @Test
     void getProductsSoldByCustomer() {
+
     }
 
     @Test

@@ -22,6 +22,13 @@ class CashBoxTest {
 
     @Test
     void open() {
+        CashBox cashBox = CashBox.getInstance();
+        String status = cashBox.getStatus();
+        assertTrue(status.equals("CLOSED"));
+        cashBox.open();
+        status = cashBox.getStatus();
+        assertTrue(status.equals("OPEN"));
+        assertFalse(status.equals("CLOSED"));
     }
 
     @Test
