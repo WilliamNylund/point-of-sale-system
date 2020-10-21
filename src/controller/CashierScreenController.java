@@ -275,6 +275,9 @@ public class CashierScreenController {
     public void startPause(){
         pauseTransaction();
     }
+    public void startContinue(){
+        continueTransaction();
+    }
 
     private boolean passwordAlert() {   // A not-so-serious login window to restrict access to admin
                                         // There is no password, just type whatever you fancy or leave it empty
@@ -308,4 +311,7 @@ public class CashierScreenController {
         return catalogListView;
     }
 
+    public Transaction getTransaction() {
+        return transaction;
+    }
 }
