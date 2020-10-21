@@ -30,9 +30,6 @@ class ItemTest {
         assertFalse(testTransaction.getItemList().contains(testItem), "Banana should be removed from item list");
         assertTrue(testTransaction.getItemList().contains(testItem2), "Item with barcode 1 should be in item list");
 
-        assertFalse(testProductCatalog.getCatalog().contains("nvidia RTX3090"), "RTX3090 should not be in item list because it does not exist");
-        assertFalse(testProductCatalog.getCatalog().contains(80085), "80085 should not be in item list because it does not exist");
-
     }
 
     @Test
