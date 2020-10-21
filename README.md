@@ -14,5 +14,12 @@ Navigate your repository and locate + **Execute Order 66.** Now you should be ab
 
 ### JAR files for Mac OS
 
-TODO: Nylund ples?
+Navigate to the project root folder and run:
+
+```bash
+java -jar ProductCatalog.jar 
+java -jar CustomerRegister.jar 
+java -jar CardReader.jar
+java -jar CashBox.jar
+```
 
